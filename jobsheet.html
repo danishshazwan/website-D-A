@@ -2,725 +2,393 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Jobsheet</title>
+<title>Jobsheet · Cyber Fusion</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap');
 
-:root{
---neon-1:#00f2fe;
---neon-2:#4facfe;
---neon-3:#00ff88;
---bg:#050510;
---card-bg:rgba(0,0,0,0.6);
-}
-
+:root{--c:#00f2fe;--b:#4facfe;--g:#00ff88;--p:#ff00c1;--y:#ffc800;--bg:#020209;}
 *{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:'Rajdhani',sans-serif;color:white;overflow-x:hidden;cursor:none;min-height:100vh;}
 
-body{
-font-family:'Orbitron',sans-serif;
-background:var(--bg);
-color:white;
-overflow-x:hidden;
-min-height:100vh;
-position:relative;
-}
+/* CURSOR */
+.cursor{position:fixed;width:12px;height:12px;background:var(--c);border-radius:50%;pointer-events:none;z-index:999999;transform:translate(-50%,-50%);box-shadow:0 0 20px var(--c),0 0 40px var(--b);mix-blend-mode:screen;}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(0,242,254,0.4);border-radius:50%;pointer-events:none;z-index:999998;transform:translate(-50%,-50%);transition:all 0.12s ease;}
 
-body::before{
-content:"";
-position:fixed; inset:0;
-background-image:
-linear-gradient(var(--neon-1) 1px, transparent 1px),
-linear-gradient(90deg, var(--neon-2) 1px, transparent 1px);
-background-size:60px 60px;
-opacity:0.06;
-z-index:-3;
-animation:circuitFlow 14s linear infinite;
-}
-@keyframes circuitFlow{
-from{transform:translateY(0);}
-to{transform:translateY(-60px);}
-}
+/* LOADER */
+#loader{position:fixed;inset:0;background:#020209;display:flex;align-items:center;justify-content:center;flex-direction:column;z-index:99999;transition:opacity 0.8s,visibility 0.8s;}
+#loader.gone{opacity:0;visibility:hidden;pointer-events:none;}
+.load-ring{width:70px;height:70px;border:2px solid rgba(0,242,254,0.1);border-top:2px solid var(--c);border-right:2px solid var(--b);border-radius:50%;animation:spin 1s linear infinite;box-shadow:0 0 30px rgba(0,242,254,0.2);margin-bottom:20px;position:relative;}
+.load-ring::before{content:'';position:absolute;inset:7px;border:1px solid rgba(0,255,136,0.15);border-top:1px solid var(--g);border-radius:50%;animation:spin 1.4s linear infinite reverse;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.load-txt{font-family:'Orbitron',sans-serif;font-size:0.55rem;letter-spacing:6px;color:rgba(0,242,254,0.5);animation:blink 1s infinite;}
+.load-bar{width:180px;height:2px;background:rgba(0,242,254,0.08);border-radius:2px;margin-top:16px;overflow:hidden;}
+.load-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--c),var(--b),var(--g));box-shadow:0 0 10px var(--c);}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.2;}}
 
-canvas{
-position:fixed;
-top:0; left:0;
-z-index:-2;
-}
+/* BG */
+#wormhole{position:fixed;inset:0;z-index:0;opacity:0.8;}
+.grid-bg{position:fixed;inset:0;z-index:1;background-image:linear-gradient(rgba(0,242,254,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,242,254,0.04) 1px,transparent 1px);background-size:50px 50px;animation:gridMove 20s linear infinite;}
+@keyframes gridMove{from{transform:perspective(500px) rotateX(20deg) translateY(0);}to{transform:perspective(500px) rotateX(20deg) translateY(50px);}}
+#scanlines{position:fixed;inset:0;z-index:2;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;}
 
-.spotlight{
-position:fixed;
-width:300px;
-height:300px;
-background:radial-gradient(circle,var(--neon-1) 0%,transparent 70%);
-opacity:0.12;
-pointer-events:none;
-mix-blend-mode:screen;
-z-index:-1;
-transition: left 0.05s, top 0.05s;
-}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 40px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,rgba(2,2,9,0.95),transparent);backdrop-filter:blur(10px);}
+.nav-logo{font-family:'Orbitron',sans-serif;font-size:0.65rem;letter-spacing:4px;color:var(--c);text-shadow:0 0 15px var(--c);}
+.nav-logo span{color:rgba(255,255,255,0.25);}
+.nav-menu{position:relative;}
+.nav-btn{background:transparent;border:1px solid rgba(0,242,254,0.3);color:var(--c);padding:9px 26px;border-radius:30px;font-family:'Orbitron',sans-serif;font-size:0.62rem;letter-spacing:3px;cursor:none;transition:0.3s;box-shadow:0 0 15px rgba(0,242,254,0.08);}
+.nav-btn:hover{background:rgba(0,242,254,0.08);box-shadow:0 0 25px rgba(0,242,254,0.2);border-color:var(--c);}
+.nav-drop{position:absolute;top:120%;right:0;background:rgba(2,2,9,0.97);border:1px solid rgba(0,242,254,0.15);border-radius:14px;padding:8px 0;min-width:155px;text-align:center;opacity:0;visibility:hidden;transform:translateY(-8px);transition:0.3s;backdrop-filter:blur(20px);box-shadow:0 20px 60px rgba(0,0,0,0.6);}
+.nav-menu:hover .nav-drop{opacity:1;visibility:visible;transform:translateY(0);}
+.nav-drop a{display:block;padding:11px 20px;color:rgba(255,255,255,0.45);text-decoration:none;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:0.78rem;letter-spacing:3px;transition:0.2s;}
+.nav-drop a:hover{color:var(--c);background:rgba(0,242,254,0.04);}
 
-/* ===== MENU ===== */
-.nav-container{
-position:absolute;
-top:25px;
-right:40px;
-z-index:100;
-}
+/* HUD */
+.hud-tl{position:fixed;top:80px;left:40px;z-index:100;font-family:'Share Tech Mono',monospace;font-size:0.52rem;color:rgba(0,242,254,0.25);line-height:2.2;letter-spacing:2px;}
+.hud-time{font-size:1.2rem;color:var(--c);letter-spacing:4px;text-shadow:0 0 15px var(--c);display:block;margin-bottom:2px;}
+.hud-dot{display:inline-block;width:5px;height:5px;background:var(--g);border-radius:50%;margin-right:5px;animation:blink 1.5s infinite;box-shadow:0 0 6px var(--g);}
+.hud-br{position:fixed;bottom:24px;right:40px;z-index:100;font-family:'Share Tech Mono',monospace;font-size:0.48rem;color:rgba(0,242,254,0.18);text-align:right;line-height:2.4;letter-spacing:2px;}
 
-.nav-button{
-background:linear-gradient(135deg,var(--neon-1),var(--neon-2));
-border:none;
-color:#000;
-padding:12px 30px;
-border-radius:30px;
-font-weight:700;
-letter-spacing:3px;
-cursor:pointer;
-transition:0.4s;
-box-shadow:0 0 15px var(--neon-1),0 0 30px var(--neon-2);
-font-family:'Orbitron',sans-serif;
-font-size:0.75rem;
-}
+/* PAGE HEADER */
+.page-header{position:relative;z-index:10;text-align:center;padding:110px 20px 50px;}
+.page-eyebrow{font-family:'Share Tech Mono',monospace;font-size:0.58rem;letter-spacing:6px;color:rgba(0,242,254,0.35);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:14px;}
+.page-eyebrow::before,.page-eyebrow::after{content:'';display:block;width:40px;height:1px;}
+.page-eyebrow::before{background:linear-gradient(90deg,transparent,rgba(0,242,254,0.4));}
+.page-eyebrow::after{background:linear-gradient(90deg,rgba(0,242,254,0.4),transparent);}
+.page-title{font-family:'Orbitron',sans-serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:900;letter-spacing:8px;background:linear-gradient(135deg,#fff,rgba(255,255,255,0.6));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;}
+.page-sub{font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:5px;color:rgba(0,242,254,0.35);}
 
-.nav-button:hover{
-background:#000;
-color:#fff;
-border:2px solid var(--neon-1);
-}
+/* MAIN */
+.container{position:relative;z-index:10;display:flex;justify-content:center;gap:30px;flex-wrap:wrap;padding:20px 30px 80px;max-width:1100px;margin:0 auto;}
 
-.dropdown{
-position:absolute;
-top:110%;
-right:0;
-background:rgba(0,0,0,0.9);
-border:1px solid var(--neon-1);
-border-radius:10px;
-opacity:0;
-visibility:hidden;
-transform:translateY(-10px);
-transition:0.3s;
-width:160px;
-text-align:center;
-backdrop-filter:blur(5px);
-}
+/* PROFILE */
+.profile{width:440px;background:linear-gradient(160deg,rgba(0,242,254,0.03),rgba(79,172,254,0.015));backdrop-filter:blur(14px);border-radius:24px;padding:28px;border:1px solid rgba(0,242,254,0.1);box-shadow:0 0 60px rgba(0,242,254,0.05),inset 0 0 80px rgba(0,0,0,0.4);transition:0.4s;position:relative;overflow:hidden;}
+.profile::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--c),var(--b),transparent);}
+.profile::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,242,254,0.15),transparent);}
+.profile:hover{transform:translateY(-6px);box-shadow:0 20px 80px rgba(0,0,0,0.4),0 0 40px rgba(0,242,254,0.1),inset 0 0 80px rgba(0,0,0,0.4);border-color:rgba(0,242,254,0.25);}
 
-.nav-container:hover .dropdown{
-opacity:1;
-visibility:visible;
-transform:translateY(0);
-}
+/* PROFILE HEADER */
+.profile-header{display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(0,242,254,0.08);}
+.profile-avatar{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--c),var(--b));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:900;color:#000;flex-shrink:0;box-shadow:0 0 20px rgba(0,242,254,0.4);}
+.profile-info h2{font-family:'Orbitron',sans-serif;font-size:0.65rem;color:var(--c);text-shadow:0 0 8px rgba(0,242,254,0.4);letter-spacing:1.5px;line-height:1.6;}
+.profile-info span{font-size:0.68rem;color:rgba(255,255,255,0.25);letter-spacing:2px;margin-top:3px;display:block;}
 
-.dropdown a{
-display:block;
-padding:12px 0;
-color:white;
-text-decoration:none;
-transition:0.3s;
-font-family:'Rajdhani',sans-serif;
-font-weight:600;
-letter-spacing:2px;
-font-size:0.85rem;
-}
+/* CARD GRID */
+.jobsheet-section{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 
-.dropdown a:hover{
-background:var(--neon-1);
-color:#000;
-}
+/* CARD */
+.jobsheet-card{background:rgba(0,0,0,0.4);border:1px solid rgba(0,242,254,0.08);border-radius:16px;padding:18px 16px;cursor:none;transition:0.35s cubic-bezier(0.34,1.56,0.64,1);position:relative;overflow:hidden;}
+.jobsheet-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,242,254,0.05),transparent);opacity:0;transition:0.3s;}
+.jobsheet-card:hover::before{opacity:1;}
+.jobsheet-card:hover{transform:translateY(-4px) scale(1.02);border-color:rgba(0,242,254,0.3);box-shadow:0 10px 30px rgba(0,0,0,0.4),0 0 20px rgba(0,242,254,0.08);}
+.jobsheet-card.active{border-color:var(--c);box-shadow:0 0 30px rgba(0,242,254,0.15),inset 0 0 20px rgba(0,242,254,0.03);background:rgba(0,242,254,0.04);grid-column:span 2;transform:none;}
 
-/* ===== HEADER ===== */
-header{
-text-align:center;
-padding:90px 20px 20px;
-}
-
-header h1{
-font-size:2.8rem;
-text-shadow:0 0 20px var(--neon-1),0 0 40px var(--neon-2);
-letter-spacing:6px;
-}
-
-header p{
-margin-top:10px;
-color:rgba(0,242,254,0.5);
-font-family:'Rajdhani',sans-serif;
-letter-spacing:4px;
-font-size:0.9rem;
-}
-
-/* ===== LAYOUT ===== */
-.container{
-display:flex;
-justify-content:center;
-gap:40px;
-flex-wrap:wrap;
-padding:30px;
-}
-
-.profile{
-width:420px;
-background:linear-gradient(160deg,rgba(0,242,254,0.04),rgba(79,172,254,0.02));
-backdrop-filter:blur(10px);
-border-radius:20px;
-padding:28px;
-border:1px solid rgba(0,242,254,0.15);
-box-shadow:0 0 40px rgba(0,242,254,0.08), inset 0 0 60px rgba(0,0,0,0.5);
-transition:0.4s;
-position:relative;
-overflow:hidden;
-}
-
-.profile::before{
-content:'';
-position:absolute;
-top:0; left:0; right:0;
-height:2px;
-background:linear-gradient(90deg, transparent, var(--neon-1), var(--neon-2), transparent);
-}
-
-.profile:hover{
-transform:translateY(-8px);
-box-shadow:0 0 60px rgba(0,242,254,0.2), inset 0 0 60px rgba(0,0,0,0.5);
-border-color:rgba(0,242,254,0.35);
-}
-
-.profile-header{
-display:flex;
-align-items:center;
-gap:14px;
-margin-bottom:22px;
-padding-bottom:18px;
-border-bottom:1px solid rgba(0,242,254,0.1);
-}
-
-.profile-avatar{
-width:46px;
-height:46px;
-border-radius:50%;
-background:linear-gradient(135deg,var(--neon-1),var(--neon-2));
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:1.2rem;
-font-weight:900;
-color:#000;
-flex-shrink:0;
-box-shadow:0 0 15px var(--neon-1);
-}
-
-.profile-info h2{
-font-size:0.72rem;
-color:var(--neon-1);
-text-shadow:0 0 8px var(--neon-1);
-letter-spacing:1.5px;
-line-height:1.4;
-}
-
-.profile-info span{
-font-family:'Rajdhani',sans-serif;
-font-size:0.75rem;
-color:rgba(255,255,255,0.35);
-letter-spacing:2px;
-}
-
-/* ===== JOBSHEET CARDS ===== */
-.jobsheet-section{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-}
-
-.jobsheet-card{
-background:rgba(0,0,0,0.5);
-border:1px solid rgba(0,242,254,0.12);
-border-radius:14px;
-padding:16px 14px;
-cursor:pointer;
-transition:0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-position:relative;
-overflow:hidden;
-}
-
-.jobsheet-card::before{
-content:'';
-position:absolute;
-inset:0;
-background:linear-gradient(135deg, rgba(0,242,254,0.06), transparent);
-opacity:0;
-transition:0.3s;
-}
-
-.jobsheet-card:hover::before{ opacity:1; }
-
-.jobsheet-card:hover{
-transform:translateY(-4px) scale(1.02);
-border-color:rgba(0,242,254,0.4);
-box-shadow:0 8px 25px rgba(0,242,254,0.15), 0 0 0 1px rgba(0,242,254,0.1);
-}
-
-.jobsheet-card.active{
-border-color:var(--neon-1);
-box-shadow:0 0 25px rgba(0,242,254,0.25), 0 0 0 1px var(--neon-1);
-background:rgba(0,242,254,0.05);
-grid-column: span 2;
-}
-
-.card-icon{
-font-size:1.5rem;
-margin-bottom:8px;
-display:block;
-filter:drop-shadow(0 0 6px var(--neon-1));
-}
-
-.card-label{
-font-size:0.68rem;
-font-weight:700;
-letter-spacing:2px;
-color:rgba(255,255,255,0.8);
-display:block;
-margin-bottom:4px;
-}
-
-.card-count{
-font-family:'Rajdhani',sans-serif;
-font-size:0.7rem;
-color:rgba(0,242,254,0.45);
-letter-spacing:1.5px;
-}
-
-.card-arrow{
-position:absolute;
-top:14px;
-right:14px;
-width:18px;
-height:18px;
-border-right:2px solid rgba(0,242,254,0.4);
-border-bottom:2px solid rgba(0,242,254,0.4);
-transform:rotate(45deg);
-transition:0.3s;
-}
-
-.jobsheet-card.active .card-arrow{
-transform:rotate(-135deg) translateY(-4px);
-border-color:var(--neon-1);
-}
+/* CARD INSIDE */
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;}
+.card-left{}
+.card-icon{font-size:1.6rem;display:block;margin-bottom:10px;filter:drop-shadow(0 0 8px var(--c));transition:0.3s;}
+.jobsheet-card:hover .card-icon{transform:scale(1.12) rotate(5deg);}
+.card-label{font-family:'Orbitron',sans-serif;font-size:0.62rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.75);display:block;margin-bottom:5px;}
+.card-count{font-size:0.65rem;letter-spacing:2px;color:rgba(0,242,254,0.4);}
+.card-arrow{width:20px;height:20px;flex-shrink:0;margin-top:2px;border-right:2px solid rgba(0,242,254,0.3);border-bottom:2px solid rgba(0,242,254,0.3);transform:rotate(45deg);transition:0.3s;}
+.jobsheet-card.active .card-arrow{transform:rotate(-135deg) translate(-2px,-2px);border-color:var(--c);}
 
 /* DROPDOWN */
-.jobsheet-dropdown{
-display:grid;
-grid-template-columns:1fr;
-gap:7px;
-margin-top:14px;
-max-height:0;
-overflow:hidden;
-transition:max-height 0.4s ease, opacity 0.3s ease;
-opacity:0;
-pointer-events:none;
-}
+.jobsheet-dropdown{display:grid;grid-template-columns:1fr;gap:8px;margin-top:16px;max-height:0;overflow:hidden;transition:max-height 0.45s cubic-bezier(0.4,0,0.2,1),opacity 0.3s;opacity:0;pointer-events:none;}
+.jobsheet-card.active .jobsheet-dropdown{max-height:500px;opacity:1;pointer-events:auto;}
 
-.jobsheet-card.active .jobsheet-dropdown{
-max-height:400px;
-opacity:1;
-pointer-events:auto;
-}
+/* DESC */
+.card-desc{padding:14px 16px;background:rgba(0,242,254,0.03);border:1px solid rgba(0,242,254,0.08);border-left:3px solid rgba(0,242,254,0.4);border-radius:0 10px 10px 0;margin-bottom:2px;}
+.card-desc p{font-size:0.78rem;line-height:1.7;color:rgba(255,255,255,0.5);letter-spacing:0.4px;}
+.tag-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.tag{padding:3px 11px;border-radius:20px;font-size:0.6rem;font-weight:700;letter-spacing:1.5px;background:rgba(0,242,254,0.06);border:1px solid rgba(0,242,254,0.15);color:rgba(0,242,254,0.6);}
 
-.jobsheet-dropdown a{
-padding:9px 12px;
-background:linear-gradient(90deg,rgba(0,242,254,0.12),rgba(79,172,254,0.08));
-border:1px solid rgba(0,242,254,0.2);
-border-radius:8px;
-text-align:center;
-text-decoration:none;
-color:var(--neon-1);
-font-family:'Rajdhani',sans-serif;
-font-weight:700;
-font-size:0.8rem;
-letter-spacing:2px;
-transition:0.25s;
-position:relative;
-overflow:hidden;
-}
+/* LINKS */
+.jobsheet-dropdown a{padding:10px 16px;background:linear-gradient(90deg,rgba(0,242,254,0.08),rgba(79,172,254,0.05));border:1px solid rgba(0,242,254,0.12);border-radius:10px;text-align:center;text-decoration:none;color:var(--c);font-family:'Rajdhani',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:2px;transition:0.25s;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:8px;}
+.jobsheet-dropdown a::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--c),var(--b));opacity:0;transition:0.25s;}
+.jobsheet-dropdown a span{position:relative;z-index:1;}
+.link-arrow{position:relative;z-index:1;transition:0.25s;opacity:0;font-size:0.7rem;}
+.jobsheet-dropdown a:hover::before{opacity:1;}
+.jobsheet-dropdown a:hover{color:#000;border-color:transparent;box-shadow:0 4px 20px rgba(0,242,254,0.3);}
+.jobsheet-dropdown a:hover .link-arrow{opacity:1;transform:translateX(3px);}
 
-.jobsheet-dropdown a::before{
-content:'';
-position:absolute;
-inset:0;
-background:linear-gradient(90deg,var(--neon-1),var(--neon-2));
-opacity:0;
-transition:0.25s;
-}
+/* FOOTER */
+footer{position:relative;z-index:10;padding:24px 40px;border-top:1px solid rgba(0,242,254,0.05);display:flex;justify-content:space-between;align-items:center;}
+.foot-l{font-family:'Share Tech Mono',monospace;font-size:0.52rem;color:rgba(0,242,254,0.18);letter-spacing:3px;}
+.foot-r{font-size:0.52rem;color:rgba(255,255,255,0.1);letter-spacing:2px;}
 
-.jobsheet-dropdown a span{ position:relative; z-index:1; }
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s cubic-bezier(0.34,1.2,0.64,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.delay-1{transition-delay:0.1s;}.delay-2{transition-delay:0.2s;}
 
-.jobsheet-dropdown a:hover::before{ opacity:1; }
-
-.jobsheet-dropdown a:hover{
-color:#000;
-border-color:transparent;
-transform:translateX(3px);
-box-shadow:0 0 15px rgba(0,242,254,0.4);
-}
-
-/* CARD DESCRIPTION */
-.card-desc{
-display:none;
-margin-top:10px;
-padding:10px 12px;
-background:rgba(0,242,254,0.04);
-border-left:2px solid rgba(0,242,254,0.4);
-border-radius:0 8px 8px 0;
-}
-
-.jobsheet-card.active .card-desc{ display:block; }
-
-.card-desc p{
-font-family:'Rajdhani',sans-serif;
-font-size:0.78rem;
-color:rgba(255,255,255,0.6);
-line-height:1.6;
-letter-spacing:0.5px;
-font-weight:400;
-}
-
-.card-desc .tag-list{
-display:flex;
-flex-wrap:wrap;
-gap:6px;
-margin-top:8px;
-}
-
-.card-desc .tag{
-padding:3px 10px;
-border-radius:20px;
-font-family:'Rajdhani',sans-serif;
-font-size:0.65rem;
-font-weight:700;
-letter-spacing:1.5px;
-background:rgba(0,242,254,0.08);
-border:1px solid rgba(0,242,254,0.2);
-color:rgba(0,242,254,0.7);
-}
-
-/* ===== FOOTER ===== */
-footer{
-text-align:center;
-padding:25px;
-color:rgba(0,242,254,0.4);
-margin-top:40px;
-border-top:1px solid rgba(255,255,255,0.04);
-font-family:'Rajdhani',sans-serif;
-letter-spacing:3px;
-font-size:0.8rem;
-}
-
-@media(max-width:760px){
-.profile{width:100%;}
-.nav-container{right:15px;top:15px;}
+@media(max-width:768px){
+  .container{padding:16px;}
+  .profile{width:100%;}
+  nav{padding:14px 18px;}
+  .hud-tl,.hud-br{display:none;}
+  .page-header{padding:90px 16px 36px;}
+  .jobsheet-section{grid-template-columns:1fr;}
+  .jobsheet-card.active{grid-column:span 1;}
 }
 </style>
 </head>
 <body>
 
-<canvas id="stars"></canvas>
-<div class="spotlight" id="spotlight"></div>
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="curR"></div>
 
-<div class="nav-container">
-<div class="nav-button">MENU</div>
-<div class="dropdown">
-<a href="index.html">HOME</a>
-<a href="aboutus.html">ABOUT US</a>
-<a href="jobsheet.html">JOBSHEET</a>
-</div>
+<div id="loader">
+  <div class="load-ring"></div>
+  <div class="load-txt" id="loadTxt">LOADING JOBSHEETS</div>
+  <div class="load-bar"><div class="load-fill" id="loadFill"></div></div>
 </div>
 
-<header>
-<h1>OUR JOBSHEET</h1>
-<p>CLICK A CATEGORY TO EXPLORE</p>
-</header>
+<canvas id="wormhole"></canvas>
+<div class="grid-bg"></div>
+<div id="scanlines"></div>
+
+<div class="hud-tl">
+  <span class="hud-time" id="clock">00:00:00</span>
+  <div id="hudDate">MON 01 JAN 2026</div>
+  <div style="margin-top:4px;"><span class="hud-dot"></span>SYSTEM ONLINE</div>
+</div>
+<div class="hud-br">
+  <div>MODULES — 5</div>
+  <div>JOBSHEETS — 28</div>
+  <div>MEMBERS — 2</div>
+</div>
+
+<nav>
+  <div class="nav-logo">CYBER<span> / </span>FUSION</div>
+  <div class="nav-menu">
+    <button class="nav-btn">MENU</button>
+    <div class="nav-drop">
+      <a href="index.html">HOME</a>
+      <a href="aboutus.html">ABOUT US</a>
+      <a href="jobsheet.html">JOBSHEET</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-eyebrow reveal">GROUP PROJECT · 2026</div>
+  <h1 class="page-title reveal delay-1">OUR JOBSHEET</h1>
+  <p class="page-sub reveal delay-2">CLICK A CATEGORY TO EXPLORE</p>
+</div>
 
 <main class="container">
 
-<!-- DANISH -->
-<section class="profile">
-  <div class="profile-header">
-    <div class="profile-avatar">DS</div>
-    <div class="profile-info">
-      <h2>DANISH SHAZWAN<br>BIN SUWANDI</h2>
-      <span>STUDENT · 5 MODULES</span>
-    </div>
-  </div>
-  <div class="jobsheet-section">
-
-    <div class="jobsheet-card">
-      <span class="card-icon">🌐</span>
-      <span class="card-label">HTML</span>
-      <span class="card-count">3 JOBSHEETS</span>
-      <div class="card-arrow"></div>
-      <div class="jobsheet-dropdown">
-        <div class="card-desc">
-          <p>Building the basic structure of a web page using HTML elements such as headings, paragraphs, forms, tables and links. HTML is the backbone of every web page.</p>
-          <div class="tag-list">
-            <span class="tag">STRUCTURE</span>
-            <span class="tag">ELEMENTS</span>
-            <span class="tag">FORMS</span>
-          </div>
-        </div>
-        <a href="DanishJS01.html"><span>Jobsheet 1</span></a>
-        <a href="DanishJS02.html"><span>Jobsheet 2</span></a>
-        <a href="DanishJS03.html"><span>Jobsheet 3</span></a>
+  <!-- DANISH -->
+  <section class="profile reveal delay-1">
+    <div class="profile-header">
+      <div class="profile-avatar">DS</div>
+      <div class="profile-info">
+        <h2>DANISH SHAZWAN<br>BIN SUWANDI</h2>
+        <span>STUDENT · 5 MODULES</span>
       </div>
     </div>
+    <div class="jobsheet-section">
 
-    <div class="jobsheet-card">
-      <span class="card-icon">🎨</span>
-      <span class="card-label">CSS</span>
-      <span class="card-count">3 JOBSHEETS</span>
-      <div class="card-arrow"></div>
-      <div class="jobsheet-dropdown">
-        <div class="card-desc">
-          <p>Using CSS to style and control the layout of web pages. Covers colours, fonts, animations, flexbox and responsive design for various screen sizes.</p>
-          <div class="tag-list">
-            <span class="tag">STYLING</span>
-            <span class="tag">ANIMATION</span>
-            <span class="tag">RESPONSIVE</span>
-          </div>
+      <div class="jobsheet-card">
+        <div class="card-top"><div class="card-left"><span class="card-icon">🌐</span><span class="card-label">HTML</span><span class="card-count">3 JOBSHEETS</span></div><div class="card-arrow"></div></div>
+        <div class="jobsheet-dropdown">
+          <div class="card-desc"><p>Building the basic structure of a web page using HTML elements such as headings, paragraphs, forms, tables and links. HTML is the backbone of every web page.</p><div class="tag-list"><span class="tag">STRUCTURE</span><span class="tag">ELEMENTS</span><span class="tag">FORMS</span></div></div>
+          <a href="DanishJS01.html"><span>Jobsheet 1</span><span class="link-arrow">→</span></a>
+          <a href="DanishJS02.html"><span>Jobsheet 2</span><span class="link-arrow">→</span></a>
+          <a href="DanishJS03.html"><span>Jobsheet 3</span><span class="link-arrow">→</span></a>
         </div>
-        <a href="DanishCSS01.html"><span>Jobsheet 4</span></a>
-        <a href="DanishCSS02.html"><span>Jobsheet 5</span></a>
-        <a href="DanishCSS03.html"><span>Jobsheet 6</span></a>
+      </div>
+
+      <div class="jobsheet-card">
+        <div class="card-top"><div class="card-left"><span class="card-icon">🎨</span><span class="card-label">CSS</span><span class="card-count">3 JOBSHEETS</span></div><div class="card-arrow"></div></div>
+        <div class="jobsheet-dropdown">
+          <div class="card-desc"><p>Using CSS to style and control the layout of web pages. Covers colours, fonts, animations, flexbox and responsive design for various screen sizes.</p><div class="tag-list"><span class="tag">STYLING</span><span class="tag">ANIMATION</span><span class="tag">RESPONSIVE</span></div></div>
+          <a href="DanishCSS01.html"><span>Jobsheet 4</span><span class="link-arrow">→</span></a>
+          <a href="DanishCSS02.html"><span>Jobsheet 5</span><span class="link-arrow">→</span></a>
+          <a href="DanishCSS03.html"><span>Jobsheet 6</span><span class="link-arrow">→</span></a>
+        </div>
+      </div>
+
+      <div class="jobsheet-card">
+        <div class="card-top"><div class="card-left"><span class="card-icon">⚡</span><span class="card-label">JAVASCRIPT</span><span class="card-count">3 JOBSHEETS</span></div><div class="card-arrow"></div></div>
+        <div class="jobsheet-dropdown">
+          <div class="card-desc"><p>Adding interactivity to web pages using JavaScript. Covers functions, event listeners, DOM manipulation and programming logic for a dynamic user experience.</p><div class="tag-list"><span class="tag">FUNCTIONS</span><span class="tag">DOM</span><span class="tag">INTERACTIVE</span></div></div>
+          <a href="DanishJSCode01.html"><span>Jobsheet 7</span><span class="link-arrow">→</span></a>
+          <a href="DanishJSCode02.html"><span>Jobsheet 8</span><span class="link-arrow">→</span></a>
+          <a href="DanishJSCode03.html"><span>Jobsheet 9</span><span class="link-arrow">→</span></a>
+        </div>
+      </div>
+
+      <div class="jobsheet-card">
+        <div class="card-top"><div class="card-left"><span class="card-icon">🔗</span><span class="card-label">JQUERY</span><span class="card-count">3 JOBSHEETS</span></div><div class="card-arrow"></div></div>
+        <div class="jobsheet-dropdown">
+          <div class="card-desc"><p>Using jQuery to simplify JavaScript tasks such as DOM traversal, event handling and animations. jQuery makes complex JavaScript operations shorter and easier to write.</p><div class="tag-list"><span class="tag">SELECTORS</span><span class="tag">EVENTS</span><span class="tag">EFFECTS</span></div></div>
+          <a href="DanishJQuery01.html"><span>Jobsheet 10</span><span class="link-arrow">→</span></a>
+          <a href="DanishJQuery02.html"><span>Jobsheet 11</span><span class="link-arrow">→</span></a>
+          <a href="DanishJQuery03.html"><span>Jobsheet 12</span><span class="link-arrow">→</span></a>
+        </div>
+      </div>
+
+      <div class="jobsheet-card">
+        <div class="card-top"><div class="card-left"><span class="card-icon">💾</span><span class="card-label">LOCALSTORAGE</span><span class="card-count">2 JOBSHEETS</span></div><div class="card-arrow"></div></div>
+        <div class="jobsheet-dropdown">
+          <div class="card-desc"><p>Saving and managing user data directly in the browser using LocalStorage. Data persists even after the page is closed, ideal for mobile apps without a server.</p><div class="tag-list"><span class="tag">SAVE DATA</span><span class="tag">BROWSER</span><span class="tag">OFFLINE</span></div></div>
+          <a href="DanishStorage01.html"><span>Jobsheet 13</span><span class="link-arrow">→</span></a>
+          <a href="DanishStorage02.html"><span>Jobsheet 14</span><span class="link-arrow">→</span></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ADILAH -->
+  <section class="profile reveal delay-2">
+    <div class="profile-header">
+      <div class="profile-avatar" style="background:linear-gradient(135deg,#ff00c1,#7928ca);box-shadow:0 0 20px rgba(255,0,193,0.4);">NA</div>
+      <div class="profile-info">
+        <h2 style="color:#ff00c1;text-shadow:0 0 8px rgba(255,0,193,0.4);">NOR ADILAH BINTI<br>SHAMSUDDIN</h2>
+        <span>STUDENT · 5 MODULES</span>
       </div>
     </div>
+    <div class="jobsheet-section">
 
-    <div class="jobsheet-card">
-      <span class="card-icon">⚡</span>
-      <span class="card-label">JAVASCRIPT</span>
-      <span class="card-count">3 JOBSHEETS</span>
-      <div class="card-arrow"></div>
-      <div class="jobsheet-dropdown">
-        <div class="card-desc">
-          <p>Adding interactivity to web pages using JavaScript. Covers functions, event listeners, DOM manipulation and programming logic for a dynamic user experience.</p>
-          <div class="tag-list">
-            <span class="tag">FUNCTIONS</span>
-            <span class="tag">DOM</span>
-            <span class="tag">INTERACTIVE</span>
-          </div>
+      <div class="jobsheet-card">
+        <div class="card-top"><div class="card-left"><span class="card-icon">🌐</span><span class="card-label">HTML</span><span class="card-count">3 JOBSHEETS</span></div><div class="card-arrow"></div></div>
+        <div class="jobsheet-dropdown">
+          <div class="card-desc"><p>Building the basic structure of a web page using HTML elements such as headings, paragraphs, forms, tables and links. HTML is the backbone of every web page.</p><div class="tag-list"><span class="tag">STRUCTURE</span><span class="tag">ELEMENTS</span><span class="tag">FORMS</span></div></div>
+          <a href="AdilahJS01.html"><span>Jobsheet 1</span><span class="link-arrow">→</span></a>
+          <a href="AdilahJS02.html"><span>Jobsheet 2</span><span class="link-arrow">→</span></a>
+          <a href="AdilahJS03.html"><span>Jobsheet 3</span><span class="link-arrow">→</span></a>
         </div>
-        <a href="DanishJSCode01.html"><span>Jobsheet 7</span></a>
-        <a href="DanishJSCode02.html"><span>Jobsheet 8</span></a>
-        <a href="DanishJSCode03.html"><span>Jobsheet 9</span></a>
       </div>
-    </div>
 
-    <div class="jobsheet-card">
-      <span class="card-icon">🔗</span>
-      <span class="card-label">JQUERY</span>
-      <span class="card-count">3 JOBSHEETS</span>
-      <div class="card-arrow"></div>
-      <div class="jobsheet-dropdown">
-        <div class="card-desc">
-          <p>Using jQuery to simplify JavaScript tasks such as DOM traversal, event handling and animations. jQuery makes complex JavaScript operations shorter and easier to write.</p>
-          <div class="tag-list">
-            <span class="tag">SELECTORS</span>
-            <span class="tag">EVENTS</span>
-            <span class="tag">EFFECTS</span>
-          </div>
+      <div class="jobsheet-card">
+        <div class="card-top"><div class="card-left"><span class="card-icon">🎨</span><span class="card-label">CSS</span><span class="card-count">3 JOBSHEETS</span></div><div class="card-arrow"></div></div>
+        <div class="jobsheet-dropdown">
+          <div class="card-desc"><p>Using CSS to style and control the layout of web pages. Covers colours, fonts, animations, flexbox and responsive design for various screen sizes.</p><div class="tag-list"><span class="tag">STYLING</span><span class="tag">ANIMATION</span><span class="tag">RESPONSIVE</span></div></div>
+          <a href="AdilahCSS01.html"><span>Jobsheet 4</span><span class="link-arrow">→</span></a>
+          <a href="AdilahCSS02.html"><span>Jobsheet 5</span><span class="link-arrow">→</span></a>
+          <a href="AdilahCSS03.html"><span>Jobsheet 6</span><span class="link-arrow">→</span></a>
         </div>
-        <a href="DanishJQuery01.html"><span>Jobsheet 10</span></a>
-        <a href="DanishJQuery02.html"><span>Jobsheet 11</span></a>
-        <a href="DanishJQuery03.html"><span>Jobsheet 12</span></a>
       </div>
-    </div>
 
-    <div class="jobsheet-card">
-      <span class="card-icon">💾</span>
-      <span class="card-label">LOCALSTORAGE</span>
-      <span class="card-count">2 JOBSHEETS</span>
-      <div class="card-arrow"></div>
-      <div class="jobsheet-dropdown">
-        <div class="card-desc">
-          <p>Saving and managing user data directly in the browser using LocalStorage. Data persists even after the page is closed, ideal for mobile apps without a server.</p>
-          <div class="tag-list">
-            <span class="tag">SAVE DATA</span>
-            <span class="tag">BROWSER</span>
-            <span class="tag">OFFLINE</span>
-          </div>
+      <div class="jobsheet-card">
+        <div class="card-top"><div class="card-left"><span class="card-icon">⚡</span><span class="card-label">JAVASCRIPT</span><span class="card-count">3 JOBSHEETS</span></div><div class="card-arrow"></div></div>
+        <div class="jobsheet-dropdown">
+          <div class="card-desc"><p>Adding interactivity to web pages using JavaScript. Covers functions, event listeners, DOM manipulation and programming logic for a dynamic user experience.</p><div class="tag-list"><span class="tag">FUNCTIONS</span><span class="tag">DOM</span><span class="tag">INTERACTIVE</span></div></div>
+          <a href="AdilahJSCode01.html"><span>Jobsheet 7</span><span class="link-arrow">→</span></a>
+          <a href="AdilahJSCode02.html"><span>Jobsheet 8</span><span class="link-arrow">→</span></a>
+          <a href="AdilahJSCode03.html"><span>Jobsheet 9</span><span class="link-arrow">→</span></a>
         </div>
-        <a href="DanishStorage01.html"><span>Jobsheet 13</span></a>
-        <a href="DanishStorage02.html"><span>Jobsheet 14</span></a>
       </div>
-    </div>
 
-  </div>
-</section>
-
-<!-- ADILAH -->
-<section class="profile">
-  <div class="profile-header">
-    <div class="profile-avatar">NA</div>
-    <div class="profile-info">
-      <h2>NOR ADILAH BINTI<br>SHAMSUDDIN</h2>
-      <span>STUDENT · 5 MODULES</span>
-    </div>
-  </div>
-  <div class="jobsheet-section">
-
-    <div class="jobsheet-card">
-      <span class="card-icon">🌐</span>
-      <span class="card-label">HTML</span>
-      <span class="card-count">3 JOBSHEETS</span>
-      <div class="card-arrow"></div>
-      <div class="jobsheet-dropdown">
-        <div class="card-desc">
-          <p>Building the basic structure of a web page using HTML elements such as headings, paragraphs, forms, tables and links. HTML is the backbone of every web page.</p>
-          <div class="tag-list">
-            <span class="tag">STRUCTURE</span>
-            <span class="tag">ELEMENTS</span>
-            <span class="tag">FORMS</span>
-          </div>
+      <div class="jobsheet-card">
+        <div class="card-top"><div class="card-left"><span class="card-icon">🔗</span><span class="card-label">JQUERY</span><span class="card-count">3 JOBSHEETS</span></div><div class="card-arrow"></div></div>
+        <div class="jobsheet-dropdown">
+          <div class="card-desc"><p>Using jQuery to simplify JavaScript tasks such as DOM traversal, event handling and animations. jQuery makes complex JavaScript operations shorter and easier to write.</p><div class="tag-list"><span class="tag">SELECTORS</span><span class="tag">EVENTS</span><span class="tag">EFFECTS</span></div></div>
+          <a href="AdilahJQuery01.html"><span>Jobsheet 10</span><span class="link-arrow">→</span></a>
+          <a href="AdilahJQuery02.html"><span>Jobsheet 11</span><span class="link-arrow">→</span></a>
+          <a href="AdilahJQuery03.html"><span>Jobsheet 12</span><span class="link-arrow">→</span></a>
         </div>
-        <a href="AdilahJS01.html"><span>Jobsheet 1</span></a>
-        <a href="AdilahJS02.html"><span>Jobsheet 2</span></a>
-        <a href="AdilahJS03.html"><span>Jobsheet 3</span></a>
       </div>
-    </div>
 
-    <div class="jobsheet-card">
-      <span class="card-icon">🎨</span>
-      <span class="card-label">CSS</span>
-      <span class="card-count">3 JOBSHEETS</span>
-      <div class="card-arrow"></div>
-      <div class="jobsheet-dropdown">
-        <div class="card-desc">
-          <p>Using CSS to style and control the layout of web pages. Covers colours, fonts, animations, flexbox and responsive design for various screen sizes.</p>
-          <div class="tag-list">
-            <span class="tag">STYLING</span>
-            <span class="tag">ANIMATION</span>
-            <span class="tag">RESPONSIVE</span>
-          </div>
+      <div class="jobsheet-card">
+        <div class="card-top"><div class="card-left"><span class="card-icon">💾</span><span class="card-label">LOCALSTORAGE</span><span class="card-count">2 JOBSHEETS</span></div><div class="card-arrow"></div></div>
+        <div class="jobsheet-dropdown">
+          <div class="card-desc"><p>Saving and managing user data directly in the browser using LocalStorage. Data persists even after the page is closed, ideal for mobile apps without a server.</p><div class="tag-list"><span class="tag">SAVE DATA</span><span class="tag">BROWSER</span><span class="tag">OFFLINE</span></div></div>
+          <a href="AdilahStorage01.html"><span>Jobsheet 13</span><span class="link-arrow">→</span></a>
+          <a href="AdilahStorage02.html"><span>Jobsheet 14</span><span class="link-arrow">→</span></a>
         </div>
-        <a href="AdilahCSS01.html"><span>Jobsheet 4</span></a>
-        <a href="AdilahCSS02.html"><span>Jobsheet 5</span></a>
-        <a href="AdilahCSS03.html"><span>Jobsheet 6</span></a>
       </div>
-    </div>
 
-    <div class="jobsheet-card">
-      <span class="card-icon">⚡</span>
-      <span class="card-label">JAVASCRIPT</span>
-      <span class="card-count">3 JOBSHEETS</span>
-      <div class="card-arrow"></div>
-      <div class="jobsheet-dropdown">
-        <div class="card-desc">
-          <p>Adding interactivity to web pages using JavaScript. Covers functions, event listeners, DOM manipulation and programming logic for a dynamic user experience.</p>
-          <div class="tag-list">
-            <span class="tag">FUNCTIONS</span>
-            <span class="tag">DOM</span>
-            <span class="tag">INTERACTIVE</span>
-          </div>
-        </div>
-        <a href="AdilahJSCode01.html"><span>Jobsheet 7</span></a>
-        <a href="AdilahJSCode02.html"><span>Jobsheet 8</span></a>
-        <a href="AdilahJSCode03.html"><span>Jobsheet 9</span></a>
-      </div>
     </div>
-
-    <div class="jobsheet-card">
-      <span class="card-icon">🔗</span>
-      <span class="card-label">JQUERY</span>
-      <span class="card-count">3 JOBSHEETS</span>
-      <div class="card-arrow"></div>
-      <div class="jobsheet-dropdown">
-        <div class="card-desc">
-          <p>Using jQuery to simplify JavaScript tasks such as DOM traversal, event handling and animations. jQuery makes complex JavaScript operations shorter and easier to write.</p>
-          <div class="tag-list">
-            <span class="tag">SELECTORS</span>
-            <span class="tag">EVENTS</span>
-            <span class="tag">EFFECTS</span>
-          </div>
-        </div>
-        <a href="AdilahJQuery01.html"><span>Jobsheet 10</span></a>
-        <a href="AdilahJQuery02.html"><span>Jobsheet 11</span></a>
-        <a href="AdilahJQuery03.html"><span>Jobsheet 12</span></a>
-      </div>
-    </div>
-
-    <div class="jobsheet-card">
-      <span class="card-icon">💾</span>
-      <span class="card-label">LOCALSTORAGE</span>
-      <span class="card-count">2 JOBSHEETS</span>
-      <div class="card-arrow"></div>
-      <div class="jobsheet-dropdown">
-        <div class="card-desc">
-          <p>Saving and managing user data directly in the browser using LocalStorage. Data persists even after the page is closed, ideal for mobile apps without a server.</p>
-          <div class="tag-list">
-            <span class="tag">SAVE DATA</span>
-            <span class="tag">BROWSER</span>
-            <span class="tag">OFFLINE</span>
-          </div>
-        </div>
-        <a href="AdilahStorage01.html"><span>Jobsheet 13</span></a>
-        <a href="AdilahStorage02.html"><span>Jobsheet 14</span></a>
-      </div>
-    </div>
-
-  </div>
-</section>
+  </section>
 
 </main>
 
 <footer>
-© 2026 GROUP PROJECT · CYBER FUSION THEME
+  <div class="foot-l">© 2026 GROUP PROJECT · CYBER FUSION THEME</div>
+  <div class="foot-r">MOBILE APP DEVELOPMENT · DANISH & DIYLA</div>
 </footer>
 
 <script>
-/* STARFIELD */
-const canvas=document.getElementById("stars");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-let stars=[];
-for(let i=0;i<200;i++){
-stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,size:Math.random()*2,speed:0.2+Math.random()*0.4});
-}
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-stars.forEach(s=>{
-const alpha=0.3+s.size*0.3;
-ctx.fillStyle=`rgba(0,242,254,${alpha})`;
-ctx.beginPath();
-ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
-ctx.fill();
-s.y+=s.speed;
-if(s.y>canvas.height)s.y=0;
-});
-requestAnimationFrame(animate);
-}
-animate();
-window.addEventListener('resize',()=>{
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+/* CURSOR */
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function animR(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(animR);})();
+document.querySelectorAll('.jobsheet-card,.nav-btn,.profile').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';curR.style.width='55px';curR.style.height='55px';curR.style.borderColor='rgba(0,242,254,0.6)';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';curR.style.width='36px';curR.style.height='36px';curR.style.borderColor='rgba(0,242,254,0.4)';});
 });
 
-/* SPOTLIGHT */
-const spotlight=document.getElementById("spotlight");
-document.addEventListener("mousemove",e=>{
-spotlight.style.left=e.pageX-150+"px";
-spotlight.style.top=e.pageY-150+"px";
-});
+/* LOADER */
+let lv=0;
+const lf=document.getElementById('loadFill'),lt=document.getElementById('loadTxt');
+const PHASES=['LOADING JOBSHEETS','PARSING MODULES','RENDERING CARDS','SYSTEM READY'];
+const li=setInterval(()=>{
+  lv+=Math.random()*9+3;if(lv>100)lv=100;
+  lf.style.width=lv+'%';
+  lt.textContent=PHASES[Math.min(Math.floor(lv/25),3)];
+  if(lv>=100){clearInterval(li);setTimeout(()=>{document.getElementById('loader').classList.add('gone');initPage();},500);}
+},90);
 
-/* DROPDOWN LOGIC */
+/* CLOCK */
+const D=['SUN','MON','TUE','WED','THU','FRI','SAT'],M=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+function tick(){const n=new Date();document.getElementById('clock').textContent=[n.getHours(),n.getMinutes(),n.getSeconds()].map(x=>String(x).padStart(2,'0')).join(':');document.getElementById('hudDate').textContent=D[n.getDay()]+' '+String(n.getDate()).padStart(2,'0')+' '+M[n.getMonth()]+' '+n.getFullYear();}
+tick();setInterval(tick,1000);
+
+/* WORMHOLE */
+const wCv=document.getElementById('wormhole');
+const wCtx=wCv.getContext('2d');
+wCv.width=innerWidth;wCv.height=innerHeight;
+const wStars=Array.from({length:280},()=>({
+  x:(Math.random()-0.5)*2,y:(Math.random()-0.5)*2,
+  z:Math.random(),sp:0.0004+Math.random()*0.0008,
+  size:Math.random()*1.4,hue:Math.random()*60+180
+}));
+function drawWormhole(){
+  wCtx.fillStyle='rgba(2,2,9,0.15)';wCtx.fillRect(0,0,wCv.width,wCv.height);
+  const cx=wCv.width/2,cy=wCv.height/2;
+  wStars.forEach(s=>{
+    s.z+=s.sp;if(s.z>1){s.z=0.01;s.x=(Math.random()-0.5)*2;s.y=(Math.random()-0.5)*2;}
+    const scale=1/(1-s.z*0.99);
+    const px=cx+s.x*cx*scale,py=cy+s.y*cy*scale;
+    const size=s.size*scale*0.5;const alpha=Math.min(1,s.z*1.5);
+    const tailLen=(s.sp*2500)*scale*35;
+    const angle=Math.atan2(py-cy,px-cx);
+    wCtx.beginPath();wCtx.moveTo(px,py);
+    wCtx.lineTo(px-Math.cos(angle)*tailLen,py-Math.sin(angle)*tailLen);
+    wCtx.strokeStyle=`hsla(${s.hue},100%,70%,${alpha*0.5})`;wCtx.lineWidth=size*0.4;wCtx.stroke();
+    wCtx.beginPath();wCtx.arc(px,py,size*0.4,0,Math.PI*2);
+    wCtx.fillStyle=`hsla(${s.hue},100%,90%,${alpha})`;wCtx.fill();
+  });
+  requestAnimationFrame(drawWormhole);
+}
+drawWormhole();
+
+/* CARD CLICK */
 document.querySelectorAll('.jobsheet-card').forEach(card=>{
-card.addEventListener('click',function(e){
-if(e.target.tagName==='A'||e.target.tagName==='SPAN')return;
-const section=this.closest('.jobsheet-section');
-section.querySelectorAll('.jobsheet-card').forEach(c=>{
-if(c!==this)c.classList.remove('active');
+  card.addEventListener('click',function(e){
+    if(e.target.tagName==='A'||e.target.closest('a'))return;
+    const section=this.closest('.jobsheet-section');
+    section.querySelectorAll('.jobsheet-card').forEach(c=>{if(c!==this)c.classList.remove('active');});
+    this.classList.toggle('active');
+  });
 });
-this.classList.toggle('active');
-});
-});
-</script>
 
+/* REVEAL */
+function initPage(){
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  },{threshold:0.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+  setTimeout(()=>document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible')),200);
+}
+
+window.addEventListener('resize',()=>{wCv.width=innerWidth;wCv.height=innerHeight;});
+</script>
 </body>
 </html>
