@@ -118,8 +118,8 @@ body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(
 .tdone{background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.22);color:var(--g);}
 .tpend{background:rgba(255,90,90,.05);border:1px solid rgba(255,90,90,.16);color:#ff8080;}
 /* JOBSHEET OVERLAY */
-#jo{position:fixed;inset:0;background:rgba(0,0,0,.96);display:none;align-items:center;justify-content:center;z-index:2000000;backdrop-filter:blur(20px);}
-.jc{width:490px;background:linear-gradient(160deg,#080815,#050a18);border:1px solid rgba(0,242,254,.22);padding:36px;border-radius:28px;box-shadow:0 0 70px rgba(0,242,254,.09);max-height:92vh;overflow-y:auto;position:relative;}
+#jo{position:fixed;inset:0;background:rgba(0,0,0,.96);display:none;align-items:center;justify-content:center;z-index:2000000;backdrop-filter:blur(20px);overflow-y:auto;padding:20px 0;}
+.jc{width:490px;max-width:95vw;background:linear-gradient(160deg,#080815,#050a18);border:1px solid rgba(0,242,254,.22);padding:36px;border-radius:28px;box-shadow:0 0 70px rgba(0,242,254,.09);position:relative;margin:auto;}
 .jc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--c),var(--b),transparent);border-radius:28px 28px 0 0;}
 .jh{text-align:center;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(0,242,254,.08);}
 .jt{font-family:'Orbitron';color:var(--c);letter-spacing:5px;font-size:1.1rem;margin-bottom:3px;}
