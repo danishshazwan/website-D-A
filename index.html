@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Group Diyla & Danish</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Orbitron',sans-serif;
+background:#050510;
+color:white;
+height:100vh;
+overflow:hidden;
+position:relative;
+}
+
+/* ===== CIRCUIT GRID (match jobsheet) ===== */
+body::before{
+content:"";
+position:fixed; inset:0;
+background-image:
+linear-gradient(#00f2fe 1px, transparent 1px),
+linear-gradient(90deg, #4facfe 1px, transparent 1px);
+background-size:60px 60px;
+opacity:0.06;
+z-index:0;
+animation:circuitFlow 14s linear infinite;
+}
+@keyframes circuitFlow{
+from{transform:translateY(0);}
+to{transform:translateY(-60px);}
+}
+
+canvas{
+position:absolute;
+top:0; left:0;
+z-index:1;
+}
+
+.spotlight{
+position:absolute;
+width:350px;
+height:350px;
+background:radial-gradient(circle,rgba(0,242,254,0.12) 0%,transparent 70%);
+pointer-events:none;
+mix-blend-mode:screen;
+z-index:5;
+}
+
+/* ===== MENU ===== */
+.nav-container{
+position:absolute;
+top:25px;
+right:40px;
+z-index:20;
+}
+
+.nav-button{
+background:linear-gradient(135deg,#00f2fe,#4facfe);
+border:none;
+color:#000;
+padding:12px 30px;
+border-radius:30px;
+font-family:'Orbitron',sans-serif;
+font-weight:700;
+font-size:0.75rem;
+letter-spacing:3px;
+cursor:pointer;
+transition:0.4s;
+box-shadow:0 0 15px #00f2fe,0 0 30px #4facfe;
+}
+
+.nav-button:hover{
+background:#000;
+color:#fff;
+border:2px solid #00f2fe;
+}
+
+.dropdown{
+position:absolute;
+right:0;
+top:110%;
+background:rgba(0,0,0,0.92);
+border:1px solid #00f2fe;
+border-radius:10px;
+opacity:0;
+transform:translateY(-10px);
+transition:0.3s;
+visibility:hidden;
+width:160px;
+text-align:center;
+backdrop-filter:blur(5px);
+}
+
+.nav-container:hover .dropdown{
+opacity:1;
+transform:translateY(0);
+visibility:visible;
+}
+
+.dropdown a{
+display:block;
+padding:12px 0;
+color:white;
+text-decoration:none;
+font-family:'Rajdhani',sans-serif;
+font-weight:600;
+letter-spacing:2px;
+font-size:0.85rem;
+transition:0.3s;
+}
+
+.dropdown a:hover{
+background:#00f2fe;
+color:black;
+}
+
+/* ===== MAIN CONTENT ===== */
+.wrapper{
+position:absolute;
+z-index:10;
+text-align:center;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:100%;
+padding:20px;
+}
+
+/* ===== TITLE ===== */
+.title-wrap{
+margin-bottom:10px;
+}
+
+.title-sub{
+font-family:'Rajdhani',sans-serif;
+letter-spacing:8px;
+font-size:0.8rem;
+color:rgba(0,242,254,0.5);
+margin-bottom:14px;
+}
+
+h1{
+font-size:clamp(1.8rem,4vw,3.2rem);
+font-weight:900;
+background:linear-gradient(90deg,#00f2fe,#4facfe,#00ff88,#00f2fe);
+background-size:200% auto;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+background-clip:text;
+animation:shimmer 4s linear infinite, glitch 5s infinite;
+letter-spacing:4px;
+}
+
+@keyframes shimmer{
+to{background-position:200% center;}
+}
+
+@keyframes glitch{
+0%,95%,100%{clip-path:none;transform:none;}
+96%{clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);transform:translate(-3px,0);}
+97%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);transform:translate(3px,0);}
+98%{clip-path:none;transform:none;}
+}
+
+/* ===== CARD ===== */
+.card{
+width:min(680px,90vw);
+margin:35px auto 0;
+padding:40px 45px;
+background:linear-gradient(160deg,rgba(0,242,254,0.04),rgba(79,172,254,0.02));
+backdrop-filter:blur(12px);
+border-radius:20px;
+border:1px solid rgba(0,242,254,0.15);
+box-shadow:0 0 50px rgba(0,242,254,0.08), inset 0 0 60px rgba(0,0,0,0.4);
+position:relative;
+overflow:hidden;
+transition:0.4s;
+}
+
+.card::before{
+content:'';
+position:absolute;
+top:0; left:0; right:0;
+height:2px;
+background:linear-gradient(90deg,transparent,#00f2fe,#4facfe,transparent);
+}
+
+.card::after{
+content:'';
+position:absolute;
+bottom:0; left:0; right:0;
+height:1px;
+background:linear-gradient(90deg,transparent,rgba(0,242,254,0.3),transparent);
+}
+
+.card:hover{
+box-shadow:0 0 80px rgba(0,242,254,0.18), inset 0 0 60px rgba(0,0,0,0.4);
+border-color:rgba(0,242,254,0.35);
+}
+
+.card h2{
+font-size:1rem;
+letter-spacing:3px;
+color:white;
+margin-bottom:8px;
+}
+
+.card .subtitle{
+font-family:'Rajdhani',sans-serif;
+color:rgba(0,242,254,0.5);
+letter-spacing:3px;
+font-size:0.8rem;
+margin-bottom:32px;
+}
+
+/* Stats row */
+.stats{
+display:flex;
+justify-content:center;
+gap:30px;
+margin-bottom:32px;
+flex-wrap:wrap;
+}
+
+.stat-item{
+text-align:center;
+padding:14px 22px;
+background:rgba(0,242,254,0.05);
+border:1px solid rgba(0,242,254,0.12);
+border-radius:12px;
+transition:0.3s;
+}
+
+.stat-item:hover{
+border-color:rgba(0,242,254,0.4);
+background:rgba(0,242,254,0.08);
+box-shadow:0 0 15px rgba(0,242,254,0.15);
+}
+
+.stat-num{
+display:block;
+font-size:1.6rem;
+font-weight:900;
+color:#00f2fe;
+text-shadow:0 0 10px #00f2fe;
+line-height:1;
+margin-bottom:5px;
+}
+
+.stat-label{
+font-family:'Rajdhani',sans-serif;
+font-size:0.7rem;
+letter-spacing:2px;
+color:rgba(255,255,255,0.4);
+}
+
+/* Tags */
+.tags{
+display:flex;
+justify-content:center;
+gap:10px;
+margin-bottom:32px;
+flex-wrap:wrap;
+}
+
+.tag{
+padding:6px 14px;
+border-radius:20px;
+font-family:'Rajdhani',sans-serif;
+font-size:0.72rem;
+letter-spacing:2px;
+font-weight:700;
+}
+
+.tag-html{ background:rgba(255,100,50,0.15); border:1px solid rgba(255,100,50,0.3); color:#ff9070; }
+.tag-css{ background:rgba(79,172,254,0.15); border:1px solid rgba(79,172,254,0.3); color:#4facfe; }
+.tag-js{ background:rgba(255,220,0,0.12); border:1px solid rgba(255,220,0,0.3); color:#ffd700; }
+.tag-ls{ background:rgba(0,255,136,0.12); border:1px solid rgba(0,255,136,0.3); color:#00ff88; }
+.tag-jq{ background:rgba(180,100,255,0.12); border:1px solid rgba(180,100,255,0.3); color:#c87dff; }
+
+/* CTA Button */
+.button{
+display:inline-flex;
+align-items:center;
+gap:10px;
+padding:14px 40px;
+background:linear-gradient(135deg,rgba(0,242,254,0.1),rgba(79,172,254,0.05));
+color:#00f2fe;
+text-decoration:none;
+border:1px solid rgba(0,242,254,0.4);
+border-radius:50px;
+font-family:'Orbitron',sans-serif;
+font-size:0.72rem;
+font-weight:700;
+letter-spacing:3px;
+transition:0.35s;
+position:relative;
+overflow:hidden;
+}
+
+.button::before{
+content:'';
+position:absolute;
+inset:0;
+background:linear-gradient(135deg,#00f2fe,#4facfe);
+opacity:0;
+transition:0.35s;
+}
+
+.button span{
+position:relative;
+z-index:1;
+}
+
+.button .arrow{
+position:relative;
+z-index:1;
+transition:0.3s;
+}
+
+.button:hover::before{opacity:1;}
+.button:hover{color:#000; box-shadow:0 0 30px rgba(0,242,254,0.5); border-color:transparent;}
+.button:hover .arrow{transform:translateX(5px);}
+
+/* ===== FOOTER ===== */
+footer{
+position:absolute;
+bottom:20px;
+width:100%;
+text-align:center;
+color:rgba(0,242,254,0.35);
+font-family:'Rajdhani',sans-serif;
+font-size:0.78rem;
+letter-spacing:3px;
+z-index:10;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+<div class="spotlight" id="spotlight"></div>
+
+<div class="nav-container">
+<div class="nav-button">MENU</div>
+<div class="dropdown">
+<a href="index.html">HOME</a>
+<a href="aboutus.html">ABOUT US</a>
+<a href="jobsheet.html">JOBSHEET</a>
+</div>
+</div>
+
+<div class="wrapper" id="wrapper">
+
+  <div class="title-wrap">
+    <p class="title-sub">GROUP PROJECT · 2026</p>
+    <h1>WELCOME TO OUR MAIN SPACE</h1>
+  </div>
+
+  <div class="card">
+    <h2>MOBILE APP DEVELOPMENT</h2>
+    <p class="subtitle">DIYLA · DANISH</p>
+
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-num">14</span>
+        <span class="stat-label">JOBSHEETS</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">5</span>
+        <span class="stat-label">MODULES</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">2</span>
+        <span class="stat-label">MEMBERS</span>
+      </div>
+    </div>
+
+    <div class="tags">
+      <span class="tag tag-html">HTML</span>
+      <span class="tag tag-css">CSS</span>
+      <span class="tag tag-js">JAVASCRIPT</span>
+      <span class="tag tag-jq">JQUERY</span>
+      <span class="tag tag-ls">LOCALSTORAGE</span>
+    </div>
+
+    <a href="jobsheet.html" class="button">
+      <span>ACCESS JOBSHEETS</span>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+</div>
+
+<footer>© 2026 GROUP PROJECT</footer>
+
+<script>
+/* STARFIELD */
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let stars=[];
+for(let i=0;i<200;i++){
+  stars.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    size:Math.random()*2,
+    speed:0.2+Math.random()*0.4
+  });
+}
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s=>{
+    const alpha=0.3+s.size*0.3;
+    ctx.fillStyle=`rgba(0,242,254,${alpha})`;
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+    ctx.fill();
+    s.y+=s.speed;
+    if(s.y>canvas.height)s.y=0;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+window.addEventListener('resize',()=>{
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+});
+
+/* SPOTLIGHT */
+const spotlight=document.getElementById("spotlight");
+document.addEventListener("mousemove",e=>{
+  spotlight.style.left=e.pageX-175+"px";
+  spotlight.style.top=e.pageY-175+"px";
+});
+
+/* PARALLAX */
+const wrapper=document.getElementById("wrapper");
+document.addEventListener("mousemove",e=>{
+  let x=(window.innerWidth/2-e.pageX)/60;
+  let y=(window.innerHeight/2-e.pageY)/60;
+  wrapper.style.transform=`translate(-50%,-50%) rotateX(${y}deg) rotateY(${x}deg)`;
+});
+</script>
+
+</body>
+</html>

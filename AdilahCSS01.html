@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Flower Store</title>
+
+<style>
+/* --- RESET SECTION --- */
+html, body, header, footer, hgroup, nav, article, section, figure, figcaption,
+h1, h2, h3, ul, li, div, p, img {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+/* --- BODY --- */
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #333333;
+    background-image: url('stucco.png');
+    line-height: 1.428571429;
+}
+
+/* --- HEADER --- */
+header {
+    width: 900px;
+    margin: 0 auto;
+}
+
+#topHeaderRow {
+    background-color: #222222;
+    font-size: 0.9em;
+    height: 3em;
+    line-height: 3em;
+    padding-right: 1em;
+    text-align: right;
+}
+
+#topHeaderRow a {
+    color: #999999;
+    margin-right: 2em;
+    text-decoration: none;
+}
+
+/* --- HEADINGS --- */
+h1 { font-size: 4em; font-weight: bold; }
+h2 { font-size: 1.75em; }
+h3 {
+    font-size: 1.25em;
+    border-bottom: 1pt solid #e7e7e7;
+    margin-top: 1em;
+    margin-bottom: 0.75em;
+}
+
+/* --- NAVIGATION --- */
+#mainNavigationRow {
+    background-color: #f8f8f8;
+    height: 3em;
+    line-height: 3em;
+    border: 1pt solid #e7e7e7;
+}
+
+#mainNavigationRow ul { list-style-type: none; }
+#mainNavigationRow li { display: inline; }
+#mainNavigationRow a {
+    color: #777777;
+    font-weight: bold;
+    margin-left: 1em;
+    margin-right: 2em;
+    text-decoration: none;
+}
+
+/* --- MAIN --- */
+main {
+    width: 880px;
+    margin: 1em auto;
+    background-color: #ffffff;
+    padding: 10px;
+    border: 1pt solid #e7e7e7;
+}
+
+/* --- PRODUCT MAIN (FLEXBOX) --- */
+.product-main {
+    display: flex; 
+    align-items: flex-start; 
+    gap: 20px;
+    margin-top: 1em;
+}
+
+.info { flex: 1; }
+
+.price {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: red;
+    margin-top: 1em;
+}
+
+.buttons {
+    border: 1pt solid #e7e7e7;
+    margin-top: 1em;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.buttons button { flex: 1; height: 3em; cursor: pointer; }
+.buttons button a { text-decoration: none; font-size: 1.2em; font-weight: bold; color: inherit; }
+
+/* --- TABLE --- */
+th { font-weight: bold; text-align: left; padding-right: 10px; }
+
+/* --- SIMILAR SECTION --- */
+.similar {
+    clear: both;
+    margin-top: 2em;
+    width: 100%;
+}
+
+/* --- KOTAK PRODUK (DIKEMASKINI) --- */
+.box {
+    width: 210px;            /* Lebar diselaraskan untuk 4 kotak */
+    padding: 10px;           /* Ruang dalam kotak */
+    border: 1px solid #e7e7e7; /* Garisan kotak yang jelas */
+    margin-right: 5px;       
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    background-color: #ffffff; 
+    box-sizing: border-box;  /* Supaya padding tidak ganggu saiz asal */
+}
+
+.box img {
+    display: block;
+    margin: 0 auto 10px auto;
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border: 1px solid #f0f0f0; /* Garisan halus pada gambar */
+}
+
+.box p a {
+    color: blue;
+    text-decoration: underline;
+    font-size: 0.9em;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.box-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+.box-buttons button {
+    padding: 2px 6px;
+    font-size: 0.8em;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* --- FOOTER --- */
+footer {
+    clear: both;
+    width: 900px;
+    height: 3em;
+    margin: 2em auto 1em auto;
+    border: 1pt solid #e7e7e7;
+    background-color: #222222;
+    color: #999999;
+    text-align: center;
+    line-height: 3em;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div id="topHeaderRow">
+        <a href="AdilahCSS02.html">My Account</a>
+        <a href="#">Wish List</a>
+        <a href="#">Shopping Cart</a>
+        <a href="#">Checkout</a>
+    </div>
+    <h1>Flower Store</h1>
+    <div id="mainNavigationRow">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Bouquets</a></li>
+            <li><a href="#">Occasions</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <h2>Red Rose Bouquet</h2>
+    <p>By <a href="#" style="color:blue; text-decoration:underline;">Flower Artist</a></p>
+    <br>
+
+    <div class="product-main">
+        <img src="rose.jpg" alt="Red Rose Bouquet" width="300">
+        <div class="info">
+            <p>A beautiful arrangement of fresh red roses perfect for romantic occasions.</p>
+            <p class="price">RM 200</p>
+            <div class="buttons">
+                <button><a href="#">Add to Wish List</a></button>
+                <button><a href="#">Add to Shopping Cart</a></button>
+            </div>
+            <h3>Product Details</h3>
+            <table>
+                <tr><th>Category:</th><td>Bouquet</td></tr>
+                <tr><th>Flowers:</th><td>Red Roses</td></tr>
+                <tr><th>Size:</th><td>Medium</td></tr>
+                <tr><th>Occasion:</th><td>Romantic, Anniversary</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="similar">
+        <h3>Similar Products</h3>
+
+        <div class="box">
+            <img src="tulip.jpg" alt="Tulip">
+            <p><a href="#">Tulip Bouquet</a></p>
+            <div class="box-buttons">
+                <button>View</button><button>Wish</button><button>Cart</button>
+            </div>
+        </div>
+
+        <div class="box">
+            <img src="lily.jpg" alt="Lily">
+            <p><a href="#">White Lily</a></p>
+            <div class="box-buttons">
+                <button>View</button><button>Wish</button><button>Cart</button>
+            </div>
+        </div>
+
+        <div class="box">
+            <img src="sunflower.jpg" alt="Sunflower">
+            <p><a href="#">Sunflower Set</a></p>
+            <div class="box-buttons">
+                <button>View</button><button>Wish</button><button>Cart</button>
+            </div>
+        </div>
+
+        <div class="box">
+            <img src="dafodil.jpg" alt="dafodil">
+            <p><a href="#">Dafodil set</a></p>
+            <div class="box-buttons">
+                <button>View</button><button>Wish</button><button>Cart</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+   All images are copyright to their owners © 2026 Copyright Flower Store Diylas
+</footer>
+
+</body>
+</html>

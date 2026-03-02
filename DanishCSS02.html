@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Malaysia Auto Store - Customer Registration</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    background: #d4d0c8;
+    color: #000;
+}
+
+/* Top Bar */
+.top-bar {
+    background: #1a1a1a;
+    color: #ccc;
+    padding: 4px 10px;
+    text-align: right;
+    font-size: 12px;
+}
+.top-bar a {
+    color: #ccc;
+    text-decoration: none;
+    margin-left: 15px;
+}
+.top-bar a:hover { color: white; }
+
+/* Header */
+header {
+    background: #c8c8c8;
+    padding: 15px 20px;
+    border-bottom: 1px solid #aaa;
+}
+header h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: #222;
+}
+
+/* Nav */
+nav {
+    background: #d4d0c8;
+    padding: 6px 20px;
+    border-bottom: 2px solid #aaa;
+    border-top: 1px solid #fff;
+}
+nav a {
+    margin-right: 25px;
+    text-decoration: none;
+    color: #000;
+    font-size: 13px;
+    font-weight: bold;
+}
+nav a:hover { text-decoration: underline; }
+
+/* Container */
+.container {
+    background: #f0ece0;
+    margin: 10px 15px;
+    padding: 15px 20px;
+    border: 1px solid #aaa;
+}
+
+h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.section {
+    margin-top: 15px;
+    border-top: 1px solid #bbb;
+    padding-top: 10px;
+}
+
+.section h3 {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* Form layout */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 6px;
+    align-items: flex-end;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 12px;
+    margin-bottom: 2px;
+}
+
+input[type=text],
+input[type=email],
+input[type=password],
+input[type=date],
+select {
+    border: 1px solid #888;
+    padding: 3px 5px;
+    font-size: 12px;
+    background: white;
+    height: 22px;
+}
+
+input[type=text]::placeholder,
+input[type=email]::placeholder,
+input[type=password]::placeholder {
+    color: #888;
+    font-size: 11px;
+}
+
+.input-sm { width: 100px; }
+.input-md { width: 150px; }
+.input-lg { width: 250px; }
+.input-xl { width: 360px; }
+
+input[type=color] {
+    width: 50px;
+    height: 24px;
+    padding: 1px;
+    border: 1px solid #888;
+    cursor: pointer;
+}
+
+input[type=range] {
+    width: 200px;
+    vertical-align: middle;
+}
+
+/* Radio group */
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    margin-bottom: 3px;
+    cursor: pointer;
+}
+
+/* Checkbox */
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+.checkbox-row a {
+    color: #0000cc;
+}
+
+/* Submit button */
+.submit-btn {
+    background: #d4d0c8;
+    border: 2px outset #ffffff;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 5px;
+    color: #000;
+}
+.submit-btn:active {
+    border-style: inset;
+}
+.submit-btn:hover {
+    background: #bbb;
+}
+
+.checkmark {
+    color: green;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: #e8f0e8;
+    color: #2a7a2a;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #4a90d9;
+    margin-right: 4px;
+}
+
+/* Range labels */
+.range-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+}
+
+/* Footer */
+footer {
+    background: #c8c8c8;
+    text-align: center;
+    padding: 8px;
+    font-size: 11px;
+    color: #444;
+    border-top: 1px solid #aaa;
+    margin-top: 10px;
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+    <a href="#">My Account</a>
+    <a href="#">Wish List</a>
+    <a href="#">Shopping Cart</a>
+    <a href="#">Checkout</a>
+</div>
+
+<header>
+    <h1>Malaysia Auto Store</h1>
+</header>
+
+<nav>
+    <a href="#">Home</a>
+    <a href="#">Cars</a>
+    <a href="#">Promotions</a>
+    <a href="#">Contact</a>
+</nav>
+
+<div class="container">
+
+    <h2>Customer Registration - Proton X50 2024 Booking</h2>
+
+    <form>
+
+        <!-- 1. User Info -->
+        <div class="section">
+            <h3>1. User Info</h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" class="input-md">
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" class="input-md">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="input-xl" placeholder="example@email.com">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="input-md" placeholder="at least 8 characters">
+                </div>
+                <div class="form-group">
+                    <label>Repeat Password</label>
+                    <input type="password" class="input-md" placeholder="at least 8 characters">
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Location -->
+        <div class="section">
+            <h3>2. Location</h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" class="input-xl">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" class="input-md">
+                </div>
+                <div class="form-group">
+                    <label>State</label>
+                    <input type="text" class="input-sm">
+                </div>
+                <div class="form-group">
+                    <label>Zip</label>
+                    <input type="text" class="input-sm">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" class="input-md" placeholder="01X-XXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label>Country</label>
+                    <select class="input-md">
+                        <option>Malaysia</option>
+                        <option>Singapore</option>
+                        <option>Thailand</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Region</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="region" value="north"> Northern Malaysia</label>
+                        <label><input type="radio" name="region" value="central"> Central Malaysia</label>
+                        <label><input type="radio" name="region" value="south"> Southern Malaysia</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Personal Details -->
+        <div class="section">
+            <h3>3. Personal Details</h3>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Birth Date</label>
+                    <input type="date" class="input-md">
+                </div>
+                <div class="form-group">
+                    <label>Preferred Car Color</label>
+                    <input type="color" value="#000000">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Interest Level (Proton X50)</label>
+                    <div class="range-wrap">
+                        <span>Minimal</span>
+                        <input type="range" min="0" max="10" value="5">
+                        <span>Love it!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Confirmation -->
+        <div class="section">
+            <h3>4. Confirmation</h3>
+
+            <div class="checkbox-row">
+                <input type="checkbox" id="terms" style="width:16px; height:16px; cursor:pointer;">
+                <label for="terms" style="font-size:12px;">I agree to the <a href="#" style="color:#0000cc;">Terms &amp; Conditions</a></label>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <span class="btn-icon">✔</span> Sign me up!
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+<footer>
+    © 2026 Malaysia Auto Store | Proton X50 Booking System
+</footer>
+
+</body>
+</html>

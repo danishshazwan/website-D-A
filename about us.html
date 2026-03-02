@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us </title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 20px; background: #000;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #bg-video {
+            position: fixed; top: 50%; left: 50%;
+            width: 95vw; height: 95vh; z-index: -1;
+            transform: translate(-50%, -50%);
+            object-fit: cover; border-radius: 40px;
+            filter: brightness(100%);
+        }
+
+        /* NAV BUTTON */
+        .nav-container {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+        }
+
+        .nav-button {
+            background: rgba(0, 242, 254, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid #00f2fe;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+        }
+
+        .nav-button:hover {
+            background: #00f2fe;
+            color: #000;
+            box-shadow: 0 0 20px #00f2fe;
+        }
+
+        .dropdown {
+            position: absolute; top: 110%; right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00f2fe;
+            border-radius: 10px;
+            opacity: 0; visibility: hidden;
+            transform: translateY(-10px);
+            transition: 0.3s;
+        }
+
+        .nav-container:hover .dropdown {
+            opacity: 1; visibility: visible; transform: translateY(0);
+        }
+
+        .dropdown a {
+            display: block; color: #fff; padding: 12px 20px;
+            text-decoration: none; font-size: 0.8rem;
+            font-family: 'Orbitron', sans-serif;
+            transition: 0.3s;
+        }
+
+        .dropdown a:hover { background: #00f2fe; color: #000; }
+
+        .title { margin-bottom: 50px; text-align: center; z-index: 1; }
+        .title h1 {
+            font-family: 'Syncopate', sans-serif; /* Font baru */
+            font-size: 3.5rem; color: #fff;
+            text-transform: uppercase; letter-spacing: 10px;
+            text-shadow: 0 0 20px #00f2fe;
+        }
+
+        .container { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; z-index: 1; }
+        .card-wrapper { display: flex; flex-direction: column; align-items: center; gap: 25px; }
+
+        /* --- FRAME KAD --- */
+        .card { 
+            width: 300px; height: 400px; 
+            perspective: 1000px; 
+            position: relative; 
+            padding: 3px;
+            border-radius: 25px;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: conic-gradient(transparent, #00f2fe, #4facfe, transparent 40%);
+            animation: rotate-light 4s linear infinite;
+        }
+
+        @keyframes rotate-light { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .card-inner {
+            position: relative; width: 100%; height: 100%;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            border-radius: 22px;
+            background: #000;
+            z-index: 2;
+        }
+
+        .card:hover .card-inner { transform: rotateY(180deg); }
+
+        .card-front, .card-back {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden; border-radius: 22px;
+        }
+
+        .card-front img {
+            width: 100%; height: 100%;
+            object-fit: cover; border-radius: 22px;
+        }
+
+        /* --- BACK: INFO --- */
+        .card-back {
+            background: linear-gradient(135deg, #001a2c 0%, #004e92 100%);
+            color: #fff; transform: rotateY(180deg);
+            padding: 25px; text-align: center;
+            display: flex; flex-direction: column; justify-content: center;
+            border: 1px solid #00f2fe;
+        }
+
+        .back-content p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* BUBBLE INFO */
+        .bubble-container {
+            position: absolute; top: 15px; left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            width: 90%;
+        }
+
+        .bubble {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 242, 254, 0.5);
+            border-radius: 15px;
+            padding: 8px;
+            font-size: 0.7rem;
+            font-family: 'Orbitron', sans-serif;
+            color: #00f2fe;
+        }
+
+        /* SOCIAL LINKS */
+        .social-links { display: flex; gap: 15px; justify-content: center; }
+
+        .social-link {
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid #00f2fe;
+            transition: 0.3s;
+        }
+
+        .social-link:hover {
+            background: #00f2fe;
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px #00f2fe;
+        }
+
+        .social-link svg { width: 22px; height: 22px; fill: #fff; transition: 0.3s; }
+        .social-link:hover svg { fill: #000; }
+
+        /* NAME TAG */
+        .card-name {
+            font-family: 'Syncopate', sans-serif; 
+            color: #fff; font-size: 0.7rem; font-weight: 700;
+            padding: 15px 30px; letter-spacing: 2px;
+            border: 1px solid #00f2fe; border-radius: 50px;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .title h1 { font-size: 1.8rem; letter-spacing: 5px; }
+            .card { width: 280px; height: 380px; }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="motion.mp4" type="video/mp4">
+    </video>
+
+    <div class="nav-container">
+        <div class="nav-button">MENU</div>
+        <div class="dropdown">
+            <a href="index.html">HOME</a>
+             <a href="jobsheet.html">JOBSHEET</a>
+        </div>
+    </div>
+
+    <div class="title">
+        <h1>ABOUT US</h1>
+    </div>
+
+    <div class="container">
+        <div class="card-wrapper">
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="danish.jpeg" alt="Danish">
+                    </div>
+                    <div class="card-back">
+                        <div class="bubble-container">
+                            <div class="bubble">Danish Shazwan Bin Suwandi</div>
+                        </div>
+                        <div class="back-content">
+                            <p>I focus on clean web development and interactive design. My goal is to create applications that are both beautiful and functional for users.</p>
+                            <div class="social-links">
+                                <a href="https://www.instagram.com/nishwrld._/" class="social-link" title="Instagram">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                </a>
+                                <a href="https://www.tiktok.com/@nvrfeelz_?_r=1&_t=ZS-93sIU9Go6k9" class="social-link" title="TikTok">
+                                    <svg viewBox="0 0 448 512"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14Z"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-name">DANISH SHAZWAN SUWANDI</div>
+        </div>
+
+        <div class="card-wrapper">
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <img src="dila.jpeg" alt="Adilah">
+                    </div>
+                    <div class="card-back">
+                        <div class="bubble-container">
+                            <div class="bubble">Nor Adilah Binti Shamsuddin</div>
+                        </div>
+                        <div class="back-content">
+                            <p>I love collaborating on projects that challenge my creativity in coding and design. I strive to deliver innovative results through teamwork.</p>
+                            <div class="social-links">
+                                <a href="https://www.instagram.com/nradilah_02?igsh=a3ltOHAyaDlvYWpv" class="social-link" title="Instagram">
+                                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                </a>
+                                <a href="https://www.tiktok.com/@4chikdiylas_02?_r=1&_t=ZS-93shzTgmdTp" class="social-link" title="TikTok">
+                                    <svg viewBox="0 0 448 512"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14Z"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-name">NOR ADILAH SHAMSUDDIN</div>
+        </div>
+    </div>
+</body>
+</html>

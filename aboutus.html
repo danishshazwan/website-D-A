@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+body{
+  background:#050510;
+  font-family:'Rajdhani',sans-serif;
+  overflow-x:hidden;
+  color:white;
+}
+
+/* CIRCUIT GRID */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background-image:
+    linear-gradient(#00f2fe 1px, transparent 1px),
+    linear-gradient(90deg, #4facfe 1px, transparent 1px);
+  background-size:60px 60px;
+  opacity:0.06;
+  z-index:0;
+  animation:circuitFlow 14s linear infinite;
+  pointer-events:none;
+}
+@keyframes circuitFlow{
+  from{transform:translateY(0);}
+  to{transform:translateY(-60px);}
+}
+
+/* VIDEO BG */
+#bg-video{
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:100vw; height:100vh;
+  object-fit:cover;
+  z-index:-2;
+  filter:brightness(25%) saturate(1.2);
+}
+
+canvas{
+  position:fixed;
+  top:0; left:0;
+  z-index:1;
+  pointer-events:none;
+}
+
+/* SPOTLIGHT */
+.spotlight{
+  position:fixed;
+  width:350px; height:350px;
+  background:radial-gradient(circle,rgba(0,242,254,0.12) 0%,transparent 70%);
+  pointer-events:none;
+  mix-blend-mode:screen;
+  z-index:2;
+}
+
+/* NAV */
+.nav-container{
+  position:fixed;
+  top:25px; right:40px;
+  z-index:999;
+}
+
+.nav-button{
+  background:linear-gradient(135deg,#00f2fe,#4facfe);
+  border:none;
+  color:#000;
+  padding:12px 30px;
+  border-radius:30px;
+  font-family:'Orbitron',sans-serif;
+  font-weight:700;
+  font-size:0.75rem;
+  letter-spacing:3px;
+  cursor:pointer;
+  transition:0.4s;
+  box-shadow:0 0 15px #00f2fe,0 0 30px #4facfe;
+}
+
+.nav-button:hover{
+  background:#000;
+  color:#fff;
+  border:2px solid #00f2fe;
+}
+
+.dropdown{
+  position:absolute;
+  top:110%; right:0;
+  background:rgba(0,0,0,0.92);
+  border:1px solid #00f2fe;
+  border-radius:10px;
+  opacity:0; visibility:hidden;
+  transform:translateY(-10px);
+  transition:0.3s;
+  width:160px;
+  text-align:center;
+  backdrop-filter:blur(5px);
+}
+
+.nav-container:hover .dropdown{
+  opacity:1; visibility:visible;
+  transform:translateY(0);
+}
+
+.dropdown a{
+  display:block;
+  padding:12px 0;
+  color:white;
+  text-decoration:none;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:600;
+  letter-spacing:2px;
+  font-size:0.85rem;
+  transition:0.3s;
+}
+
+.dropdown a:hover{ background:#00f2fe; color:#000; }
+
+/* TITLE */
+.title{
+  text-align:center;
+  padding:110px 20px 0;
+  position:relative;
+  z-index:10;
+}
+
+.title-sub{
+  font-family:'Rajdhani',sans-serif;
+  letter-spacing:8px;
+  font-size:0.8rem;
+  color:rgba(0,242,254,0.5);
+  margin-bottom:14px;
+}
+
+.title h1{
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:900;
+  letter-spacing:8px;
+  background:linear-gradient(90deg,#00f2fe,#4facfe,#00ff88,#00f2fe);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:shimmer 4s linear infinite;
+}
+
+@keyframes shimmer{ to{background-position:200% center;} }
+
+/* CONTAINER */
+.container{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:50px;
+  margin:60px 20px 60px;
+  position:relative;
+  z-index:10;
+}
+
+/* CARD WRAPPER */
+.card-wrapper{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:16px;
+  opacity:0;
+  transform:translateY(50px);
+  transition:0.8s cubic-bezier(0.34,1.2,0.64,1);
+}
+
+.card-wrapper.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* FLIP CARD */
+.card{
+  width:300px;
+  height:400px;
+  perspective:1200px;
+}
+
+.card-inner{
+  position:relative;
+  width:100%; height:100%;
+  transform-style:preserve-3d;
+  transition:0.85s cubic-bezier(0.175,0.885,0.32,1.275);
+  border-radius:20px;
+}
+
+.card:hover .card-inner{
+  transform:rotateY(180deg);
+}
+
+.card-front, .card-back{
+  position:absolute;
+  width:100%; height:100%;
+  border-radius:20px;
+  backface-visibility:hidden;
+  overflow:hidden;
+}
+
+/* FRONT */
+.card-front{
+  border:1px solid rgba(0,242,254,0.2);
+  box-shadow:0 0 30px rgba(0,242,254,0.1);
+}
+
+.card-front img{
+  width:100%; height:100%;
+  object-fit:cover;
+  filter:saturate(0.9) brightness(0.9);
+  transition:0.4s;
+}
+
+.card:hover .card-front img{
+  filter:saturate(1.1) brightness(1);
+}
+
+.card-front-overlay{
+  position:absolute;
+  bottom:0; left:0; right:0;
+  padding:20px;
+  background:linear-gradient(transparent, rgba(5,5,16,0.85));
+}
+
+.card-front-overlay .front-name{
+  font-family:'Orbitron',sans-serif;
+  font-size:0.65rem;
+  letter-spacing:2px;
+  color:#00f2fe;
+  text-shadow:0 0 10px #00f2fe;
+}
+
+.card-front-overlay .front-hint{
+  font-size:0.7rem;
+  color:rgba(255,255,255,0.35);
+  letter-spacing:1px;
+  margin-top:4px;
+}
+
+/* BACK */
+.card-back{
+  background:linear-gradient(160deg,rgba(0,20,40,0.97),rgba(0,60,100,0.97));
+  transform:rotateY(180deg);
+  padding:28px 24px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:18px;
+  border:1px solid rgba(0,242,254,0.3);
+  box-shadow:0 0 40px rgba(0,242,254,0.15), inset 0 0 40px rgba(0,0,0,0.5);
+  position:relative;
+}
+
+.card-back::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#00f2fe,#4facfe,transparent);
+}
+
+.back-avatar{
+  width:64px; height:64px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#00f2fe,#4facfe);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Orbitron',sans-serif;
+  font-size:1.2rem;
+  font-weight:900;
+  color:#000;
+  margin:0 auto;
+  box-shadow:0 0 20px #00f2fe;
+}
+
+.back-name{
+  font-family:'Orbitron',sans-serif;
+  font-size:0.62rem;
+  letter-spacing:2px;
+  color:#00f2fe;
+  text-shadow:0 0 8px #00f2fe;
+  line-height:1.5;
+}
+
+.back-role{
+  display:inline-block;
+  padding:4px 14px;
+  background:rgba(0,242,254,0.1);
+  border:1px solid rgba(0,242,254,0.2);
+  border-radius:20px;
+  font-size:0.7rem;
+  letter-spacing:2px;
+  color:rgba(0,242,254,0.7);
+  margin-top:4px;
+}
+
+.back-bio{
+  font-size:0.78rem;
+  line-height:1.7;
+  color:rgba(255,255,255,0.65);
+  letter-spacing:0.5px;
+  font-weight:400;
+}
+
+.divider{
+  width:50px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#00f2fe,transparent);
+  margin:0 auto;
+}
+
+/* SOCIAL */
+.social-links{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+}
+
+.social-link{
+  width:42px; height:42px;
+  border-radius:50%;
+  border:1px solid rgba(0,242,254,0.3);
+  background:rgba(0,242,254,0.05);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.3s;
+  text-decoration:none;
+}
+
+.social-link:hover{
+  background:#00f2fe;
+  border-color:#00f2fe;
+  transform:translateY(-4px);
+  box-shadow:0 6px 20px rgba(0,242,254,0.4);
+}
+
+.social-link svg{
+  width:18px; height:18px;
+  fill:rgba(255,255,255,0.7);
+  transition:0.3s;
+}
+
+.social-link:hover svg{ fill:#000; }
+
+/* NAME TAG */
+.card-name{
+  font-family:'Orbitron',sans-serif;
+  font-size:0.6rem;
+  letter-spacing:2px;
+  padding:10px 22px;
+  border-radius:50px;
+  background:rgba(0,0,0,0.7);
+  border:1px solid rgba(0,242,254,0.3);
+  box-shadow:0 0 15px rgba(0,242,254,0.15);
+  color:rgba(255,255,255,0.8);
+  backdrop-filter:blur(5px);
+  transition:0.3s;
+}
+
+.card-wrapper:hover .card-name{
+  border-color:#00f2fe;
+  box-shadow:0 0 20px rgba(0,242,254,0.3);
+  color:#00f2fe;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:25px;
+  color:rgba(0,242,254,0.35);
+  border-top:1px solid rgba(255,255,255,0.04);
+  font-family:'Rajdhani',sans-serif;
+  font-size:0.78rem;
+  letter-spacing:3px;
+  position:relative;
+  z-index:10;
+}
+
+@media(max-width:768px){
+  .nav-container{right:15px;top:15px;}
+}
+</style>
+</head>
+
+<body>
+
+<video autoplay muted loop playsinline id="bg-video">
+  <source src="motion.mp4" type="video/mp4">
+</video>
+
+<canvas id="particles"></canvas>
+<div class="spotlight" id="spotlight"></div>
+
+<div class="nav-container">
+  <div class="nav-button">MENU</div>
+  <div class="dropdown">
+    <a href="index.html">HOME</a>
+    <a href="aboutus.html">ABOUT US</a>
+    <a href="jobsheet.html">JOBSHEET</a>
+  </div>
+</div>
+
+<div class="title">
+  <p class="title-sub">GROUP PROJECT · 2026</p>
+  <h1 id="typing"></h1>
+</div>
+
+<div class="container">
+
+  <!-- DANISH -->
+  <div class="card-wrapper">
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="dandan.jpg" alt="Danish">
+          <div class="card-front-overlay">
+            <div class="front-name">DANISH SHAZWAN</div>
+            <div class="front-hint">hover to flip →</div>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="back-avatar">DS</div>
+          <div>
+            <div class="back-name">DANISH SHAZWAN<br>BIN SUWANDI</div>
+            <span class="back-role">WEB DEVELOPER</span>
+          </div>
+          <div class="divider"></div>
+          <p class="back-bio">I focus on clean web development and interactive design. My goal is to create applications that are both beautiful and functional for users.</p>
+          <div class="divider"></div>
+          <div class="social-links">
+            <a href="https://www.instagram.com/nishwrld._/" class="social-link" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98z"/><path d="M12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/><circle cx="18.406" cy="5.594" r="1.44"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@nvrfeelz_?_r=1&_t=ZS-93sIU9Go6k9" class="social-link" target="_blank">
+              <svg viewBox="0 0 448 512"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14Z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-name">DANISH SHAZWAN SUWANDI</div>
+  </div>
+
+  <!-- ADILAH -->
+  <div class="card-wrapper">
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="dillas.jpeg" alt="Adilah">
+          <div class="card-front-overlay">
+            <div class="front-name">NOR ADILAH</div>
+            <div class="front-hint">hover to flip →</div>
+          </div>
+        </div>
+        <div class="card-back">
+          <div class="back-avatar">NA</div>
+          <div>
+            <div class="back-name">NOR ADILAH BINTI<br>SHAMSUDDIN</div>
+            <span class="back-role">UI DESIGNER</span>
+          </div>
+          <div class="divider"></div>
+          <p class="back-bio">I love collaborating on projects that challenge my creativity in coding and design. I strive to deliver innovative results through teamwork.</p>
+          <div class="divider"></div>
+          <div class="social-links">
+            <a href="https://www.instagram.com/nradilah_02?igsh=a3ltOHAyaDlvYWpv" class="social-link" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98z"/><path d="M12 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/><circle cx="18.406" cy="5.594" r="1.44"/></svg>
+            </a>
+            <a href="https://www.tiktok.com/@4chikdiylas_02?_r=1&_t=ZS-93shzTgmdTp" class="social-link" target="_blank">
+              <svg viewBox="0 0 448 512"><path d="M448 209.91a210.06 210.06 0 0 1-122.77-39.25V349.38A162.55 162.55 0 1 1 185 188.31V278.2a74.62 74.62 0 1 0 52.23 71.18V0l88 0a121.18 121.18 0 0 0 1.86 22.17A122.18 122.18 0 0 0 381 102.39a121.43 121.43 0 0 0 67 20.14Z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-name">NOR ADILAH SHAMSUDDIN</div>
+  </div>
+
+</div>
+
+<footer>© 2026 GROUP PROJECT · CYBER FUSION THEME</footer>
+
+<script>
+/* STARFIELD */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let stars=[];
+for(let i=0;i<200;i++){
+  stars.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    size:Math.random()*2,
+    speed:0.2+Math.random()*0.4
+  });
+}
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s=>{
+    const alpha=0.3+s.size*0.3;
+    ctx.fillStyle=`rgba(0,242,254,${alpha})`;
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+    ctx.fill();
+    s.y+=s.speed;
+    if(s.y>canvas.height)s.y=0;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+window.addEventListener('resize',()=>{
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+});
+
+/* SPOTLIGHT */
+const spotlight=document.getElementById("spotlight");
+document.addEventListener("mousemove",e=>{
+  spotlight.style.left=e.pageX-175+"px";
+  spotlight.style.top=e.pageY-175+"px";
+});
+
+/* SCROLL REVEAL */
+const cards=document.querySelectorAll(".card-wrapper");
+function checkCards(){
+  cards.forEach((card,i)=>{
+    const top=card.getBoundingClientRect().top;
+    if(top<window.innerHeight-80){
+      setTimeout(()=>card.classList.add("show"), i*150);
+    }
+  });
+}
+window.addEventListener("scroll",checkCards);
+setTimeout(checkCards,300);
+
+/* TYPING */
+const text="ABOUT US";
+let i=0;
+function typing(){
+  if(i<text.length){
+    document.getElementById("typing").innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(typing,120);
+  }
+}
+typing();
+</script>
+
+</body>
+</html>

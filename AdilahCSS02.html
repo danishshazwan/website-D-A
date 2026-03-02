@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flower Store - Customer Registration</title>
+    <style>
+        /* --- RESET & LAYOUT --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+        }
+
+        /* Container utama 900px */
+        .container {
+            width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        /* --- HEADER & NAV --- */
+        header { background-color: #222; color: #999; text-align: right; padding: 10px 20px; }
+        header a { color: #999; text-decoration: none; margin-left: 15px; font-size: 0.9em; }
+        
+        .brand-area { padding: 20px; background-color: #fff; border-bottom: 1px solid #eee; }
+        .brand-area h1 { font-size: 3.5em; color: #333; }
+
+        nav { background-color: #f8f8f8; border-bottom: 1px solid #ddd; padding: 10px 20px; }
+        nav a { color: #777; font-weight: bold; text-decoration: none; margin-right: 25px; }
+
+        /* --- MAIN CONTENT --- */
+        main { padding: 30px; }
+        h2 { margin-bottom: 20px; font-size: 1.8em; color: #333; }
+
+        fieldset {
+            border: none;
+            border-top: 1px solid #eee;
+            margin-top: 25px;
+            padding-top: 15px;
+        }
+        legend { font-size: 1.2em; font-weight: bold; padding-right: 10px; color: #444; }
+
+        /* --- SYARAT GUIDES --- */
+
+        /* 1. Tables: Width is 60% */
+        table {
+            width: 60%; 
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        /* 2. Label: It is bold */
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* 3. Input type range: Width is 60% */
+        input[type="range"] {
+            width: 60%;
+            vertical-align: middle;
+        }
+
+        /* 4. Button fancyBtn: Background color is #bddbfa */
+        .fancyBtn {
+            background-color: #bddbfa;
+            border: 1px solid #a1c4e6;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* --- INPUT STYLING --- */
+        input[type="text"], input[type="email"], input[type="password"], select, input[type="date"] {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            margin-bottom: 15px;
+        }
+
+        .zip-input { width: 80px !important; }
+        .small-td { padding-right: 15px; }
+
+        /* FOOTER */
+        footer {
+            background-color: #222;
+            color: #999;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <a href="#">My Account</a>
+        <a href="#">Wish List</a>
+        <a href="#">Shopping Cart</a>
+        <a href="#">Checkout</a>
+    </header>
+
+    <div class="brand-area">
+        <h1>Flower Store </h1>
+    </div>
+
+    <nav>
+        <a href="AdilahCSS01.html">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Art Works</a>
+        <a href="#">Artists</a>
+    </nav>
+
+    <main>
+        <h2>Customer Registration</h2>
+
+        <form action="#" method="post">
+            <fieldset>
+                <legend>1. User Info</legend>
+                <table>
+                    <tr>
+                        <td class="small-td" style="width: 50%;">
+                            <label>First Name</label>
+                            <input type="text" name="fname">
+                        </td>
+                        <td style="width: 50%;">
+                            <label>Last Name</label>
+                            <input type="text" name="lname">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>Email</label>
+                            <input type="email" name="email" placeholder="Format for email is xxx@yyy.zzz">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="small-td">
+                            <label>Password</label>
+                            <input type="password" name="pwd" placeholder="at least 8 characters">
+                        </td>
+                        <td>
+                            <label>Password Repeat</label>
+                            <input type="password" name="pwd-repeat" placeholder="at least 8 characters">
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend>2. Location</legend>
+                <table>
+                    <tr>
+                        <td colspan="3">
+                            <label>Address</label>
+                            <input type="text" name="address">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="small-td">
+                            <label>City</label>
+                            <input type="text" name="city">
+                        </td>
+                        <td class="small-td">
+                            <label>State</label>
+                            <input type="text" name="state">
+                        </td>
+                        <td>
+                            <label>Zip</label>
+                            <input type="text" name="zip" class="zip-input">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="small-td">
+                            <label>Phone</label>
+                            <input type="text" name="phone" placeholder="NNN-NNN-NNNN">
+                        </td>
+                        <td colspan="2">
+                            <label>Country</label>
+                            <select name="country">
+                                <option value="Malaysia" selected>Malaysia</option>
+                                <option value="Canada">Canada</option>
+                            </select>
+                        </td>
+                    </tr>
+                   </div>
+
+<label>State (Negeri)</label>
+<div class="row" style="flex-wrap: wrap; gap: 10px;">
+    <div style="flex: 1 1 30%;">
+        <input type="radio" name="state" id="sel"> <label style="display:inline; font-weight:normal;" for="sel">Selangor</label>
+    </div>
+    <div style="flex: 1 1 30%;">
+        <input type="radio" name="state" id="kl"> <label style="display:inline; font-weight:normal;" for="kl">W.P. Kuala Lumpur</label>
+    </div>
+    <div style="flex: 1 1 30%;">
+        <input type="radio" name="state" id="joh"> <label style="display:inline; font-weight:normal;" for="joh">Johor</label>
+    </div>
+    <div style="flex: 1 1 30%;">
+        <input type="radio" name="state" id="pen"> <label style="display:inline; font-weight:normal;" for="pen">Pulau Pinang</label>
+    </div>
+    <div style="flex: 1 1 30%;">
+        <input type="radio" name="state" id="swk"> <label style="display:inline; font-weight:normal;" for="swk">Sarawak</label>
+    </div>
+    <div style="flex: 1 1 30%;">
+        <input type="radio" name="state" id="sab"> <label style="display:inline; font-weight:normal;" for="sab">Sabah</label>
+    </div>
+</div>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend>3. Personal Details</legend>
+                <table>
+                    <tr>
+                        <td class="small-td">
+                            <label>Birth Day</label>
+                            <input type="date" name="bday">
+                        </td>
+                        <td>
+                            <label>Favorite Flower color</label>
+                            <input type="color" name="favflower" style="height: 30px;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>Interest on Flower Bouquet</label>
+                            Minimal <input type="range" name="interest"> Love it!
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+
+            <fieldset>
+                <legend>4. All Done</legend>
+                <div style="margin-top: 10px;">
+                    <input type="checkbox"> I agree to the <a href="#" style="color: blue;">Terms of the Site</a><br><br>
+                    <button type="submit" class="fancyBtn">
+                        <img src="AdilahCSS01.html" alt="" style="width:18px;">
+                        Sign me up!
+                    </button>
+                </div>
+            </fieldset>
+        </form>
+    </main>
+
+    <footer>
+        All images are copyright to their owners © 2026 Copyright Flower Store Diylas
+    </footer>
+</div>
+
+</body>
+</html>
