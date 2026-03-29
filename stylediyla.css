@@ -1,0 +1,88 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(98, 30, 104);
+    padding: 100px 10% 0 10%;
+    font-size: 1.4rem;
+    font-family: sans-serif;
+    color: white;
+}
+
+.utama {
+    display: grid;
+    grid-template-columns: 2fr 1.2fr;
+    column-gap: 30px;
+}
+
+.pertama {
+    background-color: rgb(182, 77, 192);
+    padding: 30px;
+    border-radius: 5px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+.beli {
+    background-color: rgb(210, 118, 233);
+    border-radius: 3px;
+    padding: 10px 40px;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.kedua {
+    background-color: rgb(150, 96, 175);
+    padding: 30px;
+    border-radius: 5px;
+}
+
+/* Susunan item dalam troli: Sebelah-sebelah, Tiada Line */
+.kandungan-kedua {
+    display: flex; 
+    justify-content: space-between; /* Teks kiri, butang kanan */
+    align-items: center; 
+    padding: 10px 0;
+    margin-bottom: 5px;
+}
+
+.teks-kiri {
+    flex: 1;
+}
+
+.buang {
+    background-color: rgb(218, 118, 221);
+    border-radius: 4px;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.jumlah {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 2px solid rgba(255,255,255,0.2); 
+}
+
+.bold {
+    font-weight: bold;
+}

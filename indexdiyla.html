@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/659b1009c4.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="stylediyla.css">
+    <title>Diylas Flower</title>
+</head>
+<body>
+    <h1 style="text-align: center; margin-bottom: 20px;">Diylas flower shop</h1>
+    <div class="utama">
+        <div class="pertama">
+            <table>
+                <tr>
+                    <th>Barang</th>
+                    <th>Harga</th>
+                </tr>
+                <tr>
+                    <td>Bouquet</td>
+                    <td>RM 150</td>
+                    <td><button class="beli" onclick="tambahData({nama: 'Bouquet', harga:150})"><i class="fa-solid fa-cart-shopping"></i> Beli</button></td>
+                </tr>
+                <tr>
+                    <td>Crown</td>
+                    <td>RM 15</td>
+                    <td><button class="beli" onclick="tambahData({nama: 'Crown', harga:15})"><i class="fa-solid fa-cart-shopping"></i> Beli</button></td>
+                </tr>
+                <tr>
+                    <td>Flower</td>
+                    <td>RM 150</td>
+                    <td><button class="beli" onclick="tambahData({nama: 'Flower', harga:150})"><i class="fa-solid fa-cart-shopping"></i> Beli</button></td>
+                </tr>
+                <tr>
+                    <td>Henna</td>
+                    <td>RM 100</td>
+                    <td><button class="beli" onclick="tambahData({nama: 'Henna', harga:100})"><i class="fa-solid fa-cart-shopping"></i> Beli</button></td>
+                </tr>
+                <tr>
+                    <td>Lamp</td>
+                    <td>RM 80</td>
+                    <td><button class="beli" onclick="tambahData({nama: 'Lamp', harga:80})"><i class="fa-solid fa-cart-shopping"></i> Beli</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="kedua">
+            <div id="troli">
+                </div>
+
+            <div class="jumlah">
+                <div class="teks-kiri">Jumlah</div>
+                <div class="teks-kanan bold">RM 0.00</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="javadiyla.js"></script>
+</body>
+</html>

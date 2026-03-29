@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 8 - Edit Art Work</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="Lab9.js"></script>
+</head>
+<body>
+
+    <div class="outer-wrapper">
+        <h2 class="form-title">Edit Art Work Details</h2>
+        
+        <div class="main-box">
+            <foram id="mainForm" novalidate>
+                
+                <label>Title</label>
+                <input type="text" id="title" name="title" class="required hilightable">
+
+                <label>Description</label>
+                <textarea id="description" name="description" class="required hilightable"></textarea>
+
+                <div class="content-layout">
+                    <div class="left-side">
+                        <label>Genre</label>
+                        <select id="genre"><option>Choose genre</option></select>
+
+                        <label>Subject</label>
+                        <select id="subject"><option>Choose subject</option></select>
+
+                        <label>Medium</label>
+                        <input type="text" id="medium">
+
+                        <label>Year</label>
+                        <input type="text" id="year" name="year" class="required hilightable">
+
+                        <label>Museum</label>
+                        <input type="text" id="museum">
+                    </div>
+
+                    <div class="right-side">
+                        <fieldset>
+                            <legend>Type</legend>
+                            <input type="radio" name="type" id="painting" checked> 
+                            <label class="radio-label" for="painting">Painting</label><br>
+                            <input type="radio" name="type" id="sculpture"> 
+                            <label class="radio-label" for="sculpture">Sculpture</label>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Image Creative Commons Specification</legend>
+                            <input type="checkbox"> Attribution<br>
+                            <input type="checkbox"> Noncommercial<br>
+                            <input type="checkbox"> No Derivative Works<br>
+                            <input type="checkbox"> Share Alike
+                        </fieldset>
+                    </div>
+                </div>
+
+                <div class="form-footer">
+                    <button type="submit" class="btn-orange">Submit</button>
+                    <button type="reset" class="btn-orange">Clear Form</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
