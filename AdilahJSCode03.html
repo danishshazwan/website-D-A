@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Lab 7 - Shopping Cart</title>
+
+<style>
+body {
+  background-color: #F5F5F5;
+  font-family: Arial;
+}
+
+.title {
+  margin: auto;
+  max-width: 900px;
+}
+
+.table-fill {
+  background: white;
+  border-collapse: collapse;
+  margin: auto;
+  max-width: 900px;
+  width: 100%;
+}
+
+th {
+  background: orange;
+  color: white;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.center { text-align: center; }
+.right { text-align: right; }
+
+tr.totals td {
+  background: #FFF3E0;
+  text-align: right;
+}
+
+.focus td {
+  color: red;
+  font-weight: bold;
+}
+
+button {
+  padding: 3px 8px;
+  cursor: pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="title">
+<h1>Shopping Cart</h1>
+</div>
+
+<table class="table-fill">
+<thead>
+<tr>
+<th colspan="2">Product</th>
+<th>#</th>
+<th>Price</th>
+<th>Amount</th>
+</tr>
+</thead>
+
+<tbody>
+
+<script>
+// ================= DATA =================
+var filenames = ["pearlss.jpg", "holding.jpg", "toledo.jpg"];
+var quantities = [4, 1, 2];
+var prices = [80, 125, 75];
+
+var titles = [
+"Girl with a Pearl Earring",
+"Artist Holding a Thistle",
+"Portrait of Eleonora of Toledo"
+];
+
+// ================= SETTINGS =================
+const tax_rate = 0.10;
+const shipping_threshold = 1000;
+
+var subtotal = 0;
+var tax = 0;
+var shipping = 0;
+var grand = 0;
+
+// ================= FUNCTIONS =================
+function calculateTotal(q, p) { return q * p; }
+function calculateTax(s, r) { return s * r; }
+function calculateShipping(s, t) { return (s > t) ? 0 : 40; }
+function calculateGrandTotal(s, t, sh) { return s + t + sh; }
+
+function outputCurrency(num) {
+    document.write("$" + num.toFixed(2));
+}
+
+function outputCartRow(file, title, quantity, price, total, index) {
+    document.write('<tr>');
+
+    document.write('<td><img src="' + file + '" width="80"></td>');
+    document.write('<td>' + title + '</td>');
+
+    document.write('<td class="center">');
+    document.write('<button onclick="decrease(' + index + ')">-</button> ');
+    document.write('<span id="qty-' + index + '">' + quantity + '</span> ');
+    document.write('<button onclick="increase(' + index + ')">+</button>');
+    document.write('</td>');
+
+    document.write('<td class="right">$' + price.toFixed(2) + '</td>');
+    document.write('<td class="right" id="total-' + index + '">$' + total.toFixed(2) + '</td>');
+
+    document.write('</tr>');
+}
+
+// ================= MAIN LOOP =================
+subtotal = 0;
+for (var i = 0; i < filenames.length; i++) {
+    let total = calculateTotal(quantities[i], prices[i]);
+    subtotal += total;
+    outputCartRow(filenames[i], titles[i], quantities[i], prices[i], total, i);
+}
+
+tax = calculateTax(subtotal, tax_rate);
+shipping = calculateShipping(subtotal, shipping_threshold);
+grand = calculateGrandTotal(subtotal, tax, shipping);
+
+// ================= BUTTON FUNCTION =================
+function increase(i) {
+    quantities[i]++;
+    updateRow(i);
+}
+
+function decrease(i) {
+    if (quantities[i] > 0) {
+        quantities[i]--;
+        updateRow(i);
+    }
+}
+
+function updateRow(i) {
+    let newTotal = quantities[i] * prices[i];
+
+    document.getElementById("qty-" + i).innerText = quantities[i];
+    document.getElementById("total-" + i).innerText = "$" + newTotal.toFixed(2);
+
+    subtotal = 0;
+    for (let j = 0; j < quantities.length; j++) {
+        subtotal += quantities[j] * prices[j];
+    }
+
+    tax = calculateTax(subtotal, tax_rate);
+    shipping = calculateShipping(subtotal, shipping_threshold);
+
+    if (subtotal === 0) {
+        grand = 0;
+        shipping = 0;
+    } else {
+        grand = calculateGrandTotal(subtotal, tax, shipping);
+    }
+
+    let totals = document.querySelectorAll("tr.totals td:last-child");
+    totals[0].innerText = "$" + subtotal.toFixed(2);
+    totals[1].innerText = "$" + tax.toFixed(2);
+    totals[2].innerText = "$" + shipping.toFixed(2);
+    totals[3].innerText = "$" + grand.toFixed(2);
+}
+</script>
+
+<tr class="totals">
+<td colspan="4">Subtotal</td>
+<td><script>outputCurrency(subtotal);</script></td>
+</tr>
+
+<tr class="totals">
+<td colspan="4">Tax</td>
+<td><script>outputCurrency(tax);</script></td>
+</tr>
+
+<tr class="totals">
+<td colspan="4">Shipping</td>
+<td><script>outputCurrency(shipping);</script></td>
+</tr>
+
+<tr class="totals focus">
+<td colspan="4">Grand Total</td>
+<td><script>outputCurrency(grand);</script></td>
+</tr>
+
+</tbody>
+</table>
+
+</body>
+</html>

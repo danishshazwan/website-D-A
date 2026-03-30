@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 8 - Edit Art Work</title>
+
+<style>
+body { font-family: Arial, sans-serif; background-color: #f7f7f7; padding-top: 50px; }
+
+.outer-wrapper { width: 550px; margin: auto; position: relative; }
+
+.form-title {
+    background: #666; color: white; width: fit-content;
+    padding: 5px 40px; margin: 0 auto; font-size: 1.3em;
+    position: relative; top: 15px; z-index: 10;
+}
+
+.main-box {
+    border: 1px solid #ccc; background: #fdfdfd;
+    padding-top: 25px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+label { display: block; margin: 10px 20px 2px 20px; font-size: 0.85em; }
+
+input[type="text"], textarea, select {
+    margin: 0 20px; width: calc(100% - 40px);
+    border: 1px solid #999; padding: 3px;
+}
+
+.content-layout { display: flex; padding: 10px 20px; gap: 15px; }
+.left-side { flex: 1.2; }
+.right-side { flex: 1.8; }
+
+.left-side input, .left-side select { margin: 0; width: 100%; }
+.left-side label { margin: 8px 0 2px 0; }
+
+fieldset { border: 1px solid #ccc; background: white; margin-bottom: 10px; font-size: 0.8em; }
+.radio-label { display: inline; margin: 0; font-size: 1em; }
+
+/* Validation */
+.error {
+    background-color: #ffcdd2 !important;
+    border: 1px solid #b71c1c !important;
+    background-image: url('https://cdn-icons-png.flaticon.com/16/753/753345.png'); 
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+}
+
+.highlight { background-color: #fffde7 !important; }
+
+.form-footer { background: #bbb; padding: 10px; text-align: center; margin-top: 20px; }
+.btn-orange { background: #ff9800; border: 1px solid #333; padding: 4px 20px; font-weight: bold; cursor: pointer; }
+</style>
+
+</head>
+
+<body>
+
+<div class="outer-wrapper">
+    <h2 class="form-title">Edit Art Work Details</h2>
+    
+    <div class="main-box">
+        <!-- FIXED FORM -->
+        <form id="mainForm" novalidate>
+            
+            <label>Title</label>
+            <input type="text" id="title" name="title" class="required hilightable">
+
+            <label>Description</label>
+            <textarea id="description" name="description" class="required hilightable"></textarea>
+
+            <div class="content-layout">
+                <div class="left-side">
+                    <label>Genre</label>
+                    <select id="genre"><option>Choose genre</option></select>
+
+                    <label>Subject</label>
+                    <select id="subject"><option>Choose subject</option></select>
+
+                    <label>Medium</label>
+                    <input type="text" id="medium">
+
+                    <label>Year</label>
+                    <input type="text" id="year" name="year" class="required hilightable">
+
+                    <label>Museum</label>
+                    <input type="text" id="museum">
+                </div>
+
+                <div class="right-side">
+                    <fieldset>
+                        <legend>Type</legend>
+                        <input type="radio" name="type" id="painting" checked> 
+                        <label class="radio-label">Painting</label><br>
+                        <input type="radio" name="type" id="sculpture"> 
+                        <label class="radio-label">Sculpture</label>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Image Creative Commons Specification</legend>
+                        <input type="checkbox"> Attribution<br>
+                        <input type="checkbox"> Noncommercial<br>
+                        <input type="checkbox"> No Derivative Works<br>
+                        <input type="checkbox"> Share Alike
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="form-footer">
+                <button type="submit" class="btn-orange">Submit</button>
+                <button type="reset" class="btn-orange">Clear Form</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+// ================= JS =================
+window.addEventListener("load", function () {
+
+    var form = document.getElementById("mainForm");
+
+    var requiredFields = document.querySelectorAll(".required");
+    var highlightFields = document.querySelectorAll(".hilightable");
+
+    // Highlight bila klik
+    highlightFields.forEach(function(field){
+        field.addEventListener("focus", function(){
+            this.classList.add("highlight");
+        });
+
+        field.addEventListener("blur", function(){
+            this.classList.remove("highlight");
+        });
+    });
+
+    // Validation masa submit
+    form.addEventListener("submit", function(e){
+
+        var valid = true;
+
+        requiredFields.forEach(function(field){
+            if(field.value.trim() === ""){
+                field.classList.add("error");
+                valid = false;
+            } else {
+                field.classList.remove("error");
+            }
+        });
+
+        if(!valid){
+            e.preventDefault();
+            alert("Please fill all required fields");
+        }
+
+    });
+
+});
+</script>
+
+</body>
+</html>
