@@ -4,222 +4,154 @@
 <meta charset="UTF-8">
 <title>Malaysia Auto Store - Customer Registration</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* --- RESET & LAYOUT --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
-    background: #d4d0c8;
-    color: #000;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    background-color: #f4f4f4;
+    line-height: 1.6;
 }
 
-/* Top Bar */
+/* --- TOP BAR --- */
 .top-bar {
-    background: #1a1a1a;
-    color: #ccc;
-    padding: 4px 10px;
+    background: #222;
+    color: #999;
+    padding: 8px 20px;
     text-align: right;
     font-size: 12px;
 }
 .top-bar a {
-    color: #ccc;
+    color: #999;
     text-decoration: none;
     margin-left: 15px;
+    font-size: 0.9em;
 }
 .top-bar a:hover { color: white; }
 
-/* Header */
+/* --- HEADER --- */
 header {
-    background: #c8c8c8;
-    padding: 15px 20px;
-    border-bottom: 1px solid #aaa;
+    background: #fff;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
 }
 header h1 {
     font-size: 32px;
-    font-weight: bold;
-    color: #222;
+    color: #333;
 }
 
-/* Nav */
+/* --- NAVIGATION --- */
 nav {
-    background: #d4d0c8;
-    padding: 6px 20px;
-    border-bottom: 2px solid #aaa;
-    border-top: 1px solid #fff;
+    background: #f8f8f8;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 20px;
 }
 nav a {
     margin-right: 25px;
     text-decoration: none;
-    color: #000;
-    font-size: 13px;
+    color: #777;
     font-weight: bold;
 }
-nav a:hover { text-decoration: underline; }
+nav a:hover { color: #000; }
 
-/* Container */
+/* --- CONTAINER --- */
 .container {
-    background: #f0ece0;
-    margin: 10px 15px;
-    padding: 15px 20px;
-    border: 1px solid #aaa;
+    width: 900px;
+    margin: 20px auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 30px;
 }
 
+/* --- HEADINGS --- */
 h2 {
-    font-size: 16px;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #333;
+}
+h3 {
+    font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #000;
+    color: #444;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
 }
 
-.section {
-    margin-top: 15px;
-    border-top: 1px solid #bbb;
-    padding-top: 10px;
+/* --- FORM ELEMENTS --- */
+input[type="text"], input[type="email"], input[type="password"], input[type="date"], select, input[type="color"], input[type="range"] {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    font-size: 14px;
 }
 
-.section h3 {
-    font-size: 13px;
+/* Color and range inputs styling */
+input[type="color"] { height: 30px; width: 50px; padding: 2px; cursor: pointer; }
+input[type="range"] { width: 60%; vertical-align: middle; }
+
+/* Labels */
+label {
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
+    display: block;
 }
 
-/* Form layout */
-.form-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 6px;
-    align-items: flex-end;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.form-group label {
-    font-size: 12px;
-    margin-bottom: 2px;
-}
-
-input[type=text],
-input[type=email],
-input[type=password],
-input[type=date],
-select {
-    border: 1px solid #888;
-    padding: 3px 5px;
-    font-size: 12px;
-    background: white;
-    height: 22px;
-}
-
-input[type=text]::placeholder,
-input[type=email]::placeholder,
-input[type=password]::placeholder {
-    color: #888;
-    font-size: 11px;
-}
-
-.input-sm { width: 100px; }
-.input-md { width: 150px; }
-.input-lg { width: 250px; }
-.input-xl { width: 360px; }
-
-input[type=color] {
-    width: 50px;
-    height: 24px;
-    padding: 1px;
-    border: 1px solid #888;
-    cursor: pointer;
-}
-
-input[type=range] {
-    width: 200px;
-    vertical-align: middle;
-}
+/* Form rows and groups */
+.form-row { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 10px; }
+.form-group { flex: 1; display: flex; flex-direction: column; }
 
 /* Radio group */
-.radio-group label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 12px;
-    margin-bottom: 3px;
-    cursor: pointer;
-}
+.radio-group { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 5px; }
+.radio-group label { font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 5px; }
 
-/* Checkbox */
-.checkbox-row {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    margin-bottom: 10px;
-}
-.checkbox-row a {
-    color: #0000cc;
-}
+/* Checkbox row */
+.checkbox-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 14px; }
+.checkbox-row a { color: blue; text-decoration: none; }
+.checkbox-row a:hover { text-decoration: underline; }
 
-/* Submit button */
+/* Button */
 .submit-btn {
-    background: #d4d0c8;
-    border: 2px outset #ffffff;
-    padding: 4px 10px;
-    cursor: pointer;
-    font-size: 13px;
+    background-color: #bddbfa;
+    border: 1px solid #a1c4e6;
+    padding: 8px 15px;
     font-weight: bold;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    margin-top: 5px;
-    color: #000;
+    gap: 8px;
+    margin-top: 10px;
 }
-.submit-btn:active {
-    border-style: inset;
-}
-.submit-btn:hover {
-    background: #bbb;
-}
+.submit-btn:hover { background-color: #a3c4e0; }
 
-.checkmark {
-    color: green;
-    font-size: 16px;
-    font-weight: bold;
-}
-
+/* Button icon */
 .btn-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
-    background: #e8f0e8;
-    color: #2a7a2a;
-    font-size: 14px;
-    font-weight: bold;
-    border: 2px solid #4a90d9;
-    margin-right: 4px;
+    width: 18px;
+    height: 18px;
 }
 
-/* Range labels */
-.range-wrap {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-}
+/* Range wrapper */
+.range-wrap { display: flex; align-items: center; gap: 8px; font-size: 12px; }
 
-/* Footer */
+/* FOOTER */
 footer {
-    background: #c8c8c8;
+    background-color: #222;
+    color: #999;
     text-align: center;
-    padding: 8px;
-    font-size: 11px;
-    color: #444;
-    border-top: 1px solid #aaa;
-    margin-top: 10px;
+    padding: 15px;
+    font-size: 12px;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
 }
+
 </style>
 </head>
 <body>
@@ -249,135 +181,115 @@ footer {
     <form>
 
         <!-- 1. User Info -->
-        <div class="section">
-            <h3>1. User Info</h3>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>First Name</label>
-                    <input type="text" class="input-md">
-                </div>
-                <div class="form-group">
-                    <label>Last Name</label>
-                    <input type="text" class="input-md">
-                </div>
+        <h3>1. User Info</h3>
+        <div class="form-row">
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text">
             </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" class="input-xl" placeholder="example@email.com">
-                </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text">
             </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" class="input-md" placeholder="at least 8 characters">
-                </div>
-                <div class="form-group">
-                    <label>Repeat Password</label>
-                    <input type="password" class="input-md" placeholder="at least 8 characters">
-                </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="example@email.com">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" placeholder="at least 8 characters">
+            </div>
+            <div class="form-group">
+                <label>Repeat Password</label>
+                <input type="password" placeholder="at least 8 characters">
             </div>
         </div>
 
         <!-- 2. Location -->
-        <div class="section">
-            <h3>2. Location</h3>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" class="input-xl">
-                </div>
+        <h3>2. Location</h3>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Address</label>
+                <input type="text">
             </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="input-md">
-                </div>
-                <div class="form-group">
-                    <label>State</label>
-                    <input type="text" class="input-sm">
-                </div>
-                <div class="form-group">
-                    <label>Zip</label>
-                    <input type="text" class="input-sm">
-                </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>City</label>
+                <input type="text">
             </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="text" class="input-md" placeholder="01X-XXXXXXX">
-                </div>
-                <div class="form-group">
-                    <label>Country</label>
-                    <select class="input-md">
-                        <option>Malaysia</option>
-                        <option>Singapore</option>
-                        <option>Thailand</option>
-                    </select>
-                </div>
+            <div class="form-group">
+                <label>State</label>
+                <input type="text">
             </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Region</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="region" value="north"> Northern Malaysia</label>
-                        <label><input type="radio" name="region" value="central"> Central Malaysia</label>
-                        <label><input type="radio" name="region" value="south"> Southern Malaysia</label>
-                    </div>
+            <div class="form-group">
+                <label>Zip</label>
+                <input type="text">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" placeholder="01X-XXXXXXX">
+            </div>
+            <div class="form-group">
+                <label>Country</label>
+                <select>
+                    <option>Malaysia</option>
+                    <option>Singapore</option>
+                    <option>Thailand</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Region</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="region"> Northern Malaysia</label>
+                    <label><input type="radio" name="region"> Central Malaysia</label>
+                    <label><input type="radio" name="region"> Southern Malaysia</label>
                 </div>
             </div>
         </div>
 
         <!-- 3. Personal Details -->
-        <div class="section">
-            <h3>3. Personal Details</h3>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Birth Date</label>
-                    <input type="date" class="input-md">
-                </div>
-                <div class="form-group">
-                    <label>Preferred Car Color</label>
-                    <input type="color" value="#000000">
-                </div>
+        <h3>3. Personal Details</h3>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Birth Date</label>
+                <input type="date">
             </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label>Interest Level (Proton X50)</label>
-                    <div class="range-wrap">
-                        <span>Minimal</span>
-                        <input type="range" min="0" max="10" value="5">
-                        <span>Love it!</span>
-                    </div>
+            <div class="form-group">
+                <label>Preferred Car Color</label>
+                <input type="color" value="#000000">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Interest Level (Proton X50)</label>
+                <div class="range-wrap">
+                    <span>Minimal</span>
+                    <input type="range" min="0" max="10" value="5">
+                    <span>Love it!</span>
                 </div>
             </div>
         </div>
 
         <!-- 4. Confirmation -->
-        <div class="section">
-            <h3>4. Confirmation</h3>
-
-            <div class="checkbox-row">
-                <input type="checkbox" id="terms" style="width:16px; height:16px; cursor:pointer;">
-                <label for="terms" style="font-size:12px;">I agree to the <a href="#" style="color:#0000cc;">Terms &amp; Conditions</a></label>
-            </div>
-
-            <button type="submit" class="submit-btn">
-                <span class="btn-icon">✔</span> Sign me up!
-            </button>
+        <h3>4. Confirmation</h3>
+        <div class="checkbox-row">
+            <input type="checkbox" id="terms">
+            <label for="terms">I agree to the <a href="#">Terms &amp; Conditions</a></label>
         </div>
+        <button type="submit" class="submit-btn">
+            <span class="btn-icon">✔</span> Sign me up!
+        </button>
 
     </form>
-
 </div>
 
 <footer>
