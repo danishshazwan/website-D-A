@@ -5,74 +5,117 @@
 <title>F1 Fan Registration Form</title>
 
 <style>
-
+/* --- Global --- */
 body{
-font-family: Arial;
-background:#111827;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-margin:0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(135deg, #111827, #1e293b);
+  color: white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  margin:0;
 }
 
+/* --- Container / Card --- */
 .container{
-background:#1f2937;
-padding:30px;
-border-radius:10px;
-width:360px;
-box-shadow:0 0 10px rgba(0,0,0,0.5);
+  background:#1f2937;
+  padding:40px 30px;
+  border-radius:15px;
+  width:90%;
+  max-width:400px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 1px solid #ef4444;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.container:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6);
 }
 
+/* --- Header --- */
 h1{
-text-align:center;
-color:#ef4444;
-margin-bottom:20px;
+  text-align:center;
+  color:#ef4444;
+  margin-bottom:25px;
+  font-size:28px;
+  letter-spacing:1px;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.4);
 }
 
+/* --- Labels & Inputs --- */
 label{
-display:block;
-margin-top:10px;
+  display:block;
+  margin-top:15px;
+  font-weight:500;
+  font-size:0.95rem;
 }
 
 input, select{
-width:100%;
-padding:10px;
-margin-top:5px;
-margin-bottom:10px;
-border:2px solid transparent;
-border-radius:5px;
-outline:none;
+  width:100%;
+  padding:12px;
+  margin-top:5px;
+  margin-bottom:10px;
+  border:2px solid transparent;
+  border-radius:8px;
+  outline:none;
+  font-size:0.95rem;
+  background:#2d3748;
+  color:white;
+  transition: all 0.3s ease;
+}
+input::placeholder{
+  color:#a0aec0;
 }
 
 /* highlight bila focus */
 .highlight{
-background:#dbeafe;
+  background:#3b82f6;
+  color:white;
+  border-color:#3b82f6;
 }
 
 /* error style */
 .error{
-border:2px solid red;
-background:#fee2e2;
+  border:2px solid #f87171;
+  background:#fca5a5;
+  color:#111;
 }
 
+/* --- Button --- */
 button{
-width:100%;
-padding:10px;
-background:#ef4444;
-border:none;
-color:white;
-font-size:16px;
-border-radius:5px;
-cursor:pointer;
-margin-top:10px;
+  width:100%;
+  padding:12px;
+  background:#ef4444;
+  border:none;
+  color:white;
+  font-size:16px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:15px;
+  font-weight:600;
+  transition: all 0.3s ease;
 }
-
 button:hover{
-background:#dc2626;
+  background:#dc2626;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
+/* --- Responsive --- */
+@media screen and (max-width:480px){
+  .container{
+    padding:30px 20px;
+    width:95%;
+  }
+  h1{
+    font-size:24px;
+  }
+  input, select, button{
+    font-size:0.9rem;
+    padding:10px;
+  }
+}
 </style>
 
 </head>
