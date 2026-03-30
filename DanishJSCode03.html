@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,width=device-width">
 
-<title>Lab 9 - Shopping Cart</title>
+<title>Shopping Cart</title>
 
 <style>
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
@@ -65,13 +65,8 @@ background:#FFF3E0;
 text-align:right;
 }
 
-td.right{
-text-align:right;
-}
-
-td.center{
-text-align:center;
-}
+td.right{ text-align:right; }
+td.center{ text-align:center; }
 
 .focus td{
 color:#E65100;
@@ -80,6 +75,20 @@ font-weight:500;
 
 img{
 width:80px;
+}
+
+button{
+  padding:4px 10px;
+  margin:2px;
+  cursor:pointer;
+  border:none;
+  background:#EF6C00;
+  color:white;
+  border-radius:4px;
+}
+
+button:hover{
+  background:#e65100;
 }
 </style>
 
@@ -105,58 +114,17 @@ width:80px;
 <tbody>
 
 <script>
-// ================= DATA.JS =================
-var filenames = [
-"106020.jpg",
-"116010.jpg",
-"120010.jpg"
-];
-
+// ===== DATA =====
+var filenames = ["106020.jpg","116010.jpg","120010.jpg"];
 var titles = [
 "Girl with a Pearl Earring",
 "Artist Holding a Thistle",
 "Portrait of Eleanor of Toledo"
 ];
-
 var quantities = [3,1,2];
 var prices = [80,125,75];
 
-// ================= FUNCTION.JS =================
-function outputCartRow(file,title,quantity,price,total){
-document.write("<tr>");
-document.write("<td><img src='"+file+"'></td>");
-document.write("<td>"+title+"</td>");
-document.write("<td class='center'>"+quantity+"</td>");
-document.write("<td class='right'>$"+price.toFixed(2)+"</td>");
-document.write("<td class='right'>$"+total.toFixed(2)+"</td>");
-document.write("</tr>");
-}
-
-function calculateTotal(quantity,price){
-return quantity * price;
-}
-
-function calculateTax(subtotal,rate){
-return subtotal * rate;
-}
-
-function calculateShipping(subtotal,threshold){
-if(subtotal > threshold){
-return 0;
-}else{
-return 40;
-}
-}
-
-function calculateGrandTotal(subtotal,tax,shipping){
-return subtotal + tax + shipping;
-}
-
-function outputCurrency(num){
-document.write("$"+num.toFixed(2));
-}
-
-// ================= LAB9.JS =================
+// ===== SETTINGS =====
 const tax_rate = 0.10;
 const shipping_threshold = 1000;
 
@@ -165,6 +133,32 @@ var tax = 0;
 var shipping = 0;
 var grand = 0;
 
+// ===== FUNCTIONS =====
+function calculateTotal(q,p){ return q*p; }
+function calculateTax(s,r){ return s*r; }
+function calculateShipping(s,t){ return (s>t)?0:40; }
+function calculateGrandTotal(s,t,sh){ return s+t+sh; }
+
+// OUTPUT ROW (ADA BUTTON + -)
+function outputCartRow(file,title,quantity,price,total,index){
+document.write("<tr>");
+
+document.write("<td><img src='"+file+"'></td>");
+document.write("<td>"+title+"</td>");
+
+document.write("<td class='center'>");
+document.write("<button onclick='decrease("+index+")'>-</button>");
+document.write("<span id='qty-"+index+"'> "+quantity+" </span>");
+document.write("<button onclick='increase("+index+")'>+</button>");
+document.write("</td>");
+
+document.write("<td class='right'>$"+price.toFixed(2)+"</td>");
+document.write("<td class='right' id='total-"+index+"'>$"+total.toFixed(2)+"</td>");
+
+document.write("</tr>");
+}
+
+// ===== MAIN LOOP =====
 for (var i=0; i<titles.length; i++){
 let total = calculateTotal(quantities[i], prices[i]);
 subtotal += total;
@@ -174,7 +168,8 @@ filenames[i],
 titles[i],
 quantities[i],
 prices[i],
-total
+total,
+i
 );
 }
 
@@ -182,26 +177,69 @@ tax = calculateTax(subtotal, tax_rate);
 shipping = calculateShipping(subtotal, shipping_threshold);
 grand = calculateGrandTotal(subtotal, tax, shipping);
 
+// ===== BUTTON FUNCTION =====
+function increase(i){
+    quantities[i]++;
+    updateRow(i);
+}
+
+function decrease(i){
+    if(quantities[i] > 0){
+        quantities[i]--;
+        updateRow(i);
+    }
+}
+
+// UPDATE SEMUA
+function updateRow(i){
+
+    let newTotal = quantities[i] * prices[i];
+
+    document.getElementById("qty-"+i).innerText = quantities[i];
+    document.getElementById("total-"+i).innerText = "$"+newTotal.toFixed(2);
+
+    subtotal = 0;
+    for(let j=0;j<quantities.length;j++){
+        subtotal += quantities[j]*prices[j];
+    }
+
+    tax = calculateTax(subtotal, tax_rate);
+    shipping = calculateShipping(subtotal, shipping_threshold);
+
+    if(subtotal === 0){
+        grand = 0;
+        shipping = 0;
+    } else {
+        grand = calculateGrandTotal(subtotal, tax, shipping);
+    }
+
+    let totals = document.querySelectorAll("tr.totals td:last-child");
+
+    totals[0].innerText = "$"+subtotal.toFixed(2);
+    totals[1].innerText = "$"+tax.toFixed(2);
+    totals[2].innerText = "$"+shipping.toFixed(2);
+    totals[3].innerText = "$"+grand.toFixed(2);
+}
 </script>
 
 <tr class="totals">
 <td colspan="4">Subtotal</td>
-<td><script>outputCurrency(subtotal);</script></td>
+<td>$<span id="subtotal"><script>document.write(subtotal.toFixed(2))</script></span></td>
 </tr>
 
 <tr class="totals">
 <td colspan="4">Tax</td>
-<td><script>outputCurrency(tax);</script></td>
+<td>$<span id="tax"><script>document.write(tax.toFixed(2))</script></span></td>
 </tr>
 
 <tr class="totals">
 <td colspan="4">Shipping</td>
-<td><script>outputCurrency(shipping);</script></td>
+<td>$<span id="shipping"><script>document.write(shipping.toFixed(2))</script></span></td>
 </tr>
 
 <tr class="totals focus">
 <td colspan="4">Grand Total</td>
-<td><script>outputCurrency(grand);</script></td>
+<td>$<span id="grand"><script>document.write(grand.toFixed(2))</script></span></td>
 </tr>
 
 </tbody>
