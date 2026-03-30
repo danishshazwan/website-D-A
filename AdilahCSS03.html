@@ -71,10 +71,23 @@
             padding: 10px;
         }
 
+        /* --- STYLE KHUSUS UNTUK ICON GAMBAR --- */
+        section img {
+            width: 50px;           /* Mengecilkan saiz imej */
+            height: 50px;          /* Menjadikan ia petak sama saiz */
+            object-fit: cover;     /* Mengelakkan imej daripada terpenyek */
+            border-radius: 10px;   /* Membuat bucu bulat (rounded) */
+            border: 1px solid #999;/* Garisan nipis di sekeliling */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3); /* Kesan bayangan (shadow) */
+            margin: 10px 0;        /* Jarak atas dan bawah */
+            display: block;
+        }
+
         /* --- FOOTER --- */
         footer {
             display: none;
         }
+        
     </style>
 </head>
 <body>
@@ -103,7 +116,7 @@
         <h2>About</h2>
         <p>Larry Page is the co-founder of Google and a technology entrepreneur who revolutionized the way people search for information online. He also served as the CEO of Google and Alphabet Inc., leading major innovations in artificial intelligence and digital technology.</p>
         
-        <img src="larry page.jpg" alt="Manga Potrait of Larry Page" height="100" width="150"><br>
+       <img src="larry page.jpg" alt="Larry Page" class="icon">
 
         <p>Larry Page focuses on developing and advancing internet technologies, designing and optimizing search engine systems, pioneering innovations in artificial intelligence (AI), and leading large-scale, transformative projects in the technology industry that have a global impact.</p>
     </section>
