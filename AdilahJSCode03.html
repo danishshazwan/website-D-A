@@ -1,132 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
+<meta charset="UTF-8">
 <title>Lab 7 - Shopping Cart</title>
-
 <style>
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,300');
+
 body {
-  background-color: #F5F5F5;
-  font-family: Arial;
+    background-color: #F5F5F5;
+    font-family: "Roboto", helvetica, arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    margin: 20px;
 }
 
-.title {
-  margin: auto;
-  max-width: 900px;
+div.title {
+    margin: auto;
+    max-width: 900px;
+    width: 100%;
 }
 
+.title h1 {
+    color: #333;
+    font-size: 26px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+/*** Table Styles ***/
 .table-fill {
-  background: white;
-  border-collapse: collapse;
-  margin: auto;
-  max-width: 900px;
-  width: 100%;
+    background: white;
+    border-collapse: collapse;
+    margin: auto;
+    max-width: 900px;
+    width: 100%;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
 }
 
 th {
-  background: orange;
-  color: white;
-  padding: 10px;
+    color: white;
+    background: #EF6C00;
+    border-bottom: 4px solid #9ea7af;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 20px;
+    text-align: left;
+}
+
+tr {
+    border-bottom: 1px solid #C1C3D1;
+    color: #666B85;
 }
 
 td {
-  padding: 10px;
-  border: 1px solid #ccc;
+    background: #FFFFFF;
+    padding: 15px;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: 300;
+    font-size: 16px;
 }
 
-.center { text-align: center; }
+/* --- Gambar aesthetic --- */
+td img {
+    display: block;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* --- Description --- */
+td:nth-child(2) {
+    font-weight: 400;
+    color: #333;
+    max-width: 300px;
+}
+
 .right { text-align: right; }
+.center { text-align: center; }
 
+/* Bahagian Total (Warna Kuning Lembut) */
 tr.totals td {
-  background: #FFF3E0;
-  text-align: right;
+    background: #FFF3E0;
+    text-align: right;
+    border-bottom: none; /* buang line bawah */
 }
+
+tr.totals { border-bottom: none !important; }
 
 .focus td {
-  color: red;
-  font-weight: bold;
+    color: #E65100;
+    font-weight: 700;
+    font-size: 18px;
 }
 
 button {
-  padding: 3px 8px;
-  cursor: pointer;
+    padding: 4px 10px;
+    margin: 3px 3px 3px 0;
+    border: none;
+    background: #EF6C00;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
 }
+
+button:hover { background: #E65100; }
+
 </style>
-
 </head>
-
 <body>
 
 <div class="title">
-<h1>Shopping Cart</h1>
+    <h1>Shopping Cart</h1>
 </div>
 
 <table class="table-fill">
-<thead>
-<tr>
-<th colspan="2">Product</th>
-<th>#</th>
-<th>Price</th>
-<th>Amount</th>
-</tr>
-</thead>
-
-<tbody>
+    <thead>
+        <tr>
+            <th colspan="2">Product</th>
+            <th>Amount</th>
+            <th>Price</th>
+            <th>RM</th>
+        </tr>
+    </thead>
+    <tbody id="cart-body">
+        <!-- JS akan inject row di sini -->
+    </tbody>
+    <tfoot>
+        <tr class="totals">
+            <td colspan="4">Subtotal</td>
+            <td id="subtotal"></td>
+        </tr>
+        <tr class="totals">
+            <td colspan="4">Tax</td>
+            <td id="tax"></td>
+        </tr>
+        <tr class="totals">
+            <td colspan="4">Shipping</td>
+            <td id="shipping"></td>
+        </tr>
+        <tr class="totals focus">
+            <td colspan="4">Grand Total</td>
+            <td id="grand"></td>
+        </tr>
+    </tfoot>
+</table>
 
 <script>
-// ================= DATA =================
+// DATA
 var filenames = ["pearlss.jpg", "holding.jpg", "toledo.jpg"];
-var quantities = [4, 1, 2];
-var prices = [80, 125, 75];
+var quantities = [4,1,2];
+var prices = [80,125,75];
+var titles = ["Girl with a Pearl Earring","Artist Holding a Thistle","Portrait of Eleonora of Toledo"];
 
-var titles = [
-"Girl with a Pearl Earring",
-"Artist Holding a Thistle",
-"Portrait of Eleonora of Toledo"
-];
-
-// ================= SETTINGS =================
 const tax_rate = 0.10;
 const shipping_threshold = 1000;
 
-var subtotal = 0;
-var tax = 0;
-var shipping = 0;
-var grand = 0;
+var subtotal=0, tax=0, shipping=0, grand=0;
 
-// ================= FUNCTIONS =================
-function calculateTotal(q, p) { return q * p; }
-function calculateTax(s, r) { return s * r; }
-function calculateShipping(s, t) { return (s > t) ? 0 : 40; }
-function calculateGrandTotal(s, t, sh) { return s + t + sh; }
+/* FUNCTIONS */
+function calculateTotal(q,p){ return q*p; }
+function calculateTax(s,r){ return s*r; }
+function calculateShipping(s,t){ return (s>t)?0:40; }
+function calculateGrandTotal(s,t,sh){ return s+t+sh; }
+function outputCurrency(num){ return "RM"+num.toFixed(2); }
 
-function outputCurrency(num) {
-    document.write("$" + num.toFixed(2));
+function outputCartRow(file, title, quantity, price, total, index){
+    let tbody = document.getElementById("cart-body");
+    let tr = document.createElement("tr");
+
+    // image
+    let tdImg = document.createElement("td");
+    let img = document.createElement("img");
+    img.src = file; img.width=80; img.height=80;
+    tdImg.appendChild(img);
+    tr.appendChild(tdImg);
+
+    // title
+    let tdTitle = document.createElement("td");
+    tdTitle.innerText = title;
+    tr.appendChild(tdTitle);
+
+    // quantity + buttons
+    let tdQty = document.createElement("td");
+    tdQty.className = "center";
+    tdQty.innerHTML = `<button onclick="decrease(${index})">-</button>
+                       <span id="qty-${index}">${quantity}</span>
+                       <button onclick="increase(${index})">+</button>`;
+    tr.appendChild(tdQty);
+
+    // price
+    let tdPrice = document.createElement("td");
+    tdPrice.className = "right";
+    tdPrice.innerText = "RM"+price.toFixed(2);
+    tr.appendChild(tdPrice);
+
+    // total
+    let tdTotal = document.createElement("td");
+    tdTotal.className = "right";
+    tdTotal.id = "total-"+index;
+    tdTotal.innerText = "RM"+total.toFixed(2);
+    tr.appendChild(tdTotal);
+
+    tbody.appendChild(tr);
 }
 
-function outputCartRow(file, title, quantity, price, total, index) {
-    document.write('<tr>');
-
-    document.write('<td><img src="' + file + '" width="80"></td>');
-    document.write('<td>' + title + '</td>');
-
-    document.write('<td class="center">');
-    document.write('<button onclick="decrease(' + index + ')">-</button> ');
-    document.write('<span id="qty-' + index + '">' + quantity + '</span> ');
-    document.write('<button onclick="increase(' + index + ')">+</button>');
-    document.write('</td>');
-
-    document.write('<td class="right">$' + price.toFixed(2) + '</td>');
-    document.write('<td class="right" id="total-' + index + '">$' + total.toFixed(2) + '</td>');
-
-    document.write('</tr>');
-}
-
-// ================= MAIN LOOP =================
-subtotal = 0;
-for (var i = 0; i < filenames.length; i++) {
+/* OUTPUT INITIAL ROWS */
+subtotal=0;
+for(var i=0;i<filenames.length;i++){
     let total = calculateTotal(quantities[i], prices[i]);
-    subtotal += total;
+    subtotal+=total;
     outputCartRow(filenames[i], titles[i], quantities[i], prices[i], total, i);
 }
 
@@ -134,70 +220,41 @@ tax = calculateTax(subtotal, tax_rate);
 shipping = calculateShipping(subtotal, shipping_threshold);
 grand = calculateGrandTotal(subtotal, tax, shipping);
 
-// ================= BUTTON FUNCTION =================
-function increase(i) {
+document.getElementById("subtotal").innerText = outputCurrency(subtotal);
+document.getElementById("tax").innerText = outputCurrency(tax);
+document.getElementById("shipping").innerText = outputCurrency(shipping);
+document.getElementById("grand").innerText = outputCurrency(grand);
+
+/* QUANTITY FUNCTIONS */
+function increase(i){
     quantities[i]++;
     updateRow(i);
 }
 
-function decrease(i) {
-    if (quantities[i] > 0) {
-        quantities[i]--;
-        updateRow(i);
-    }
+function decrease(i){
+    if(quantities[i]>0){ quantities[i]--; updateRow(i); }
 }
 
-function updateRow(i) {
-    let newTotal = quantities[i] * prices[i];
+function updateRow(i){
+    let newTotal = quantities[i]*prices[i];
+    document.getElementById("qty-"+i).innerText = quantities[i];
+    document.getElementById("total-"+i).innerText = "RM"+newTotal.toFixed(2);
 
-    document.getElementById("qty-" + i).innerText = quantities[i];
-    document.getElementById("total-" + i).innerText = "$" + newTotal.toFixed(2);
-
-    subtotal = 0;
-    for (let j = 0; j < quantities.length; j++) {
-        subtotal += quantities[j] * prices[j];
+    // recalc totals
+    subtotal=0;
+    for(let j=0;j<quantities.length;j++){
+        subtotal+=quantities[j]*prices[j];
     }
-
     tax = calculateTax(subtotal, tax_rate);
-    shipping = calculateShipping(subtotal, shipping_threshold);
+    shipping = (subtotal===0)?0:calculateShipping(subtotal, shipping_threshold);
+    grand = (subtotal===0)?0:calculateGrandTotal(subtotal, tax, shipping);
 
-    if (subtotal === 0) {
-        grand = 0;
-        shipping = 0;
-    } else {
-        grand = calculateGrandTotal(subtotal, tax, shipping);
-    }
-
-    let totals = document.querySelectorAll("tr.totals td:last-child");
-    totals[0].innerText = "$" + subtotal.toFixed(2);
-    totals[1].innerText = "$" + tax.toFixed(2);
-    totals[2].innerText = "$" + shipping.toFixed(2);
-    totals[3].innerText = "$" + grand.toFixed(2);
+    document.getElementById("subtotal").innerText = outputCurrency(subtotal);
+    document.getElementById("tax").innerText = outputCurrency(tax);
+    document.getElementById("shipping").innerText = outputCurrency(shipping);
+    document.getElementById("grand").innerText = outputCurrency(grand);
 }
 </script>
-
-<tr class="totals">
-<td colspan="4">Subtotal</td>
-<td><script>outputCurrency(subtotal);</script></td>
-</tr>
-
-<tr class="totals">
-<td colspan="4">Tax</td>
-<td><script>outputCurrency(tax);</script></td>
-</tr>
-
-<tr class="totals">
-<td colspan="4">Shipping</td>
-<td><script>outputCurrency(shipping);</script></td>
-</tr>
-
-<tr class="totals focus">
-<td colspan="4">Grand Total</td>
-<td><script>outputCurrency(grand);</script></td>
-</tr>
-
-</tbody>
-</table>
 
 </body>
 </html>
