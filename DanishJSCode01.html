@@ -8,63 +8,81 @@
 
 <style>
 
+/* ===== BODY ===== */
 body{
-font-family: Arial;
-background:#111827;
-color:white;
-text-align:center;
-margin:0;
-padding:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#e5e7eb;
+    margin:0;
 }
 
+/* ===== HEADER ===== */
 header{
-background:#dc2626;
-padding:20px;
-font-size:28px;
-font-weight:bold;
+    background:#1e3a8a;
+    color:white;
+    padding:15px 20px;
+    font-size:24px;
+    font-weight:bold;
 }
 
+/* ===== CONTAINER ===== */
 .container{
-width:900px;
-margin:auto;
-margin-top:30px;
+    width:900px;
+    margin:30px auto;
+    background:white;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
+/* ===== FEATURED IMAGE ===== */
 #featured{
-position:relative;
+    position:relative;
 }
 
 #featured img{
-width:450px;
-border-radius:10px;
+    width:100%;
+    height:400px;
+    object-fit:cover;
+    border-radius:5px;
 }
 
+/* ===== CAPTION ===== */
 figcaption{
-position:absolute;
-bottom:10px;
-left:0;
-right:0;
-background:rgba(0,0,0,0.7);
-padding:10px;
-opacity:0;
-color:white;
-border-radius:0 0 10px 10px;
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    background:rgba(255,255,255,0.7);
+    padding:15px;
+    font-size:20px;
+    font-weight:bold;
+    color:#111;
+    border-radius:0 0 5px 5px;
+    opacity:0;
+    transition:0.5s;
 }
 
+/* ===== THUMBNAILS ===== */
 #thumbnails{
-margin-top:30px;
+    margin-top:20px;
+    display:flex;
+    justify-content:space-between;
 }
 
 #thumbnails img{
-width:140px;
-margin:10px;
-cursor:pointer;
-border-radius:8px;
-transition:0.3s;
+    width:150px;
+    height:90px;
+    object-fit:cover;
+    cursor:pointer;
+    border-radius:5px;
+    transition:0.3s;
+    border:3px solid transparent;
 }
 
+/* hover thumbnail */
 #thumbnails img:hover{
-transform:scale(1.1);
+    transform:scale(1.05);
+    border:3px solid #1e3a8a;
 }
 
 </style>
@@ -79,80 +97,71 @@ F1 Drivers Gallery
 
 <div class="container">
 
+<!-- FEATURED -->
 <figure id="featured">
-<img src="verstappen.avif" title="Max Verstappen - Red Bull Racing">
-<figcaption></figcaption>
+    <img src="verstappen.avif" title="Max Verstappen - Red Bull Racing">
+    <figcaption></figcaption>
 </figure>
 
+<!-- THUMBNAILS -->
 <div id="thumbnails">
 
-<img src="cs55.jpg"
-title="Carlos Sainz - Williams">
-
-<img src="lh44.jpg"
-title="Lewis Hamilton - Mercedes">
-
-<img src="cs16.jpg"
-title="Charles Leclerc - Ferrari">
-
-<img src="lando.jpg"
-title="Lando Norris - McLaren">
+    <img src="cs55.jpg" title="Carlos Sainz - Williams">
+    <img src="lh44.jpg" title="Lewis Hamilton - Mercedes">
+    <img src="cs16.jpg" title="Charles Leclerc - Ferrari">
+    <img src="lando.jpg" title="Lando Norris - McLaren">
 
 </div>
 
 </div>
 
 <script>
-// ================= JS GABUNG =================
+
+// bila page load
 window.addEventListener("load", function() {
 
-var thumbs = document.getElementById("thumbnails");
+    var thumbs = document.getElementById("thumbnails");
 
-// event delegation
-thumbs.addEventListener("click", function (e) {
+    // CLICK THUMBNAIL
+    thumbs.addEventListener("click", function (e) {
 
-if (e.target.nodeName.toLowerCase() == 'img') {
+        if (e.target.tagName === "IMG") {
 
-var clickedImageSource = e.target.src;
+            var featuredImage = document.querySelector("#featured img");
 
-// tukar folder small -> medium
-var newSrc = clickedImageSource.replace("small", "medium");
+            // tukar gambar
+            featuredImage.src = e.target.src;
 
-var featuredImage = document.querySelector("#featured img");
+            // tukar title
+            featuredImage.title = e.target.title;
 
-featuredImage.src = newSrc;
+        }
 
-featuredImage.title = e.target.title;
+    });
 
-}
+    var featured = document.getElementById("featured");
 
-});
+    // MOUSE OVER (show caption)
+    featured.addEventListener("mouseover", function () {
 
-// mouse over
-var featured = document.getElementById("featured");
+        var caption = document.querySelector("#featured figcaption");
 
-featured.addEventListener("mouseover", function () {
+        caption.style.opacity = 1;
+        caption.innerHTML = document.querySelector("#featured img").title;
 
-var caption = document.querySelector("#featured figcaption");
+    });
 
-caption.style.transition = "opacity 1.5s";
-caption.style.opacity = 0.8;
+    // MOUSE OUT (hide caption)
+    featured.addEventListener("mouseout", function () {
 
-caption.innerHTML = document.querySelector("#featured img").title;
+        var caption = document.querySelector("#featured figcaption");
 
-});
+        caption.style.opacity = 0;
 
-// mouse out
-featured.addEventListener("mouseout", function () {
-
-var caption = document.querySelector("#featured figcaption");
-
-caption.style.transition = "opacity 1.5s";
-caption.style.opacity = 0;
+    });
 
 });
 
-});
 </script>
 
 </body>
