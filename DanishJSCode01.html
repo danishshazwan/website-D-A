@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>F1 Drivers Gallery</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#111827;
+color:white;
+text-align:center;
+margin:0;
+padding:0;
+}
+
+header{
+background:#dc2626;
+padding:20px;
+font-size:28px;
+font-weight:bold;
+}
+
+.container{
+width:900px;
+margin:auto;
+margin-top:30px;
+}
+
+#featured{
+position:relative;
+}
+
+#featured img{
+width:450px;
+border-radius:10px;
+}
+
+figcaption{
+position:absolute;
+bottom:10px;
+left:0;
+right:0;
+background:rgba(0,0,0,0.7);
+padding:10px;
+opacity:0;
+color:white;
+border-radius:0 0 10px 10px;
+}
+
+#thumbnails{
+margin-top:30px;
+}
+
+#thumbnails img{
+width:140px;
+margin:10px;
+cursor:pointer;
+border-radius:8px;
+transition:0.3s;
+}
+
+#thumbnails img:hover{
+transform:scale(1.1);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+F1 Drivers Gallery
+</header>
+
+<div class="container">
+
+<figure id="featured">
+<img src="verstappen.avif" title="Max Verstappen - Red Bull Racing">
+<figcaption></figcaption>
+</figure>
+
+<div id="thumbnails">
+
+<img src="cs55.jpg"
+title="Carlos Sainz - Williams">
+
+<img src="lh44.jpg"
+title="Lewis Hamilton - Mercedes">
+
+<img src="cs16.jpg"
+title="Charles Leclerc - Ferrari">
+
+<img src="lando.jpg"
+title="Lando Norris - McLaren">
+
+</div>
+
+</div>
+
+<script>
+// ================= JS GABUNG =================
+window.addEventListener("load", function() {
+
+var thumbs = document.getElementById("thumbnails");
+
+// event delegation
+thumbs.addEventListener("click", function (e) {
+
+if (e.target.nodeName.toLowerCase() == 'img') {
+
+var clickedImageSource = e.target.src;
+
+// tukar folder small -> medium
+var newSrc = clickedImageSource.replace("small", "medium");
+
+var featuredImage = document.querySelector("#featured img");
+
+featuredImage.src = newSrc;
+
+featuredImage.title = e.target.title;
+
+}
+
+});
+
+// mouse over
+var featured = document.getElementById("featured");
+
+featured.addEventListener("mouseover", function () {
+
+var caption = document.querySelector("#featured figcaption");
+
+caption.style.transition = "opacity 1.5s";
+caption.style.opacity = 0.8;
+
+caption.innerHTML = document.querySelector("#featured img").title;
+
+});
+
+// mouse out
+featured.addEventListener("mouseout", function () {
+
+var caption = document.querySelector("#featured figcaption");
+
+caption.style.transition = "opacity 1.5s";
+caption.style.opacity = 0;
+
+});
+
+});
+</script>
+
+</body>
+</html>

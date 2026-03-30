@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,width=device-width">
+
+<title>Lab 9 - Shopping Cart</title>
+
+<style>
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+
+body {
+  background-color: #F5F5F5;
+  font-family: "Roboto", helvetica, arial, sans-serif;
+}
+
+div.title {
+  margin: auto;
+  max-width: 900px;
+  padding:5px;
+}
+
+.title h1 {
+   color: black;
+   font-size: 26px;
+   font-weight: 500;
+   text-transform:uppercase;
+}
+
+.table-fill {
+  background: white;
+  border-radius:3px;
+  border-collapse: collapse;
+  margin: auto;
+  max-width: 900px;
+  width: 100%;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+ 
+th {
+  color: white;
+  background: #EF6C00;
+  font-size:20px;
+  padding:20px;
+  text-align:left;
+}
+  
+tr {
+  border-top:1px solid #C1C3D1;
+}
+
+td {
+  padding:10px;
+  font-size:18px;
+  border-right:1px solid #C1C3D1;
+}
+
+td:last-child{
+border-right:none;
+}
+
+tr.totals td{
+background:#FFF3E0;
+text-align:right;
+}
+
+td.right{
+text-align:right;
+}
+
+td.center{
+text-align:center;
+}
+
+.focus td{
+color:#E65100;
+font-weight:500;
+}
+
+img{
+width:80px;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="title">
+<h1>Shopping Cart</h1>
+</div>
+
+<table class="table-fill">
+
+<thead>
+<tr>
+<th colspan="2">Product</th>
+<th>#</th>
+<th>Price</th>
+<th>Amount</th>
+</tr>
+</thead>
+
+<tbody>
+
+<script>
+// ================= DATA.JS =================
+var filenames = [
+"106020.jpg",
+"116010.jpg",
+"120010.jpg"
+];
+
+var titles = [
+"Girl with a Pearl Earring",
+"Artist Holding a Thistle",
+"Portrait of Eleanor of Toledo"
+];
+
+var quantities = [3,1,2];
+var prices = [80,125,75];
+
+// ================= FUNCTION.JS =================
+function outputCartRow(file,title,quantity,price,total){
+document.write("<tr>");
+document.write("<td><img src='images/"+file+"'></td>");
+document.write("<td>"+title+"</td>");
+document.write("<td class='center'>"+quantity+"</td>");
+document.write("<td class='right'>$"+price.toFixed(2)+"</td>");
+document.write("<td class='right'>$"+total.toFixed(2)+"</td>");
+document.write("</tr>");
+}
+
+function calculateTotal(quantity,price){
+return quantity * price;
+}
+
+function calculateTax(subtotal,rate){
+return subtotal * rate;
+}
+
+function calculateShipping(subtotal,threshold){
+if(subtotal > threshold){
+return 0;
+}else{
+return 40;
+}
+}
+
+function calculateGrandTotal(subtotal,tax,shipping){
+return subtotal + tax + shipping;
+}
+
+function outputCurrency(num){
+document.write("$"+num.toFixed(2));
+}
+
+// ================= LAB9.JS =================
+const tax_rate = 0.10;
+const shipping_threshold = 1000;
+
+var subtotal = 0;
+var tax = 0;
+var shipping = 0;
+var grand = 0;
+
+for (var i=0; i<titles.length; i++){
+let total = calculateTotal(quantities[i], prices[i]);
+subtotal += total;
+
+outputCartRow(
+filenames[i],
+titles[i],
+quantities[i],
+prices[i],
+total
+);
+}
+
+tax = calculateTax(subtotal, tax_rate);
+shipping = calculateShipping(subtotal, shipping_threshold);
+grand = calculateGrandTotal(subtotal, tax, shipping);
+
+</script>
+
+<tr class="totals">
+<td colspan="4">Subtotal</td>
+<td><script>outputCurrency(subtotal);</script></td>
+</tr>
+
+<tr class="totals">
+<td colspan="4">Tax</td>
+<td><script>outputCurrency(tax);</script></td>
+</tr>
+
+<tr class="totals">
+<td colspan="4">Shipping</td>
+<td><script>outputCurrency(shipping);</script></td>
+</tr>
+
+<tr class="totals focus">
+<td colspan="4">Grand Total</td>
+<td><script>outputCurrency(grand);</script></td>
+</tr>
+
+</tbody>
+</table>
+
+</body>
+</html>
