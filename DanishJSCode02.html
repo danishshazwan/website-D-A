@@ -1,199 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>F1 Fan Registration</title>
 
 <style>
+body { font-family: Arial, sans-serif; background-color: #f7f7f7; padding-top: 50px; }
 
-/* ===== BODY ===== */
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    background:#e6e6e6;
-    margin:0;
+.outer-wrapper { width: 550px; margin: auto; position: relative; }
+
+.form-title {
+    background: #666; color: white; width: fit-content;
+    padding: 5px 40px; margin: 0 auto; font-size: 1.3em;
+    position: relative; top: 15px; z-index: 10;
 }
 
-/* ===== CONTAINER ===== */
-.container{
-    width:700px;
-    margin:40px auto;
-    background:#f5f5f5;
-    border:1px solid #999;
-    padding:20px 30px;
+.main-box {
+    border: 1px solid #ccc; background: #fdfdfd;
+    padding-top: 25px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
 }
 
-/* ===== HEADER ===== */
-.header{
-    background:#666;
-    color:white;
-    text-align:center;
-    font-size:26px;
-    padding:10px;
-    margin:-20px -30px 20px -30px;
-    font-weight:bold;
+label { display: block; margin: 10px 20px 2px 20px; font-size: 0.85em; }
+
+input[type="text"], input[type="email"], input[type="password"], select {
+    margin: 0 20px; width: calc(100% - 40px);
+    border: 1px solid #999; padding: 5px;
 }
 
-/* ===== LABEL ===== */
-label{
-    display:block;
-    margin-top:15px;
-    font-size:14px;
+.content-layout { display: flex; padding: 10px 20px; gap: 15px; }
+.left-side { flex: 1.2; }
+.right-side { flex: 1.8; }
+
+.left-side input, .left-side select { margin: 0; width: 100%; }
+.left-side label { margin: 8px 0 2px 0; }
+
+fieldset { border: 1px solid #ccc; background: white; margin-bottom: 10px; font-size: 0.85em; padding:10px; }
+.radio-label { display: inline; margin: 0; font-size: 1em; }
+
+/* Validation */
+.error {
+    background-color: #ffcdd2 !important;
+    border: 1px solid #b71c1c !important;
+    background-image: url('https://cdn-icons-png.flaticon.com/16/753/753345.png'); 
+    background-repeat: no-repeat;
+    background-position: right 8px center;
 }
 
-/* ===== INPUT ===== */
-input, select{
-    width:100%;
-    padding:8px;
-    margin-top:5px;
-    border:1px solid #999;
-    background:white;
-    font-size:14px;
-}
+.highlight { background-color: #fffde7 !important; }
 
-/* ===== FLEX ROW ===== */
-.row{
-    display:flex;
-    gap:20px;
-}
+.form-footer { background: #bbb; padding: 10px; text-align: center; margin-top: 20px; }
 
-/* ===== SMALL INPUT ===== */
-.small{
-    width:120px;
+.btn-orange { 
+    background: #ff9800; 
+    border: 1px solid #333; 
+    padding: 5px 20px; 
+    font-weight: bold; 
+    cursor: pointer; 
 }
-
-/* ===== BOX (TYPE & CHECKBOX) ===== */
-.box{
-    border:1px solid #999;
-    padding:10px;
-    margin-top:15px;
-    background:#fff;
-}
-
-/* ===== BUTTON AREA ===== */
-.button-area{
-    margin-top:20px;
-    background:#ccc;
-    padding:15px;
-    text-align:center;
-}
-
-/* ===== BUTTON ===== */
-button{
-    padding:8px 20px;
-    margin:5px;
-    background:orange;
-    border:1px solid #333;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-button:hover{
-    background:#ff9900;
-}
-
-/* ===== ERROR ===== */
-.error{
-    border:2px solid red;
-    background:#ffd6d6;
-}
-
-/* ===== HIGHLIGHT ===== */
-.highlight{
-    background:#dbeafe;
-}
-
 </style>
 
 </head>
 
 <body>
 
-<div class="container">
+<div class="outer-wrapper">
+    <h2 class="form-title">F1 Fan Registration</h2>
+    
+    <div class="main-box">
+        <form id="mainForm">
 
-<div class="header">F1 Fan Registration</div>
+            <label>Full Name</label>
+            <input type="text" class="required hilightable">
 
-<form id="mainForm">
+            <label>Email</label>
+            <input type="email" class="required hilightable">
 
-<label>Full Name</label>
-<input type="text" class="required hilightable">
+            <div class="content-layout">
 
-<label>Email</label>
-<input type="email" class="required hilightable">
+                <div class="left-side">
 
-<div class="row">
+                    <label>Favourite Driver</label>
+                    <select class="required hilightable">
+                        <option value="">Select Driver</option>
+                        <option>Max Verstappen</option>
+                        <option>Lewis Hamilton</option>
+                        <option>Charles Leclerc</option>
+                        <option>Lando Norris</option>
+                        <option>Fernando Alonso</option>
+                    </select>
 
-<div style="flex:1;">
-<label>Favourite Driver</label>
-<select class="required hilightable">
-<option value="">Select Driver</option>
-<option>Max Verstappen</option>
-<option>Lewis Hamilton</option>
-<option>Charles Leclerc</option>
-<option>Lando Norris</option>
-<option>Fernando Alonso</option>
-</select>
+                    <label>Country</label>
+                    <select id="country" class="required hilightable">
+                        <option value="">Select Country</option>
+                    </select>
 
-<label>Country</label>
-<select id="country" class="required hilightable">
-<option value="">Select Country</option>
-</select>
+                    <label>Password</label>
+                    <input type="password" class="required hilightable">
 
-<label>Password</label>
-<input type="password" class="required hilightable">
+                    <label>Year</label>
+                    <input type="text" class="required hilightable">
 
-<label>Year</label>
-<input type="text" class="required hilightable small">
+                </div>
 
-</div>
+                <div class="right-side">
 
-<div style="flex:1;">
+                    <fieldset>
+                        <legend>Type</legend>
+                        <input type="radio" name="type"> Casual Fan<br>
+                        <input type="radio" name="type"> Hardcore Fan
+                    </fieldset>
 
-<div class="box">
-<strong>Type</strong><br>
-<input type="radio" name="type"> Casual Fan<br>
-<input type="radio" name="type"> Hardcore Fan
-</div>
+                    <fieldset>
+                        <legend>F1 Interests</legend>
+                        <input type="checkbox"> Racing<br>
+                        <input type="checkbox"> Strategy<br>
+                        <input type="checkbox"> Drivers<br>
+                        <input type="checkbox"> Teams
+                    </fieldset>
 
-<div class="box">
-<strong>F1 Interests</strong><br>
-<input type="checkbox"> Racing<br>
-<input type="checkbox"> Strategy<br>
-<input type="checkbox"> Drivers<br>
-<input type="checkbox"> Teams
-</div>
+                </div>
 
-</div>
+            </div>
 
-</div>
+            <label>Favourite Circuit</label>
+            <input type="text" class="hilightable">
 
-<label>Museum / Favorite Circuit</label>
-<input type="text" class="hilightable">
+            <div class="form-footer">
+                <button type="submit" class="btn-orange">Submit</button>
+                <button type="reset" class="btn-orange">Clear Form</button>
+            </div>
 
-<div class="button-area">
-<button type="submit">Submit</button>
-<button type="reset">Clear Form</button>
-</div>
-
-</form>
-
+        </form>
+    </div>
 </div>
 
 <script>
 
-// ===== COUNTRY LIST =====
+// COUNTRY LIST
 const countries = ["Malaysia","Singapore","Indonesia","Thailand","Japan","UK","USA","Australia"];
 
-// check kosong
 function isBlank(input){
     return input.value.trim() === "";
 }
 
-// buang error
 function makeClean(el){
     el.classList.remove("error");
 }
 
-// load
 window.addEventListener("load", function(){
 
     const countrySelect = document.getElementById("country");
@@ -205,18 +158,15 @@ window.addEventListener("load", function(){
         countrySelect.appendChild(opt);
     });
 
-    // highlight
     document.querySelectorAll(".hilightable").forEach(input=>{
         input.addEventListener("focus", e=> e.target.classList.add("highlight"));
         input.addEventListener("blur", e=> e.target.classList.remove("highlight"));
     });
 
-    // remove error bila ubah
     document.querySelectorAll(".required").forEach(input=>{
         input.addEventListener("change", e=> makeClean(e.target));
     });
 
-    // validation
     document.getElementById("mainForm").addEventListener("submit", function(e){
 
         let valid = true;
