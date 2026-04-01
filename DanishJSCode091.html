@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedai Pakaian Amanah Rakyat</title>
+    <script src="https://kit.fontawesome.com/5500485196.js" crossorigin="anonymous"></script>
+    
+    <style>
+        /* Gaya CSS (Gantikan kandungan style.css yang silap tadi) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            text-align: center;
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .utama {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pertama {
+            flex: 2;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .kedua {
+            flex: 1;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            min-width: 300px;
+            height: fit-content;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
+
+        button.beli {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button.beli:hover {
+            background-color: #219150;
+        }
+
+        .troli-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        button.buang {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .jumlah {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #2c3e50;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2em;
+        }
+
+        .bold {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Kedai Pakaian Amanah Rakyat</h1>
+    </header>
+
+    <div class="utama">
+        <div class="pertama">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pakaian</th>
+                        <th>Harga</th>
+                        <th>Tindakan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Baju Melayu</td>
+                        <td>RM120</td>
+                        <td>
+                            <button class="beli" onclick="tambahData({nama:'Baju Melayu', harga:120})">
+                                <i class="fa-solid fa-cart-shopping"></i> Beli
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Sampin</td>
+                        <td>RM90</td>
+                        <td>
+                            <button class="beli" onclick="tambahData({nama:'Sampin', harga:90})">
+                                <i class="fa-solid fa-cart-shopping"></i> Beli
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Songkok</td>
+                        <td>RM50</td>
+                        <td>
+                            <button class="beli" onclick="tambahData({nama:'Songkok', harga:50})">
+                                <i class="fa-solid fa-cart-shopping"></i> Beli
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kurta</td>
+                        <td>RM100</td>
+                        <td>
+                            <button class="beli" onclick="tambahData({nama:'Kurta', harga:100})">
+                                <i class="fa-solid fa-cart-shopping"></i> Beli
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Kopiah</td>
+                        <td>RM30</td>
+                        <td>
+                            <button class="beli" onclick="tambahData({nama:'Kopiah', harga:30})">
+                                <i class="fa-solid fa-cart-shopping"></i> Beli
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="kedua">
+            <h3><i class="fa-solid fa-basket-shopping"></i> Troli Anda</h3>
+            <div class="kandungan-kedua" id="troli">
+                <p style="color: #888;">Troli masih kosong.</p>
+            </div>
+
+            <div class="jumlah">
+                <p>Total:</p>
+                <div id="jumlah">
+                    <p class="bold">RM0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Logik JavaScript (Asal daripada index.js)
+        let data = {}
+        let hasil = 0
+
+        let troli = document.querySelector("#troli")
+        let jumlahPaparan = document.querySelector('#jumlah')
+
+        function tambahData(dapatkanBarang){
+            if(dapatkanBarang.nama in data){
+                data[dapatkanBarang.nama].jumlah++
+            } else {
+                data[dapatkanBarang.nama] = {
+                    harga: dapatkanBarang.harga,
+                    jumlah: 1  
+                }
+            }
+            kiraHasil()
+            renderTroli()
+            paparJumlah()
+        }
+
+        function paparJumlah(){
+            kosongkanElemen(jumlahPaparan)
+            let p = document.createElement("p")
+            p.classList.add("bold")
+            p.innerHTML = `RM${hasil}`
+            jumlahPaparan.appendChild(p)
+        }
+
+        function buangBarang(barangUntukDibuang){
+            delete data[barangUntukDibuang]
+            kiraHasil()
+            renderTroli()
+            paparJumlah()
+        }
+
+        function kiraHasil(){
+            hasil = 0
+            for(let key in data){
+                hasil += data[key].harga * data[key].jumlah
+            }
+        }
+
+        function renderTroli(){
+            kosongkanElemen(troli)
+            
+            // Jika troli kosong
+            if (Object.keys(data).length === 0) {
+                troli.innerHTML = '<p style="color: #888;">Troli masih kosong.</p>';
+                return;
+            }
+
+            for(let key in data){
+                let itemContainer = document.createElement("div")
+                itemContainer.classList.add("troli-item")
+
+                let div_barang = document.createElement("span")  
+                div_barang.innerHTML = `<strong>${key}</strong> <br><small>RM${data[key].harga} x ${data[key].jumlah}</small>`
+
+                let butang = document.createElement("button")
+                butang.classList.add("buang")
+                butang.setAttribute("onclick", `buangBarang('${key}')`)
+
+                let i = document.createElement("i")
+                i.classList.add("fas", "fa-trash")
+                butang.appendChild(i)
+                butang.insertAdjacentHTML("beforeend", " <span>Buang</span>")
+
+                itemContainer.appendChild(div_barang)
+                itemContainer.appendChild(butang)
+                troli.appendChild(itemContainer)
+            }
+        }
+
+        function kosongkanElemen(elemen) {
+            while(elemen.firstChild){
+                elemen.removeChild(elemen.firstChild)
+            }
+        }
+    </script>
+</body>
+</html>
