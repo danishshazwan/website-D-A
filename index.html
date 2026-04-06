@@ -463,112 +463,16 @@ nav{
   border:1px solid rgba(255,200,0,0.2);
   color:var(--y);
 }
+.badge-prog{
+  background:rgba(0,242,254,0.08);
+  border:1px solid rgba(0,242,254,0.3);
+  color:var(--c);
+}
 .mod-card[data-mod="html"]{--accent:#e44d26;}
 .mod-card[data-mod="css"]{--accent:#264de4;}
 .mod-card[data-mod="js"]{--accent:#f7df1e;}
 .mod-card[data-mod="jq"]{--accent:#0769ad;}
 .mod-card[data-mod="ls"]{--accent:#00ff88;}
-
-/* ===== TEAM SECTION ===== */
-.team-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:40px;
-}
-.team-card{
-  position:relative;
-  border-radius:24px;
-  border:1px solid rgba(0,242,254,0.1);
-  background:rgba(0,0,0,0.3);
-  overflow:hidden;
-  backdrop-filter:blur(10px);
-  transition:0.4s;
-  cursor:none;
-}
-.team-card:hover{
-  border-color:rgba(0,242,254,0.3);
-  box-shadow:0 30px 80px rgba(0,0,0,0.5),0 0 40px rgba(0,242,254,0.08);
-  transform:translateY(-6px);
-}
-.team-card::before{
-  content:'';position:absolute;
-  top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--c),var(--b),transparent);
-}
-.team-inner{display:flex;gap:0;}
-.team-img-wrap{
-  width:200px;flex-shrink:0;
-  position:relative;overflow:hidden;
-}
-.team-img-wrap img{
-  width:100%;height:100%;object-fit:cover;
-  transition:0.5s;filter:saturate(0.7);
-}
-.team-card:hover .team-img-wrap img{
-  filter:saturate(1.1);transform:scale(1.05);
-}
-.team-img-wrap::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent 60%,rgba(0,0,0,0.8));
-}
-/* scan line on hover */
-.team-img-wrap::before{
-  content:'';position:absolute;
-  top:-100%;left:0;width:100%;height:3px;
-  background:linear-gradient(90deg,transparent,rgba(0,242,254,0.8),transparent);
-  z-index:2;transition:0s;
-}
-.team-card:hover .team-img-wrap::before{
-  animation:scanTeam 1.5s linear infinite;
-}
-@keyframes scanTeam{from{top:-5px;}to{top:105%;}}
-.team-info{
-  flex:1;padding:32px 28px;
-  display:flex;flex-direction:column;justify-content:center;
-  gap:14px;
-}
-.team-initials{
-  width:44px;height:44px;border-radius:50%;
-  background:linear-gradient(135deg,var(--c),var(--b));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Orbitron',sans-serif;font-size:0.8rem;
-  font-weight:900;color:#000;
-  box-shadow:0 0 20px rgba(0,242,254,0.4);
-}
-.team-name{
-  font-family:'Orbitron',sans-serif;
-  font-size:0.65rem;color:var(--c);
-  letter-spacing:2px;line-height:1.6;
-  text-shadow:0 0 10px rgba(0,242,254,0.3);
-}
-.team-role{
-  display:inline-block;
-  padding:5px 14px;border-radius:20px;
-  background:rgba(0,242,254,0.06);
-  border:1px solid rgba(0,242,254,0.15);
-  font-size:0.62rem;letter-spacing:2px;
-  color:rgba(0,242,254,0.6);
-  align-self:flex-start;
-}
-.team-bio{
-  font-size:0.8rem;line-height:1.8;
-  color:rgba(255,255,255,0.4);
-}
-.team-socials{display:flex;gap:10px;}
-.social-btn{
-  width:36px;height:36px;border-radius:50%;
-  border:1px solid rgba(0,242,254,0.2);
-  background:rgba(0,242,254,0.04);
-  display:flex;align-items:center;justify-content:center;
-  text-decoration:none;transition:0.3s;cursor:none;
-}
-.social-btn:hover{
-  background:var(--c);border-color:var(--c);
-  transform:translateY(-3px);
-  box-shadow:0 6px 20px rgba(0,242,254,0.35);
-}
-.social-btn svg{width:16px;height:16px;fill:rgba(255,255,255,0.6);transition:0.3s;}
-.social-btn:hover svg{fill:#000;}
 
 /* ===== CTA SECTION ===== */
 .cta-section{
@@ -659,7 +563,6 @@ footer{
 .delay-4{transition-delay:0.4s;}
 .delay-5{transition-delay:0.5s;}
 
-/* glitch animation for title */
 @keyframes titleGlitch{
   0%,94%,100%{clip-path:none;}
   95%{clip-path:polygon(0 25%,100% 25%,100% 45%,0 45%);transform:translate(-3px);}
@@ -671,11 +574,8 @@ footer{
   .hero-inner{grid-template-columns:1fr;gap:40px;text-align:center;}
   #globe-canvas{width:280px;height:280px;}
   .modules-grid{grid-template-columns:repeat(3,1fr);}
-  .team-grid{grid-template-columns:1fr;}
   .stats-inner{grid-template-columns:repeat(3,1fr);}
   .hero-right{order:-1;}
-  .team-inner{flex-direction:column;}
-  .team-img-wrap{width:100%;height:200px;}
 }
 </style>
 </head>
@@ -772,8 +672,9 @@ footer{
       <span class="stat-n" data-target="5">0</span>
       <span class="stat-l">MODULES</span>
     </div>
+    <!-- UPDATED: 28 → 30 -->
     <div class="stat-box reveal delay-3">
-      <span class="stat-n" data-target="28">0</span>
+      <span class="stat-n" data-target="30">0</span>
       <span class="stat-l">JOBSHEETS</span>
     </div>
     <div class="stat-box reveal delay-4">
@@ -804,11 +705,12 @@ footer{
       <span class="mod-sub">STYLING · ANIMATION</span>
       <span class="mod-badge badge-done">✓ COMPLETED</span>
     </a>
+    <!-- UPDATED: JavaScript → IN PROGRESS -->
     <a href="jobsheet.html" class="mod-card reveal delay-3" data-mod="js">
       <span class="mod-icon">⚡</span>
       <span class="mod-name">JAVASCRIPT</span>
       <span class="mod-sub">LOGIC · DOM</span>
-      <span class="mod-badge badge-pend">◌ UPCOMING</span>
+      <span class="mod-badge badge-prog">◎ IN PROGRESS</span>
     </a>
     <a href="jobsheet.html" class="mod-card reveal delay-4" data-mod="jq">
       <span class="mod-icon">🔗</span>
@@ -831,8 +733,9 @@ footer{
   <div class="cta-inner">
     <p class="cta-sub reveal">READY TO EXPLORE</p>
     <h2 class="cta-title reveal delay-1">ACCESS OUR WORK</h2>
+    <!-- UPDATED: 28 → 30 -->
     <p class="cta-desc reveal delay-2">
-      Dive into 28 jobsheets spanning HTML, CSS, JavaScript, jQuery and LocalStorage.
+      Dive into 30 jobsheets spanning HTML, CSS, JavaScript, jQuery and LocalStorage.
       Every project crafted with precision and passion.
     </p>
     <a href="jobsheet.html" class="cta-btn reveal delay-3">
@@ -853,7 +756,7 @@ const cur=document.getElementById('cur'),curR=document.getElementById('curR');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
 (function animR(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(animR);})();
-document.querySelectorAll('a,button,.mod-card,.team-card,.stat-box').forEach(el=>{
+document.querySelectorAll('a,button,.mod-card,.stat-box').forEach(el=>{
   el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';curR.style.width='60px';curR.style.height='60px';curR.style.borderColor='rgba(0,242,254,0.6)';});
   el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';curR.style.width='36px';curR.style.height='36px';curR.style.borderColor='rgba(0,242,254,0.4)';});
 });
@@ -921,7 +824,7 @@ drawWormhole();
 const gCv=document.getElementById('globe-canvas');const gCtx=gCv.getContext('2d');
 const GW=420,GH=420,GR=160,gcx=GW/2,gcy=GH/2;
 let gAngle=0;
-const GN=180; // latitude lines count
+const GN=180;
 const gPoints=[];
 for(let i=0;i<GN;i++){
   const lat=(Math.random()-0.5)*Math.PI;
@@ -931,7 +834,6 @@ for(let i=0;i<GN;i++){
     alpha:0.4+Math.random()*0.6
   });
 }
-// orbit paths
 const orbits=[
   {tilt:0.3,speed:0.008,r:GR+30,phase:0,col:'rgba(0,242,254,0.5)',sat:'🛰️'},
   {tilt:-0.5,speed:0.013,r:GR+55,phase:2,col:'rgba(0,255,136,0.5)',sat:'⭐'},
@@ -939,14 +841,12 @@ const orbits=[
 ];
 function drawGlobe(){
   gCtx.clearRect(0,0,GW,GH);
-  // ambient glow
   const grad=gCtx.createRadialGradient(gcx,gcy,0,gcx,gcy,GR);
   grad.addColorStop(0,'rgba(0,40,80,0.4)');
   grad.addColorStop(0.7,'rgba(0,15,40,0.5)');
   grad.addColorStop(1,'rgba(0,0,20,0.8)');
   gCtx.beginPath();gCtx.arc(gcx,gcy,GR,0,Math.PI*2);
   gCtx.fillStyle=grad;gCtx.fill();
-  // grid lines (lat/lon)
   gCtx.save();
   for(let lat=-80;lat<=80;lat+=20){
     const y=Math.sin(lat*Math.PI/180);
@@ -965,7 +865,6 @@ function drawGlobe(){
     gCtx.strokeStyle=`rgba(0,242,254,${0.03+Math.abs(x)*0.05})`;
     gCtx.lineWidth=0.5;gCtx.stroke();
   }
-  // dots on globe
   gPoints.forEach(p=>{
     const lon2=p.lon+gAngle;
     const x3D=Math.cos(p.lat)*Math.sin(lon2);
@@ -979,17 +878,14 @@ function drawGlobe(){
     gCtx.fillStyle=`hsla(${p.hue},100%,70%,${p.alpha*brightness})`;
     gCtx.fill();
   });
-  // globe rim glow
   const rimGrad=gCtx.createRadialGradient(gcx,gcy,GR-2,gcx,gcy,GR+2);
   rimGrad.addColorStop(0,'transparent');
   rimGrad.addColorStop(0.5,'rgba(0,242,254,0.3)');
   rimGrad.addColorStop(1,'transparent');
   gCtx.beginPath();gCtx.arc(gcx,gcy,GR,0,Math.PI*2);
   gCtx.strokeStyle=rimGrad;gCtx.lineWidth=3;gCtx.stroke();
-  // orbits
   orbits.forEach(o=>{
     o.phase+=o.speed;
-    // draw ellipse orbit path
     gCtx.save();
     gCtx.translate(gcx,gcy);
     gCtx.rotate(o.tilt);
@@ -999,7 +895,6 @@ function drawGlobe(){
     gCtx.lineWidth=1;gCtx.stroke();
     const sx=Math.cos(o.phase)*o.r;
     const sy=Math.sin(o.phase)*o.r*0.25;
-    // satellite glow
     gCtx.shadowBlur=15;gCtx.shadowColor=o.col;
     gCtx.font='14px serif';gCtx.textAlign='center';gCtx.textBaseline='middle';
     gCtx.fillText(o.sat,sx,sy);
@@ -1028,16 +923,14 @@ function initReveal(){
     entries.forEach(e=>{
       if(e.isIntersecting){
         e.target.classList.add('visible');
-        // trigger counters
         if(e.target.querySelector('.stat-n')){
-          e.target.querySelector('.stat-n') && animCounter(e.target.querySelector('.stat-n'));
+          animCounter(e.target.querySelector('.stat-n'));
         }
         obs.unobserve(e.target);
       }
     });
   },{threshold:0.15});
   document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>obs.observe(el));
-  // trigger hero immediately
   setTimeout(()=>{
     document.querySelectorAll('.hero .reveal,.hero .reveal-left,.hero .reveal-right').forEach(el=>el.classList.add('visible'));
   },200);
@@ -1049,7 +942,6 @@ setInterval(()=>{
   if(t){t.style.animation='titleGlitch 0.3s ease';setTimeout(()=>t.style.animation='',350);}
 },6000);
 
-/* RESIZE */
 window.addEventListener('resize',()=>{wCv.width=innerWidth;wCv.height=innerHeight;});
 </script>
 </body>
