@@ -72,6 +72,8 @@ body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(
 .mb{display:inline-block;padding:3px 11px;border-radius:20px;font-size:.54rem;letter-spacing:1px;font-weight:700;}
 .bd{background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.28);color:var(--g);}
 .bp{background:rgba(255,90,90,.06);border:1px solid rgba(255,90,90,.2);color:#ff7070;}
+/* UPDATED: in-progress badge */
+.bi{background:rgba(0,242,254,.07);border:1px solid rgba(0,242,254,.3);color:var(--c);}
 /* SECTION TITLE */
 .sttl{font-family:'Orbitron';text-align:center;color:var(--c);letter-spacing:10px;margin:100px 0 50px;opacity:0;transform:translateY(30px);transition:1s ease;font-size:clamp(.82rem,2vw,1rem);}
 .sttl.show{opacity:1;transform:translateY(0);}
@@ -99,7 +101,7 @@ body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(
 .sf.jq{background:rgba(7,105,173,.4);}
 .sf.st{background:rgba(0,255,136,.3);}
 .snote{font-size:.58rem;margin-top:4px;letter-spacing:1px;}
-.snote.ok{color:var(--g);}.snote.no{color:rgba(255,100,100,.55);}
+.snote.ok{color:var(--g);}.snote.no{color:rgba(255,100,100,.55);}.snote.prog{color:var(--c);}
 /* RADAR */
 .radsec{display:flex;flex-direction:column;align-items:center;gap:14px;}
 .radleg{display:flex;gap:18px;font-family:'Orbitron';font-size:.56rem;letter-spacing:2px;}
@@ -113,14 +115,16 @@ body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(
 .tli.show{opacity:1;transform:translateX(0);}
 .tld{position:absolute;left:-24px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c);border:2px solid var(--bg);}
 .tld.pend{background:rgba(255,90,90,.4);box-shadow:0 0 7px rgba(255,90,90,.3);}
+.tld.prog{background:var(--c);box-shadow:0 0 14px var(--c);animation:blink 1.2s infinite;}
 .tldt{font-family:'Orbitron';font-size:.54rem;color:rgba(0,242,254,.42);letter-spacing:2px;margin-bottom:4px;}
 .tltit{font-family:'Orbitron';font-size:.78rem;color:white;letter-spacing:2px;margin-bottom:3px;}
 .tldesc{font-size:.72rem;color:rgba(255,255,255,.4);line-height:1.7;}
 .tltag{display:inline-block;margin-top:6px;padding:2px 9px;border-radius:9px;font-size:.52rem;letter-spacing:1px;}
 .tdone{background:rgba(0,255,136,.07);border:1px solid rgba(0,255,136,.22);color:var(--g);}
 .tpend{background:rgba(255,90,90,.05);border:1px solid rgba(255,90,90,.16);color:#ff8080;}
+.tprog{background:rgba(0,242,254,.07);border:1px solid rgba(0,242,254,.3);color:var(--c);}
 
-/* ===== JOBSHEET OVERLAY - REDESIGNED ===== */
+/* ===== JOBSHEET OVERLAY ===== */
 #jo{
   position:fixed;inset:0;
   background:rgba(0,0,0,.88);
@@ -147,8 +151,6 @@ body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(
   overflow:hidden;
 }
 .jc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--c),var(--b),transparent);border-radius:24px 24px 0 0;}
-
-/* X Close Button */
 .j-close{
   position:absolute;top:14px;right:16px;
   width:32px;height:32px;
@@ -163,25 +165,17 @@ body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(
   z-index:10;
 }
 .j-close:hover{background:rgba(255,50,50,.15);border-color:rgba(255,80,80,.4);color:#ff8080;}
-
-/* Header */
 .jh{text-align:center;padding-bottom:10px;border-bottom:1px solid rgba(0,242,254,.08);}
 .jt{font-family:'Orbitron';color:var(--c);letter-spacing:5px;font-size:1rem;margin-bottom:2px;}
 .jsub{font-size:.52rem;color:rgba(0,242,254,.28);letter-spacing:3px;}
-
-/* Module dots indicator */
 .j-dots{display:flex;justify-content:center;gap:8px;}
 .j-dot{width:8px;height:8px;border-radius:50%;background:rgba(0,242,254,.15);border:1px solid rgba(0,242,254,.2);transition:.3s;cursor:pointer!important;}
 .j-dot.active{background:var(--c);box-shadow:0 0 8px var(--c);}
-
-/* Overall bar */
 .ovbox{padding:12px 16px;background:rgba(0,242,254,.03);border-radius:12px;border:1px solid rgba(0,242,254,.06);text-align:center;}
 .ovlbl{font-family:'Orbitron';font-size:.5rem;color:rgba(0,242,254,.42);letter-spacing:3px;margin-bottom:7px;}
 .ovbg{width:100%;height:9px;background:rgba(255,255,255,.03);border-radius:10px;overflow:hidden;}
 .ovf{height:100%;background:linear-gradient(90deg,var(--c),var(--b),var(--g));width:0%;transition:1.5s cubic-bezier(.1,0,.2,1);box-shadow:0 0 9px var(--c);}
 .ovn{font-family:'Orbitron';font-size:1.6rem;color:var(--c);margin-top:6px;}
-
-/* Member progress */
 .members-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .pb{padding:12px;background:rgba(0,0,0,.26);border-radius:12px;border:1px solid rgba(0,242,254,.055);}
 .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
@@ -199,11 +193,7 @@ body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(
 .td2.done{background:var(--g);box-shadow:0 0 5px var(--g);}
 .td2.prog{background:var(--y);}
 .td2.pend{background:rgba(255,90,90,.42);}
-
-/* Radar */
 .rdwrap{display:flex;justify-content:center;}
-
-/* NAV ARROWS */
 .j-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:2px;}
 .j-arr{
   display:flex;align-items:center;gap:6px;
@@ -284,19 +274,14 @@ footer{text-align:center;padding:55px 20px;color:rgba(0,242,254,.16);font-size:.
 <div class="hud"><div class="ht" id="ht">00:00:00</div><div id="hd">MON 01 JAN 2026</div></div>
 <div class="hbot"><div><span class="hd"></span>SYSTEM ONLINE</div><div style="color:rgba(0,242,254,.1);font-size:.46rem;">SESSION ACTIVE</div></div>
 
-<!-- ===== JOBSHEET OVERLAY REDESIGNED ===== -->
+<!-- JOBSHEET OVERLAY -->
 <div id="jo">
   <div class="jc">
-    <!-- X Close -->
     <button class="j-close" onclick="closeJ()">✕</button>
-
-    <!-- Header -->
     <div class="jh">
       <div class="jt" id="jt">HTML5 MODULE</div>
       <div class="jsub">JOBSHEET PROGRESS TRACKER</div>
     </div>
-
-    <!-- Dot indicators -->
     <div class="j-dots">
       <div class="j-dot active" onclick="goMod(0)" title="HTML5"></div>
       <div class="j-dot" onclick="goMod(1)" title="CSS3"></div>
@@ -304,18 +289,12 @@ footer{text-align:center;padding:55px 20px;color:rgba(0,242,254,.16);font-size:.
       <div class="j-dot" onclick="goMod(3)" title="jQuery"></div>
       <div class="j-dot" onclick="goMod(4)" title="Web Storage"></div>
     </div>
-
-    <!-- Overall -->
     <div class="ovbox">
       <div class="ovlbl">OVERALL COMPLETION</div>
       <div class="ovbg"><div class="ovf" id="ovf"></div></div>
       <div class="ovn" id="ovn">0%</div>
     </div>
-
-    <!-- Radar -->
     <div class="rdwrap"><canvas id="rcv" width="160" height="160"></canvas></div>
-
-    <!-- Members -->
     <div class="members-row">
       <div class="pb">
         <div class="ph"><span class="pn">👾 DANISH</span><span class="pp" id="dp">0%</span></div>
@@ -330,8 +309,6 @@ footer{text-align:center;padding:55px 20px;color:rgba(0,242,254,.16);font-size:.
         <div class="tlist" id="at2"></div>
       </div>
     </div>
-
-    <!-- Prev / Next navigation -->
     <div class="j-nav">
       <button class="j-arr" id="j-prev" onclick="navMod(-1)">◀ PREV</button>
       <div class="j-arr-mid" id="j-mid">1 / 5</div>
@@ -373,24 +350,27 @@ footer{text-align:center;padding:55px 20px;color:rgba(0,242,254,.16);font-size:.
   <div class="mc" id="ab">
     <h2 style="font-family:'Orbitron';color:var(--c);letter-spacing:5px;margin-bottom:5px;font-size:1.05rem;">CORE ARCHITECTURE</h2>
     <p style="color:rgba(0,242,254,.26);font-size:.56rem;letter-spacing:2px;margin-bottom:12px;">CLICK MODULE → VIEW JOBSHEET PROGRESS</p>
-    <p style="color:rgba(255,255,255,.6);line-height:1.7;font-size:.86rem;max-width:660px;margin:0 auto;">A digital learning platform built with five core web technologies. Two modules completed, three more incoming.</p>
+    <p style="color:rgba(255,255,255,.6);line-height:1.7;font-size:.86rem;max-width:660px;margin:0 auto;">A digital learning platform built with five core web technologies. Two modules completed, JavaScript in progress.</p>
     <div class="mgrid">
       <div class="mi" id="mod-0" onclick="openJ(0)"><h4>HTML5</h4><p>Structure</p><span class="mb bd">✓ COMPLETED</span></div>
       <div class="mi" id="mod-1" onclick="openJ(1)"><h4>CSS3</h4><p>Styling</p><span class="mb bd">✓ COMPLETED</span></div>
-      <div class="mi" id="mod-2" onclick="openJ(2)"><h4>JAVASCRIPT</h4><p>Logic</p><span class="mb bp">◌ NOT STARTED</span></div>
-      <div class="mi" id="mod-3" onclick="openJ(3)"><h4>JQUERY</h4><p>DOM</p><span class="mb bp">◌ NOT STARTED</span></div>
-      <div class="mi" id="mod-4" onclick="openJ(4)"><h4>WEB STORAGE</h4><p>Data</p><span class="mb bp">◌ NOT STARTED</span></div>
+      <!-- UPDATED: JavaScript → IN PROGRESS -->
+      <div class="mi" id="mod-2" onclick="openJ(2)"><h4>JAVASCRIPT</h4><p>Logic</p><span class="mb bi">◎ IN PROGRESS</span></div>
+      <div class="mi" id="mod-3" onclick="openJ(3)"><h4>JQUERY</h4><p>DOM</p><span class="mb bp">◌ UPCOMING</span></div>
+      <div class="mi" id="mod-4" onclick="openJ(4)"><h4>WEB STORAGE</h4><p>Data</p><span class="mb bp">◌ UPCOMING</span></div>
     </div>
   </div>
 </section>
-<!-- COUNTER STATS -->
+
+<!-- COUNTER STATS — UPDATED: 28 → 30 -->
 <div class="srow" id="srow">
   <div class="sbox"><span class="snum" data-t="2">0</span><div class="slbl">TEAM MEMBERS</div></div>
   <div class="sbox"><span class="snum" data-t="5">0</span><div class="slbl">MODULES TOTAL</div></div>
   <div class="sbox"><span class="snum" data-t="2">0</span><div class="slbl">COMPLETED</div></div>
   <div class="sbox"><span class="snum" data-t="3">0</span><div class="slbl">IN QUEUE</div></div>
 </div>
-<!-- SKILL MATRIX -->
+
+<!-- SKILL MATRIX — UPDATED: JS now in progress (60%) -->
 <h2 class="sttl" id="stsk">TEAM SKILL MATRIX</h2>
 <div class="skwrap">
   <div class="tabs">
@@ -402,23 +382,26 @@ footer{text-align:center;padding:55px 20px;color:rgba(0,242,254,.16);font-size:.
   <div class="panel active" id="t-all">
     <div class="sbw"><div class="slb"><span>HTML5</span><span class="spc">100%</span></div><div class="sbg"><div class="sf html" data-w="100"></div></div><div class="snote ok">✓ COMPLETED — BOTH MEMBERS</div></div>
     <div class="sbw"><div class="slb"><span>CSS3 / ANIMATIONS</span><span class="spc">100%</span></div><div class="sbg"><div class="sf css" data-w="100"></div></div><div class="snote ok">✓ COMPLETED — BOTH MEMBERS</div></div>
-    <div class="sbw"><div class="slb"><span>JAVASCRIPT</span><span class="spc">0%</span></div><div class="sbg"><div class="sf js" data-w="0"></div></div><div class="snote no">◌ NOT STARTED — BELUM BUAT</div></div>
-    <div class="sbw"><div class="slb"><span>JQUERY</span><span class="spc">0%</span></div><div class="sbg"><div class="sf jq" data-w="0"></div></div><div class="snote no">◌ NOT STARTED — BELUM BUAT</div></div>
-    <div class="sbw"><div class="slb"><span>WEB STORAGE</span><span class="spc">0%</span></div><div class="sbg"><div class="sf st" data-w="0"></div></div><div class="snote no">◌ NOT STARTED — BELUM BUAT</div></div>
+    <!-- UPDATED: JS 0% → 60% in progress -->
+    <div class="sbw"><div class="slb"><span>JAVASCRIPT</span><span class="spc">60%</span></div><div class="sbg"><div class="sf js" data-w="60"></div></div><div class="snote prog">◎ IN PROGRESS — JS 7, 8, 9, 9.1, 9.2 SUBMITTED</div></div>
+    <div class="sbw"><div class="slb"><span>JQUERY</span><span class="spc">0%</span></div><div class="sbg"><div class="sf jq" data-w="0"></div></div><div class="snote no">◌ UPCOMING — BELUM BUAT</div></div>
+    <div class="sbw"><div class="slb"><span>WEB STORAGE</span><span class="spc">0%</span></div><div class="sbg"><div class="sf st" data-w="0"></div></div><div class="snote no">◌ UPCOMING — BELUM BUAT</div></div>
   </div>
   <div class="panel" id="t-dan">
     <div class="sbw"><div class="slb"><span>HTML5</span><span class="spc">100%</span></div><div class="sbg"><div class="sf html" data-w="100"></div></div><div class="snote ok">✓ index.html · aboutus.html · jobsheet.html</div></div>
     <div class="sbw"><div class="slb"><span>CSS3</span><span class="spc">100%</span></div><div class="sbg"><div class="sf css" data-w="100"></div></div><div class="snote ok">✓ styles.css · animations.css · responsive.css</div></div>
-    <div class="sbw"><div class="slb"><span>JAVASCRIPT</span><span class="spc">0%</span></div><div class="sbg"><div class="sf js" data-w="0"></div></div><div class="snote no">◌ Pending: main.js · effects.js · interactivity.js</div></div>
-    <div class="sbw"><div class="slb"><span>JQUERY</span><span class="spc">0%</span></div><div class="sbg"><div class="sf jq" data-w="0"></div></div><div class="snote no">◌ Pending: carousel.js · animations.js · forms.js</div></div>
-    <div class="sbw"><div class="slb"><span>WEB STORAGE</span><span class="spc">0%</span></div><div class="sbg"><div class="sf st" data-w="0"></div></div><div class="snote no">◌ Pending: localStorage.js · sessionStorage.js</div></div>
+    <!-- UPDATED: JS in progress -->
+    <div class="sbw"><div class="slb"><span>JAVASCRIPT</span><span class="spc">60%</span></div><div class="sbg"><div class="sf js" data-w="60"></div></div><div class="snote prog">◎ JS7 · JS8 · JS9 · JS9.1 · JS9.2 — Submitted</div></div>
+    <div class="sbw"><div class="slb"><span>JQUERY</span><span class="spc">0%</span></div><div class="sbg"><div class="sf jq" data-w="0"></div></div><div class="snote no">◌ Upcoming: carousel.js · animations.js · forms.js</div></div>
+    <div class="sbw"><div class="slb"><span>WEB STORAGE</span><span class="spc">0%</span></div><div class="sbg"><div class="sf st" data-w="0"></div></div><div class="snote no">◌ Upcoming: localStorage.js · sessionStorage.js</div></div>
   </div>
   <div class="panel" id="t-dil">
     <div class="sbw"><div class="slb"><span>HTML5</span><span class="spc">100%</span></div><div class="sbg"><div class="sf html" data-w="100"></div></div><div class="snote ok">✓ index.html · aboutus.html · jobsheet.html</div></div>
     <div class="sbw"><div class="slb"><span>CSS3</span><span class="spc">100%</span></div><div class="sbg"><div class="sf css" data-w="100"></div></div><div class="snote ok">✓ styles.css · animations.css · responsive.css</div></div>
-    <div class="sbw"><div class="slb"><span>JAVASCRIPT</span><span class="spc">0%</span></div><div class="sbg"><div class="sf js" data-w="0"></div></div><div class="snote no">◌ Pending: events.js · validation.js · utils.js</div></div>
-    <div class="sbw"><div class="slb"><span>JQUERY</span><span class="spc">0%</span></div><div class="sbg"><div class="sf jq" data-w="0"></div></div><div class="snote no">◌ Pending: slider.js · tabs.js · modal.js</div></div>
-    <div class="sbw"><div class="slb"><span>WEB STORAGE</span><span class="spc">0%</span></div><div class="sbg"><div class="sf st" data-w="0"></div></div><div class="snote no">◌ Pending: localStorage.js · sessionStorage.js</div></div>
+    <!-- UPDATED: JS in progress -->
+    <div class="sbw"><div class="slb"><span>JAVASCRIPT</span><span class="spc">60%</span></div><div class="sbg"><div class="sf js" data-w="60"></div></div><div class="snote prog">◎ JS7 · JS8 · JS9 · JS9.1 · JS9.2 — Submitted</div></div>
+    <div class="sbw"><div class="slb"><span>JQUERY</span><span class="spc">0%</span></div><div class="sbg"><div class="sf jq" data-w="0"></div></div><div class="snote no">◌ Upcoming: slider.js · tabs.js · modal.js</div></div>
+    <div class="sbw"><div class="slb"><span>WEB STORAGE</span><span class="spc">0%</span></div><div class="sbg"><div class="sf st" data-w="0"></div></div><div class="snote no">◌ Upcoming: localStorage.js · sessionStorage.js</div></div>
   </div>
   <div class="panel" id="t-rad">
     <div class="radsec">
@@ -427,21 +410,25 @@ footer{text-align:center;padding:55px 20px;color:rgba(0,242,254,.16);font-size:.
         <div class="rli"><div class="rld" style="background:var(--c)"></div><span style="color:var(--c);font-family:'Orbitron';font-size:.56rem;letter-spacing:2px;">DANISH</span></div>
         <div class="rli"><div class="rld" style="background:var(--g)"></div><span style="color:var(--g);font-family:'Orbitron';font-size:.56rem;letter-spacing:2px;">NOR ADILAH</span></div>
       </div>
-      <p style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:2px;margin-top:6px;">HTML & CSS: 100% · JS / JQ / STORAGE: 0%</p>
+      <!-- UPDATED: JS now 60% -->
+      <p style="font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:2px;margin-top:6px;">HTML & CSS: 100% · JS: 60% · JQ / STORAGE: 0%</p>
     </div>
   </div>
 </div>
-<!-- TIMELINE -->
+
+<!-- TIMELINE — UPDATED: JS phase now in progress -->
 <h2 class="sttl" id="sttl">PROJECT TIMELINE</h2>
 <div class="tlsec">
   <div class="tl">
     <div class="tli"><div class="tld"></div><div class="tldt">PHASE 01 · 2026</div><div class="tltit">HTML STRUCTURE</div><div class="tldesc">Built all 3 pages — index, about us & jobsheet. Semantic markup & responsive skeleton done.</div><span class="tltag tdone">✓ COMPLETED</span></div>
     <div class="tli"><div class="tld"></div><div class="tldt">PHASE 02 · 2026</div><div class="tltit">CSS STYLING & ANIMATIONS</div><div class="tldesc">Full cyberpunk design, custom cursor, particles, lightning, flip cards, scanlines & glassmorphism.</div><span class="tltag tdone">✓ COMPLETED</span></div>
-    <div class="tli"><div class="tld pend"></div><div class="tldt">PHASE 03 · UPCOMING</div><div class="tltit">JAVASCRIPT LOGIC</div><div class="tldesc">Interactive features, form handling, dynamic content & DOM manipulation dengan vanilla JS.</div><span class="tltag tpend">◌ NOT STARTED</span></div>
+    <!-- UPDATED: JS phase → IN PROGRESS -->
+    <div class="tli"><div class="tld prog"></div><div class="tldt">PHASE 03 · IN PROGRESS</div><div class="tltit">JAVASCRIPT LOGIC</div><div class="tldesc">Interactive features, form handling, dynamic content & DOM manipulation dengan vanilla JS. Jobsheets 7–9.2 submitted.</div><span class="tltag tprog">◎ IN PROGRESS</span></div>
     <div class="tli"><div class="tld pend"></div><div class="tldt">PHASE 04 · UPCOMING</div><div class="tltit">JQUERY INTEGRATION</div><div class="tldesc">Carousels, sliders, tabs, modals dan AJAX-powered interactions guna jQuery library.</div><span class="tltag tpend">◌ NOT STARTED</span></div>
     <div class="tli"><div class="tld pend"></div><div class="tldt">PHASE 05 · UPCOMING</div><div class="tltit">WEB STORAGE</div><div class="tldesc">LocalStorage & SessionStorage untuk simpan data user dan settings secara persistent.</div><span class="tltag tpend">◌ NOT STARTED</span></div>
   </div>
 </div>
+
 <!-- TEAM -->
 <h2 class="sttl" id="sttm">MEET THE ARCHITECTS</h2>
 <div class="container">
@@ -497,17 +484,18 @@ footer{text-align:center;padding:55px 20px;color:rgba(0,242,254,.16);font-size:.
 <footer>© 2026 CYBER FUSION ELITE v3 · GROUP PROJECT<br><span style="font-size:.48rem;letter-spacing:2px;color:rgba(0,242,254,.08);">↑↑↓↓←→←→BA · SECRET CODE EXISTS</span></footer>
 
 <script>
-/* ===== MODULE DATA ===== */
+/* ===== MODULE DATA — UPDATED: JS now has 9.1 & 9.2 ===== */
 const MODS = ['HTML','CSS','JS','JQ','ST'];
 const LBL  = {HTML:'HTML5',CSS:'CSS3',JS:'JAVASCRIPT',JQ:'JQUERY',ST:'WEB STORAGE'};
 let curMod = 0;
 
 const JD={
-  HTML:{total:3,dan:{done:['index.html','aboutus.html','jobsheet.html'],prog:[],pend:[]},dil:{done:['index.html','aboutus.html','jobsheet.html'],prog:[],pend:[]}},
-  CSS:{total:3,dan:{done:['styles.css','animations.css','responsive.css'],prog:[],pend:[]},dil:{done:['styles.css','animations.css','responsive.css'],prog:[],pend:[]}},
-  JS:{total:3,dan:{done:[],prog:[],pend:['main.js','effects.js','interactivity.js']},dil:{done:[],prog:[],pend:['events.js','validation.js','utils.js']}},
-  JQ:{total:3,dan:{done:[],prog:[],pend:['carousel.js','animations.js','forms.js']},dil:{done:[],prog:[],pend:['slider.js','tabs.js','modal.js']}},
-  ST:{total:2,dan:{done:[],prog:[],pend:['localStorage.js','sessionStorage.js']},dil:{done:[],prog:[],pend:['localStorage.js','sessionStorage.js']}},
+  HTML:{total:3,dan:{done:['JS01 — index.html','JS02 — aboutus.html','JS03 — jobsheet.html'],prog:[],pend:[]},dil:{done:['JS01 — index.html','JS02 — aboutus.html','JS03 — jobsheet.html'],prog:[],pend:[]}},
+  CSS:{total:3,dan:{done:['CSS01 — styles.css','CSS02 — animations.css','CSS03 — responsive.css'],prog:[],pend:[]},dil:{done:['CSS01 — styles.css','CSS02 — animations.css','CSS03 — responsive.css'],prog:[],pend:[]}},
+  /* UPDATED: JS now has 5 files (7, 8, 9, 9.1, 9.2) */
+  JS:{total:5,dan:{done:['JS07 — Jobsheet 7','JS08 — Jobsheet 8','JS09 — Jobsheet 9'],prog:['JS9.1 — Jobsheet 9.1','JS9.2 — Jobsheet 9.2'],pend:[]},dil:{done:['JS07 — Jobsheet 7','JS08 — Jobsheet 8','JS09 — Jobsheet 9'],prog:['JS9.1 — Jobsheet 9.1','JS9.2 — Jobsheet 9.2'],pend:[]}},
+  JQ:{total:3,dan:{done:[],prog:[],pend:['JQ10 — Jobsheet 10','JQ11 — Jobsheet 11','JQ12 — Jobsheet 12']},dil:{done:[],prog:[],pend:['JQ10 — Jobsheet 10','JQ11 — Jobsheet 11','JQ12 — Jobsheet 12']}},
+  ST:{total:2,dan:{done:[],prog:[],pend:['ST13 — Jobsheet 13','ST14 — Jobsheet 14']},dil:{done:[],prog:[],pend:['ST13 — Jobsheet 13','ST14 — Jobsheet 14']}},
 };
 
 const cAudio=document.getElementById('sFX'),tAudio=document.getElementById('tFX');
@@ -540,37 +528,25 @@ function renderMod(idx){
   const d   = JD[key];
   curMod    = idx;
 
-  // Title
   document.getElementById('jt').textContent = LBL[key]+' MODULE';
-
-  // Dots
   document.querySelectorAll('.j-dot').forEach((dot,i)=>dot.classList.toggle('active',i===idx));
-
-  // Module card highlight
   document.querySelectorAll('.mi').forEach((m,i)=>m.classList.toggle('active-mod',i===idx));
-
-  // Counter indicator
   document.getElementById('j-mid').textContent = (idx+1)+' / '+MODS.length;
-
-  // Prev/Next state
   document.getElementById('j-prev').disabled = idx===0;
   document.getElementById('j-next').disabled = idx===MODS.length-1;
-
-  // Reset bars
   ['ovf','df','af'].forEach(id=>document.getElementById(id).style.width='0%');
 
-  const dp=Math.round((d.dan.done.length/d.total)*100);
-  const ap=Math.round((d.dil.done.length/d.total)*100);
+  const dp=Math.round(((d.dan.done.length + d.dan.prog.length*0.5)/d.total)*100);
+  const ap=Math.round(((d.dil.done.length + d.dil.prog.length*0.5)/d.total)*100);
   const ov=Math.round((dp+ap)/2);
 
-  // Tasks list
   const tasks=(who,cid)=>{
     const el=document.getElementById(cid);el.innerHTML='';
     const ico={done:'✓ ',prog:'⟳ ',pend:'◌ '};
     ['done','prog','pend'].forEach(s=>d[who][s].forEach(f=>el.innerHTML+='<div class="ti"><div class="td2 '+s+'"></div>'+ico[s]+f+'</div>'));
   };
-  document.getElementById('ds').textContent=dp===100?'✓ ALL FILES SUBMITTED':'Files: '+d.dan.done.length+' / '+d.total;
-  document.getElementById('as').textContent=ap===100?'✓ ALL FILES SUBMITTED':'Files: '+d.dil.done.length+' / '+d.total;
+  document.getElementById('ds').textContent=dp===100?'✓ ALL SUBMITTED':'Files: '+(d.dan.done.length+d.dan.prog.length)+' / '+d.total;
+  document.getElementById('as').textContent=ap===100?'✓ ALL SUBMITTED':'Files: '+(d.dil.done.length+d.dil.prog.length)+' / '+d.total;
   tasks('dan','dt');tasks('dil','at2');
 
   const dfEl=document.getElementById('df'),afEl=document.getElementById('af');
@@ -583,12 +559,13 @@ function renderMod(idx){
     document.getElementById('ap').textContent=ap+'%';
     document.getElementById('ovf').style.width=ov+'%';
     document.getElementById('ovn').textContent=ov+'%';
+    /* UPDATED radar values: JS = 60 */
     const rd={
       HTML:[[100,100,0,0,0],[100,100,0,0,0]],
       CSS:[[100,100,0,0,0],[100,100,0,0,0]],
-      JS:[[0,0,0,0,0],[0,0,0,0,0]],
-      JQ:[[0,0,0,0,0],[0,0,0,0,0]],
-      ST:[[0,0,0,0,0],[0,0,0,0,0]]
+      JS:[[100,100,60,0,0],[100,100,60,0,0]],
+      JQ:[[100,100,60,0,0],[100,100,60,0,0]],
+      ST:[[100,100,60,0,0],[100,100,60,0,0]]
     };
     const[dv,av]=rd[key];
     drawR('rcv',dv,av,['HTML','CSS','JS','JQ','STG'],160);
@@ -620,7 +597,6 @@ function goMod(idx){
   renderMod(idx);
 }
 
-// Close on backdrop click
 document.getElementById('jo').addEventListener('click',function(e){
   if(e.target===this)closeJ();
 });
@@ -635,7 +611,8 @@ function switchTab(tab,btn){
   const pn=document.getElementById(map[tab]);if(!pn)return;
   pn.classList.add('active');
   pn.querySelectorAll('.sf').forEach((f,i)=>setTimeout(()=>{if(f.dataset.w!==undefined)f.style.width=f.dataset.w+'%';},i*120));
-  if(tab==='rad')drawR('mrad',[100,100,0,0,0],[100,100,0,0,0],['HTML','CSS','JS','JQ','STG'],300);
+  /* UPDATED radar: JS = 60 */
+  if(tab==='rad')drawR('mrad',[100,100,60,0,0],[100,100,60,0,0],['HTML','CSS','JS','JQ','STG'],300);
 }
 
 /* ===== LOADER ===== */
