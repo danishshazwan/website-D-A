@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial jQuery - Danish Corner</title>
+    <script src="jquery-4.0.0.js"></script>
+    <style>
+        body {
+            font-size: 17px;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: lightskyblue;
+            color: white;
+        }
+        .container {
+            padding: 30px 50px;
+        }
+        /* Tambah cursor pointer supaya user tahu gambar boleh diinteraksi */
+        img {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Tutorial jQuery Danish</h1>
+    </div>
+
+    <div class="container">
+        <h1>Mouse Event - Tukar Gambar</h1> 
+        <button id="tombol">Hilang (Gambar 1)</button>
+        <button id="tombol2">Muncul (Gambar 1)</button>
+
+        <br><br>
+        <img id="gmbr1" src="Gemini_Generated_Image_i2e7aqi2e7aqi2e7.png" width="250"/>
+    </div>
+
+    <script>
+    $(document).ready(function(){
+        
+        // 1. Butang Hilang -> Sembunyikan gambar
+        $('#tombol').on('click', function(){
+            $('#gmbr1').hide();
+        });
+
+        // 2. Butang Muncul -> Tunjukkan balik gambar
+        $('#tombol2').on('click', function(){
+            $('#gmbr1').show();
+        });
+
+        // 3. Mouse Over (Pointer masuk) -> Tukar ke Gambar 2
+        $('#gmbr1').on('mouseenter', function(){
+            $(this).attr('src', 'Gemini_Generated_Image_o17a73o17a73o17a.png');
+        });
+
+        // 4. Mouse Leave (Pointer keluar) -> Tukar balik ke Gambar 1
+        $('#gmbr1').on('mouseleave', function(){
+            $(this).attr('src', 'Gemini_Generated_Image_i2e7aqi2e7aqi2e7.png');
+        });
+
+    });
+    </script>
+    
+</body>
+</html>
