@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial jQuery - Danish Corner</title>
+    <script src="jquery-4.0.0.js"></script>
+    <style>
+        body {
+            font-size: 17px;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: lightskyblue;
+            color: white;
+        }
+        .container {
+            padding: 30px 50px;
+        }
+
+        .judul {
+        color :rgb(255,9,253)
+        }
+
+        .styleBaru {
+        color:yellow;
+        background: black;
+        padding: 10px;
+        }
+       </style>
+</head>
+<body>
+    <div class="header"><h1>Tutorial jQuery Danish</h1> </div>
+<br>
+    
+    <div class="container">
+        <button id ="tombol" type="button">Ubah Style</button>
+        <button id ="tombol2" type="button">Uba Ayat</button>
+        <!-- <button id ="tombol2" type="button">Hapus Style</button> -->
+        <br>
+        <h1 class ="judul">Judul Heeading 1</h1>
+        <p ud ="pi">
+            Kaliamt Awal
+        </p>
+
+        <input type="text" id="itemBaru"/>
+
+
+        <ul id="list">
+            <li>item 1</li>
+            <li>item 2</li>
+            <li>item 3</li>
+        </ul>
+    </div>
+
+    <a href="www.google.com" id="link">Ini Link</a>
+
+    <script>
+        $(document).ready(function(){
+//         $('#tombol').click(function(){
+
+
+//         $('.judul').toogleClass('styleBaru');
+
+// })
+//         })
+// $('#tombol2').click(function(){
+//      $('#p1').text('Ini Kalimat Baru');
+//     $('#p1').text('<h2>Ini Kalimat Baru</h2>')
+//      $('#p1').html('<h2>Ini Kalimat Baru</h2>');
+
+//      alert($('#p1').text());
+//      alert($('#p1').html());
+
+
+//            $('#tombol2').click(function(){
+//             $('.judul').removeClass('styleBaru');
+//             $('.judul').addClass('styleBaru');
+//             });
+//         });
+
+//             $('judul').css({
+//             'color': 'rgb(255,238,0)'
+//             'background': '#0000'
+// });
+            // $('#list').append('<li>ini list item baru</li>')
+            // $('#list').prepend('<li>ini list item baru dengan prepend</li>')
+            // $('#list').before('<h2>Daftar List</h2>')
+            // $('#list').after('<h2>Akhir List Item</h2>')
+            // $('.judul').before('<h5>Sub Judul</h5>');
+
+            // $('#list').empty();
+            // $('#list').detach();
+            // $("#link").attr('href','https://www.google.com/search?sca_esv=254f3e790db52f40&sxsrf=ANbL-n5fAhGfQy6fEhLDXMyyAfwb_-PahQ:1777256230661&udm=2&fbs=ADc_l-aN0CWEZBOHjofHoaMMDiKpaEWjvZ2Py1XXV8d8KvlI3o6iwGk6Iv1tRbZIBNIVs-5-bUj3iBl-UxHsANYwOkWWQqZAJJdwuRaSoLHfELMHAS_5zAurUVcQ8qBcfeEsVs-mMGRW1NvmiX4UFJbfHrVurAbZ6A-bH8woQQp4XNDfhD6OiH1i4Msmyp1hYhVrpH4H8k5p-1iHjCBWliv9f3fg_ntC_w&q=x1r&sa=X&ved=2ahUKEwjLrray-4yUAxVw1TgGHfHWD1YQtKgLegQIFxAB&biw=614&bih=695&dpr=1.25')
+            // // alert($('#link').attr('id'))
+
+            // $("#link").removeAttr('href');
+        //  $('p').wrapAll('<b>')
+        
+            $('#itemBaru').keyup(function(e){
+                var kodeKey= e.which;
+                if(kodeKey==13){
+                e.preventDefault();
+                $('#list').prepend('<li>' + e.target.value + '</li>');
+                }
+
+            })
+
+            var arraySaya = ['Donat', 'Sate', 'Nasi Lemak', 'Ayam Goreng'];
+
+            // Looping untuk masukkan data array ke dalam list
+            $.each(arraySaya, function(i, val){
+                // Perhatikan tanda petik di akhir </li>');
+                $('#list').prepend('<li>' + val + '</li>'); 
+            });
+        });
+</script>
+    
+</body>
+</html>
