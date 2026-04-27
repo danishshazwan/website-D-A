@@ -3,70 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial jQuery - Danish Corner</title>
+    <title>Tutorial JQuery</title>
     <script src="jquery-4.0.0.js"></script>
     <style>
-        body {
+         body {
             font-size: 17px;
             font-family: Arial, sans-serif;
             line-height: 1.6;
         }
+
         .header {
             text-align: center;
             padding: 20px;
             background: lightskyblue;
             color: white;
         }
+
         .container {
             padding: 30px 50px;
         }
-        /* Tambah cursor pointer supaya user tahu gambar boleh diinteraksi */
-        img {
-            cursor: pointer;
-            transition: 0.3s;
+
+        
+        p {
+            margin-bottom: 20px;
+        }
+
+        #gbr{
+            position: relative;
         }
     </style>
 </head>
 <body>
-
-    <div class="header">
-        <h1>Tutorial jQuery Danish</h1>
-    </div>
+    <div class="header"><h1>Tutorial Jquery</h1></div>
 
     <div class="container">
-        <h1>Mouse Event - Tukar Gambar</h1> 
-        <button id="tombol">Hilang (Gambar 1)</button>
-        <button id="tombol2">Muncul (Gambar 1)</button>
+        <button id="animasi">Animasi</button>
 
+        <!-- <button id="Kiri">Ke Kiri</button>
+        <button id="Kanan">Ke Kanan</button> -->
         <br><br>
-        <img id="gmbr1" src="Gemini_Generated_Image_i2e7aqi2e7aqi2e7.png" width="250"/>
+        <img id ="gbr" src ="Gemini_Generated_Image_i2e7aqi2e7aqi2e7.png" width="300px">
+
+        <!-- <button id="hilang">hilang</button>
+        <button id="muncul">muncul</button>
+        <button id="toggle">toggle</button>
+     -->
+        <!-- <button id="SlideHilang">Slide Hilang</button>
+        <button id="Slidemuncul">Slide Muncul</button>
+        <button id="Slidetoggle">Slide Toggle</button> -->
+
+    <!-- <p id="paragraf">
+       Dalam dunia perlumbaan kereta berkelajuan tinggi, 
+       aerodinamik bukan sekadar tentang kelajuan di litar lurus, 
+       tetapi tentang bagaimana mengekalkan kereta agar tetap "melekat" pada litar semasa mengambil selekoh. Konsep Ground Effect menggunakan reka bentuk lantai kereta untuk menghasilkan kawasan tekanan udara yang sangat rendah di bawah kenderaan, 
+       yang secara mekanikal "menyedut" kereta ke bawah. Ini membolehkan pemandu mengekalkan kelajuan ekstrem tanpa kehilangan cengkeraman. Perubahan kecil pada sayap depan atau lantai boleh membezakan antara kemenangan podium atau kemalangan di dinding litar, menjadikan setiap milimeter reka bentuk sangat kritikal.
+    </p> -->
+
     </div>
+<script>
+$(document).ready(function(){
+    $('#animasi').click(function(){
+        $('#gbr').animate({
+            top : 200,
+       })
+       $('#gbr').animate({
+            left : 300,
+       })
+       $('#gbr').animate({
+            top : 0,
+       })
 
-    <script>
-    $(document).ready(function(){
-        
-        // 1. Butang Hilang -> Sembunyikan gambar
-        $('#tombol').on('click', function(){
-            $('#gmbr1').hide();
-        });
+       $('#gbr').animate({
+            left : 0,
+       })
 
-        // 2. Butang Muncul -> Tunjukkan balik gambar
-        $('#tombol2').on('click', function(){
-            $('#gmbr1').show();
-        });
-
-        // 3. Mouse Over (Pointer masuk) -> Tukar ke Gambar 2
-        $('#gmbr1').on('mouseenter', function(){
-            $(this).attr('src', 'Gemini_Generated_Image_o17a73o17a73o17a.png');
-        });
-
-        // 4. Mouse Leave (Pointer keluar) -> Tukar balik ke Gambar 1
-        $('#gmbr1').on('mouseleave', function(){
-            $(this).attr('src', 'Gemini_Generated_Image_i2e7aqi2e7aqi2e7.png');
-        });
-
+       $('#gbr').animate({
+            width: 400,
+            opacity: 0
+       })
+    })
     });
-    </script>
     
+    // Butang Ke Kanan
+    // $('#Kanan').click(function(){
+    //     $('#gbr').animate({
+    //         left: '100px',  // <--- TANDA KOMA INI WAJIB ADA
+    //         width: '900px'
+    //     }, 1000); 
+    // });
+
+    // // Butang Ke Kiri
+    // $('#Kiri').click(function(){
+    //     $('#gbr').animate({
+    //         left: '0px',
+    //         width: '100px' // Tambahkan width asal kalau nak dia kecil semula
+    //     }, 1000); 
+    // });
+
+        // // Butang Hilang (FadeOut)
+        // $('#hilang').click(function(){
+        //     $('#paragraf').fadeOut(3000, function(){
+        //         $('#hilang').text('Sudah Hilang');  
+        //     }); 
+        // });
+
+        // // Butang Muncul (FadeIn)
+        // $('#muncul').click(function(){
+        //     $('#paragraf').fadeIn('slow');
+        //     $('#hilang').text('hilang'); // Reset teks butang hilang
+        // });
+
+        // // Butang Toggle (FadeToggle) - Betulkan ejaan 'toggle' dan 'fadeToggle'
+        // $('#toggle').click(function(){
+        //     $('#paragraf').fadeToggle('slow');
+        // });
+
+        // // Slide Hilang (SlideUp)
+        // $('#SlideHilang').click(function(){
+        //     $('#paragraf').slideUp('slow');
+        // });
+
+        // // Slide Muncul (SlideDown)
+        // $('#Slidemuncul').click(function(){
+        //     $('#paragraf').slideDown('slow');
+        // });
+
+        // // Slide Toggle (SlideToggle)
+        // $('#Slidetoggle').click(function(){
+        //     $('#paragraf').slideToggle('slow');
+        // });
+     // Pastikan semua kod berada di dalam kurungan ini
+</script>
+
 </body>
 </html>
