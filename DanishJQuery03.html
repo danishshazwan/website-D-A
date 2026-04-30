@@ -45,14 +45,14 @@
     </div>
 <script>
     $(document).ready(function(){
-        // 1. Contoh penggunaan .load()
-        // $('#kotak').load('newfile.html', function(responseTxt, statusTxt, xhr){
-        //     if(statusTxt == "success") alert('File sukses diambil');
-        //     if(statusTxt == "error") alert("Error: " + xhr.status);
-        // });
+        // 1. Contoh penggunaan .load() - Simbol // telah dibuang
+        $('#kotak').load('newfile.html', function(responseTxt, statusTxt, xhr){
+            if(statusTxt == "success") alert('Fail berjaya diambil');
+            if(statusTxt == "error") alert("Ralat: " + xhr.status);
+        });
 
         // 2. Mengambil data dari buku.json
-        $.getJSON('buku.json', function(data) { // Parameter 'data' ditambah di sini
+        $.getJSON('buku.json', function(data) { 
             $.each(data, function(i, buku) {
                 // Memasukkan judul buku ke dalam senarai <ul>
                 $("ul#daftarbuku").append("<li>" + buku.judul + " - " + buku.pengarang + "</li>");
