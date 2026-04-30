@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial JQuery</title>
+    <script src="jquery-4.0.0.js"></script>
+    <style>
+         body {
+            font-size: 17px;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background: lightskyblue;
+            color: white;
+        }
+
+        .container {
+            padding: 30px 50px;
+        }
+
+        
+        p {
+            margin-bottom: 20px;
+        }
+
+        #gbr{
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="header"><h1>Tutorial Jquery</h1></div>
+
+    <div class="container">
+        <div id="kotak"></div>
+
+        <ul id="daftarbuku"></ul>
+
+    
+    </div>
+<script>
+    $(document).ready(function(){
+        // 1. Contoh penggunaan .load()
+        // $('#kotak').load('newfile.html', function(responseTxt, statusTxt, xhr){
+        //     if(statusTxt == "success") alert('File sukses diambil');
+        //     if(statusTxt == "error") alert("Error: " + xhr.status);
+        // });
+
+        // 2. Mengambil data dari buku.json
+        $.getJSON('buku.json', function(data) { // Parameter 'data' ditambah di sini
+            $.each(data, function(i, buku) {
+                // Memasukkan judul buku ke dalam senarai <ul>
+                $("ul#daftarbuku").append("<li>" + buku.judul + " - " + buku.pengarang + "</li>");
+            });
+        }).fail(function() {
+            console.log("Ralat: Gagal memuatkan fail JSON.");
+        });
+    });
+</script>
+
+</body>
+</html>
