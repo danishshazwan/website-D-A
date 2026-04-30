@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Storage</title>
+    <title>Web Storage - Pengurusan Nama</title>
     <style>
-        body { transition: 0.3s; font-family: sans-serif; }
+        body { font-family: sans-serif; }
         a { color: inherit; margin-right: 15px; cursor: pointer; text-decoration: underline; }
-        .dark-mode { background-color: #222; color: #fff; } 
     </style>
 </head>
 <body>
@@ -15,14 +14,11 @@
     <h1 id="judul">Hello Leeya!</h1>
     <a id="ganti">Ganti nama</a>
     <a id="hapus">Hapus nama</a>
-    <a id="toggle" class="toggle">Mode Gelap</a>
 
     <script>
-        // Now these will correctly find the elements above
         const judul = document.getElementById('judul');
         const btnGanti = document.getElementById('ganti');
         const btnHapus = document.getElementById('hapus');
-        const btnToggle = document.getElementById('toggle');
 
         // --- NAME LOGIC ---
         let nama = localStorage.getItem('nama');
@@ -45,33 +41,6 @@
         btnHapus.addEventListener('click', () => {
             localStorage.removeItem('nama');
             location.reload();
-        });
-
-        // --- THEME LOGIC ---
-        const applyDarkMode = () => {
-            document.body.classList.add('dark-mode');
-            btnToggle.innerHTML = 'Mode Terang';
-            localStorage.setItem('tema', 'dark');
-        };
-
-        const applyLightMode = () => {
-            document.body.classList.remove('dark-mode');
-            btnToggle.innerHTML = 'Mode Gelap';
-            localStorage.setItem('tema', 'light');
-        };
-
-        // Check preference on initial load
-        let tema = localStorage.getItem('tema');
-        if (tema === 'dark') applyDarkMode();
-
-        btnToggle.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevents page jump
-            tema = localStorage.getItem('tema');
-            if (tema === 'dark') {
-                applyLightMode();
-            } else {
-                applyDarkMode();
-            }
         });
     </script>
 </body>
