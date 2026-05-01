@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Storage - Nama</title>
+    <style>
+       a {
+        color: inherit;
+        margin-right: 10px;
+       }
+    </style>
+</head>
+<body>
+    <h1>Halo!</h1>
 
+    <a href="#" onclick="gantiNama(event)">Ganti Nama</a>
+    <a href="#" onclick="hapusNama(event)">Hapus Nama</a>
+
+<script>
+    const judul = document.querySelector('h1');
+    
+    let nama = localStorage.getItem('nama');
+
+    if(!nama){
+        nama = prompt('masukkan nama anda: ');
+        if(nama) localStorage.setItem('nama', nama);
+    }
+
+    judul.innerHTML = `Halo, ${nama ? nama : 'diylas'}!`;
+
+    window.gantiNama = (e) => {
+        e.preventDefault();
+        let namaBaru = prompt('masukkan nama baru anda: ');
+        if(namaBaru) {
+            localStorage.setItem('nama', namaBaru);
+            judul.innerHTML = `Halo, ${namaBaru}!`;
+        }
+    }
+
+    window.hapusNama = (e) => {
+        e.preventDefault(); 
+        localStorage.removeItem('nama'); 
+        let namaBaru = prompt('Nama dipadam. Sila masukkan nama baru anda: ');
+        if(namaBaru) {
+            localStorage.setItem('nama', namaBaru);
+            judul.innerHTML = `Halo, ${namaBaru}!`;
+        } else {
+            judul.innerHTML = 'Halo!';
+        }
+    }
+</script>
+</body>
+</html>
