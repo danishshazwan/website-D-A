@@ -1,1 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Storage - Tema</title>
+<style>
+   body { transition: 0.3s; }
+   #toggle {
+    color: inherit;
+    cursor: pointer;
+   }
+   .dark-mode {
+        background-color: black;
+        color: rgb(211, 180, 240);
+    }
+</style>
+</head>
+<body>
+    <h1>Set Your Mode</h1>
 
+    <a href="#" id="toggle">Dark Mode</a>
+
+<script>
+    const toggleBtn = document.getElementById('toggle');
+    let tema = localStorage.getItem('tema');
+
+    const darkMode = () => {
+        document.body.classList.add('dark-mode');
+        toggleBtn.innerHTML = 'Light Mode'; 
+        localStorage.setItem('tema', 'dark');
+    }
+
+    const lightMode = () => {
+        document.body.classList.remove('dark-mode');
+        toggleBtn.innerHTML = 'Dark Mode'; 
+        localStorage.setItem('tema', 'light');
+    }
+
+    if(tema === 'dark'){
+        darkMode();
+    }
+
+    toggleBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        tema = localStorage.getItem('tema'); 
+        if(tema === 'dark'){
+            lightMode();
+        } else {
+            darkMode();
+        }
+    });
+</script>
+</body>
+</html>
