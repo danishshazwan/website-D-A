@@ -1392,7 +1392,7 @@ function triggerLightning() {
   lCtx.clearRect(0, 0, lCanvas.width, lCanvas.height);
   drawBolt(Math.random() * lCanvas.width, 0, 12, 25, 0.2);
   const thunder = document.getElementById('tFX');
-  thunder.volume = 0.08;
+  thunder.volume = 1.0;
   thunder.currentTime = 0;
   thunder.play().catch(() => {});
   setTimeout(() => lCtx.clearRect(0, 0, lCanvas.width, lCanvas.height), 200);
