@@ -3,73 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial jQuery-Diyla</title>
+    <title>Tutorial jQuery-Diyla </title>
 
     <!-- jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-size: 16px;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            height: 100vh;
         }
 
         .header {
             background-color: rgb(121, 44, 104);
-            padding: 15px;
+            padding: 20px;
             text-align: center;
-            color: white;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 1.8rem;
+            color: rgb(51, 42, 82)
         }
 
         .container {
-            height: calc(100vh - 70px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
+            padding: 50px;
             text-align: center;
         }
 
         button {
             padding: 12px 24px;
             cursor: pointer;
-            margin: 5px;
+            margin: 10px;
             border-radius: 8px;
             border: none;
             font-weight: bold;
         }
 
-        #tombol { 
-            background-color: rgb(122, 101, 143); 
-            color: white; 
-        }
-
-        #tombol2 { 
-            background-color: rgb(60, 13, 104); 
-            color: white; 
-        }
+        #tombol { background-color: rgb(122, 101, 143); color: white; }
+        #tombol2 { background-color: rgb(60, 13, 104); color: white; }
 
         #gbr1 {
-            margin-top: 10px;
+            margin-top: 30px;
             border: 5px solid #ffffff;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            cursor: pointer;
-            max-width: 90%;
+            cursor: crosshair;
         }
     </style>
 </head>
@@ -81,14 +56,14 @@
     </div>
 
     <div class="container">
-        <h2>Mouse Event</h2>
+        <h1>Mouse Event</h1>
         
-        <div>
-            <button id="tombol">Hilang</button>
-            <button id="tombol2">Muncul</button>
-        </div>
+        <button id="tombol">Hilang</button>
+        <button id="tombol2">Muncul</button>
 
-        <img id="gbr1" src="scuba.gif" width="300" alt="Gambar"/>
+        <br><br>
+
+        <img id="gbr1" src="scuba.gif" width="300px" alt="Gambar"/>
 
         <!-- SOUND FILES -->
         <audio id="soundBananas">
@@ -105,6 +80,7 @@
 
         let nextImage = "cat"; 
 
+       
         function stopAllSounds() {
             $('#soundBananas')[0].pause();
             $('#soundBananas')[0].currentTime = 0;
