@@ -1,1 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial jQuery-Diyla & Wanie</title>
 
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <style>
+        body {
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .header {
+            background-color: rgb(121, 44, 104);
+            padding: 20px;
+            text-align: center;
+            color: rgb(51, 42, 82)
+        }
+
+        .container {
+            padding: 50px;
+            text-align: center;
+        }
+
+        button {
+            padding: 12px 24px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+        }
+
+        #tombol { background-color: rgb(122, 101, 143); color: white; }
+        #tombol2 { background-color: rgb(60, 13, 104); color: white; }
+
+        #gbr1 {
+            margin-top: 30px;
+            border: 5px solid #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            cursor: crosshair;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>TUTORIAL JQUERY DIYLA & WANIE</h1>
+    </div>
+
+    <div class="container">
+        <h1>Mouse Event</h1>
+        
+        <button id="tombol">Hilang</button>
+        <button id="tombol2">Muncul</button>
+
+        <br><br>
+
+        <img id="gbr1" src="scuba.gif" width="300px" alt="Gambar"/>
+
+        <!-- SOUND FILES -->
+        <audio id="soundBananas">
+            <source src="bananas.mp3" type="audio/mpeg">
+        </audio>
+        
+        <audio id="soundScuba">
+            <source src="scuba.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+
+        let nextImage = "cat"; 
+
+       
+        function stopAllSounds() {
+            $('#soundBananas')[0].pause();
+            $('#soundBananas')[0].currentTime = 0;
+            $('#soundScuba')[0].pause();
+            $('#soundScuba')[0].currentTime = 0;
+        }
+
+        function playBananas() {
+            stopAllSounds();
+            $('#soundBananas')[0].play();
+        }
+
+        function playScuba() {
+            stopAllSounds();
+            $('#soundScuba')[0].play();
+        }
+
+        $('#gbr1').on('mouseenter', function() {
+            $(this).attr('src', 'cat.gif');
+            playBananas();
+        });
+
+        $('#gbr1').on('mouseleave', function() {
+            $(this).attr('src', 'scuba.gif');
+            playScuba();
+        });
+
+        $('#tombol').on('click', function() {
+            $('#gbr1').hide();
+            stopAllSounds();
+        });
+
+        $('#tombol2').on('click', function() {
+            if (nextImage === "cat") {
+                $('#gbr1').show().attr('src', 'cat.gif');
+                playBananas();
+                nextImage = "scuba"; 
+            } else { 
+                $('#gbr1').show().attr('src', 'scuba.gif');
+                playScuba();
+                nextImage = "cat"; 
+            }
+        });
+
+    });
+    </script>
+
+</body>
+</html>
