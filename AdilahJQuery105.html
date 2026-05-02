@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,23 +46,16 @@
 $(document).ready(function(){
     $('#kotak').load("filebaru.html", function(responseTxt, statusTxt, xhr){
 
-        // if(statusTxt == "success"){
-        //     alert('File berjaya di ambil');
-        // }
+        if(statusTxt == "success"){
+            alert('File berjaya di ambil');
+        }
 
-        // else if(statusTxt == "error"){
-        //     alert("File tidak ditemukan, error: " + xhr.status);
-        // }
+        else if(statusTxt == "error"){
+            alert("File tidak ditemukan, error: " + xhr.status);
+        }
 
-        // $.get('filebaru.html', function(data){
-        //     $('#kotak').html(data);
-        // })
-
-
-        $.getJSON('buku.json', function(data){
-            $.each(data, function(i, buku){
-                $("ul#daftarbuku")
-            })
+        $.get('filebaru.html', function(data){
+            $('#kotak').html(data);
         })
     });
 });
