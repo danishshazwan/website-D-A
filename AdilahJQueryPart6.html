@@ -1,65 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial jQuery-Diyla</title>
-
-    <!-- jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            text-align: center;
-            padding: 20px;
-            background: rgb(121, 44, 104);
-            color: rgb(51, 42, 82);
-        }
-        .container {
-            padding: 50px;
-            text-align: center;
-        }
-        #kotak {
-            border: 2px solid #ccc;
-            padding: 20px;
-            min-height: 100px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>JobsheetjQuery Part 6</title>
 </head>
-
 <body>
 
-<div class="header">
-    <h1>TUTORIAL JQUERY DIYLA</h1>
-</div>
+<h2>JobsheetjQuery Part 6 -Newfile</h2>
 
-<div class="container">
-    <div id="kotak"></div>
-</div>
-
-<script>
-$(document).ready(function(){
-    $('#kotak').load("filebaru.html", function(responseTxt, statusTxt, xhr){
-
-        if(statusTxt == "success"){
-            alert('File berjaya di ambil');
-        }
-
-        else if(statusTxt == "error"){
-            alert("File tidak ditemukan, error: " + xhr.status);
-        }
-
-        $.get('filebaru.html', function(data){
-            $('#kotak').html(data);
-        })
-    });
-});
-</script>
+<video width="700" controls>
+    <source src="filet.mp4" type="video/mp4">
+    Browser tak support video.
+</video>
 
 </body>
 </html>
